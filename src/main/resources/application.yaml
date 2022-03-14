@@ -1,0 +1,70 @@
+spring:
+  application:
+    name: wechat
+
+  datasource:
+    url: jdbc:mysql://120.76.100.173?characterEncoding=UTF-8
+    username: root
+    password: Aa664490254
+
+wechat:
+  wx-token: Jeffrey
+  wx-app-id: wx3304ba44a60dedd7
+  wx-app-secret: 2a3f2e232db36e2242c08e20f322f563
+
+email:
+  email-from: safety_report@yeah.net
+  email-to: jeffrey2971@outlook.com
+  email-host: smtp.yeah.net
+  email-port: 465
+  email-c-c: 664490254@qq.com
+  email-pass-code: KOLXLPATXBOOXILT
+
+baidu:
+  baidu-transaction-app-id: 20200709000515966 # appid
+  baidu-transaction-app-key: gkV0xq2Wz5zgCgbft68b # appkey
+  erase-none: 0 # 不擦除
+  erase-full: 1 # 全屏擦除
+  erase-block: 2 # 区块擦除
+  paste-none: 0 # 不贴合
+  paste-full: 1 # 全屏贴合
+  paste-block: 2 # 区块贴合
+  close: 0 # 关闭填充
+  auto: auto # 自动检测
+  zh: zh # 中文
+  en: en # 英语
+  jp: jp # 日语
+  kor: kor # 韩语
+  fra: fra # 法语
+  spa: spa # 西班牙语
+  ru: ru # 俄语
+  pt: pt # 葡萄牙语
+  de: de # 德语
+  it: it # 意大利语
+  dan: dan # 丹麦语
+  nl: nl # 荷兰语
+  may: may # 马来语
+  swe: swe # 瑞典语
+  id: id # 印尼语
+  pl: pl # 波兰语
+  rom: rom # 罗马尼亚语
+  tr: tr # 土耳其语
+  el: el # 希腊语
+  hu: hu # 匈牙利语
+  req-url: https://fanyi-api.baidu.com/api/trans/sdk/picture
+  file-content-type: mutipart/form-data
+
+
+
+
+cli:
+  cli-style-id: QR_LIMIT_STR_SCENE
+#  cli-action-type: 5BDCCgromMMhMHYqLtJUP68
+
+server:
+  port: 80
+  servlet:
+    encoding:
+      charset: UTF-8
+      force-request: true
+      force-response: true
