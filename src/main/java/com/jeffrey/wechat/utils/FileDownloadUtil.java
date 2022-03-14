@@ -5,7 +5,6 @@ import org.springframework.util.FileCopyUtils;
 
 import java.io.*;
 import java.net.URL;
-import java.net.URLConnection;
 
 /**
  * @author jeffrey
@@ -16,7 +15,7 @@ import java.net.URLConnection;
 public class FileDownloadUtil {
 
     /**
-     * 下载给定链接中的文件并存储到给定的目录
+     * 下载给定链接中的文件并存储到给定的目录（只对图片有优化）
      * 如果给定参数 savePath 为一个目录，那么将使用下载文件的 md5 作为保存文件名并返回
      * 如果给定参数 savePath 不为一个目录（例如 /temp/save.png），那么将使直接进行保存并返回该文件的文件名
      *
@@ -26,15 +25,20 @@ public class FileDownloadUtil {
      */
     public static String download(File savePath, String httpUrl) {
         try {
-            URL url = new URL(httpUrl);
-            URLConnection urlConnection = url.openConnection();
-            InputStream is = urlConnection.getInputStream();
+            InputStream is = new URL(httpUrl).openConnection().getInputStream();
+            ByteArrayOutputStream os = new ByteArrayOutputStream(4 * (1024 * 1024));
+            byte[] buffer = new byte[4 * (1024 * 1024)];
+            int len;
+            while ((len = is.read(buffer)) != -1) {
+                os.write(buffer, 0, len);
+            }
+            os.close();
             if (savePath.isDirectory()) {
-                String md5Name = DigestUtils.md5DigestAsHex(is); // 计算 MD5
-                FileCopyUtils.copy(is, new FileOutputStream(new File(savePath, (md5Name + ".png")).toString()));
+                String md5Name = DigestUtils.md5DigestAsHex(os.toByteArray()); // 计算 MD5
+                FileCopyUtils.copy(os.toByteArray(), new FileOutputStream(new File(savePath, (md5Name + ".png")).toString()));
                 return md5Name;
             } else {
-                FileCopyUtils.copy(is, new FileOutputStream(savePath));
+                FileCopyUtils.copy(os.toByteArray(), new FileOutputStream(savePath));
                 return savePath.getName();
             }
         } catch (IOException e) {
@@ -44,6 +48,6 @@ public class FileDownloadUtil {
     }
 
     public static void main(String[] args) {
-        download(new File("/Users/jeffrey/IdeaProjects/wechat/src/test"), "https://xyq.gdl.netease.com/MHXY-JD-3.0.414.exe");
+        System.out.println(download(new File("/Users/jeffrey/IdeaProjects/wechat/src/test"), "http://mmbiz.qpic.cn/mmbiz_jpg/F5kt9ZMIMgFtFwwvqlxYEP65GnTf2gy3MsHcydHN9fv1LbSmeic4DquOJ81U2vUN6iblDBjZNyuIhWmUfK2svZpA/0"));
     }
 }
