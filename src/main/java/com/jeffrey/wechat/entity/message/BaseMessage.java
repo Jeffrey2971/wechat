@@ -1,9 +1,6 @@
 package com.jeffrey.wechat.entity.message;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import java.util.Map;
 
@@ -14,11 +11,9 @@ import java.util.Map;
  * @since JDK 1.8
  */
 
-@Getter
-@Setter
+@Data
 @ToString(callSuper = true)
-@NoArgsConstructor
-public class BaseMessage {
+public abstract class BaseMessage {
 
     private String ToUserName;
     private String FromUserName;
