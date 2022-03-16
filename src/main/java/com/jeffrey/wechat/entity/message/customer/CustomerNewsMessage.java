@@ -1,12 +1,12 @@
 package com.jeffrey.wechat.entity.message.customer;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 /**
  * @author jeffrey
  * @since JDK 1.8
  */
-
 
 public class CustomerNewsMessage extends BaseCustomerMessageType {
 
@@ -18,10 +18,13 @@ public class CustomerNewsMessage extends BaseCustomerMessageType {
     }
 
     @Data
-    private static class News{
+    @AllArgsConstructor
+    public static class News{
+
         private Articles articles;
 
         @Data
+        @AllArgsConstructor
         public static class Articles{
             private String title;
             private String description;
