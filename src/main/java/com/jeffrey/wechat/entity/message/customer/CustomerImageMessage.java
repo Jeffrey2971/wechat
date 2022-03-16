@@ -18,7 +18,7 @@ public class CustomerImageMessage extends BaseCustomerMessageType {
     }
 
     @Data
-    private static class Image{
+    public static class Image{
         private String media_id;
     }
 }

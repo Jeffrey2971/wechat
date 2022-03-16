@@ -19,13 +19,13 @@ public class CustomerMsgMenuMessage extends BaseCustomerMessageType {
     }
 
     @Data
-    private static class MsgMenu{
+    public static class MsgMenu{
         private String head_content;
         private java.util.List<CustomerMsgMenuMessage.MsgMenu.List> list;
         private String tail_content;
 
         @Data
-        private static class List{
+        public static class List{
             private Integer id;
             private String content;
         }

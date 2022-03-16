@@ -18,7 +18,7 @@ public class CustomerWxCardMessage extends BaseCustomerMessageType {
     }
 
     @Data
-    private static class WxCard{
+    public static class WxCard{
         private String card_id;
     }
 }

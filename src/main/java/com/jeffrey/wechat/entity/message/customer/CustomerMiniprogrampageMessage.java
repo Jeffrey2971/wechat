@@ -18,7 +18,7 @@ public class CustomerMiniprogrampageMessage extends BaseCustomerMessageType {
     }
 
     @Data
-    private static class Miniprogrampage {
+    public static class Miniprogrampage {
         private String title;
         private String appid;
         private String pagepath;

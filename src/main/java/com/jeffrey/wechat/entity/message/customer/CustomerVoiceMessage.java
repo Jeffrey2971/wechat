@@ -18,7 +18,7 @@ public class CustomerVoiceMessage extends BaseCustomerMessageType {
     }
 
     @Data
-    private static class Voice{
+    public static class Voice{
         private String media_id;
     }
 }

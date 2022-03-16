@@ -18,7 +18,7 @@ public class CustomerVideoMessage extends BaseCustomerMessageType {
     }
 
     @Data
-    private static class Video{
+    public static class Video{
         private String media_id;
         private String thumb_media_id;
         private String title;

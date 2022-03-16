@@ -18,7 +18,7 @@ public class CustomerMpnewsarticleMessage extends BaseCustomerMessageType {
     }
 
     @Data
-    private static class Mpnewsarticle{
+    public static class Mpnewsarticle{
         private String article_id;
     }
 }

@@ -18,7 +18,7 @@ public class CustomerMusicMessage extends BaseCustomerMessageType {
     }
 
     @Data
-    private static class Music{
+    public static class Music{
         private String title;
         private String description;
         private String musicurl;

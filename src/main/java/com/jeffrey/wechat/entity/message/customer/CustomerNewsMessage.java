@@ -22,7 +22,7 @@ public class CustomerNewsMessage extends BaseCustomerMessageType {
         private Articles articles;
 
         @Data
-        private static class Articles{
+        public static class Articles{
             private String title;
             private String description;
             private String url;

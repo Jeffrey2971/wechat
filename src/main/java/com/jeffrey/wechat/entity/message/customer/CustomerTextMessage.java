@@ -18,7 +18,7 @@ public class CustomerTextMessage extends BaseCustomerMessageType {
 
     @Data
     @AllArgsConstructor
-    private static class Text {
+    public static class Text {
         private String content;
     }
 }
