@@ -2,7 +2,7 @@ package com.jeffrey.wechat.service.impl;
 
 import java.util.*;
 
-import com.jeffrey.wechat.entity.message.*;
+import com.jeffrey.wechat.entity.message.BaseMessage;
 import com.thoughtworks.xstream.XStream;
 import org.dom4j.Element;
 import org.dom4j.Document;
@@ -10,43 +10,34 @@ import org.dom4j.DocumentHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.dom4j.DocumentException;
 import java.security.MessageDigest;
-import com.jeffrey.wechat.entity.Config;
+import com.jeffrey.wechat.config.WeChatAutoConfiguration;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.security.NoSuchAlgorithmException;
-import org.springframework.beans.BeansException;
+
 import com.jeffrey.wechat.service.WeChatService;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
 
 @Service
 @Slf4j
-public class WeChatServiceImpl implements WeChatService, ApplicationContextAware {
+public class WeChatServiceImpl implements WeChatService {
 
-    private static ApplicationContext context;
-    private static final XStream XSTREAM = new XStream();
-    private static final ProcessMessage PROCESS_MESSAGE = new ProcessMessage();
+    @Autowired
+    private XStream xStream;
+    
+    @Autowired
+    private ProcessMessage processMessage;
 
-    // 批量解析标注了 @XStreamAlias 的类，这些类只需要被解析一次
-    static {
-        XSTREAM.processAnnotations(new Class[]{
-                ImageMessage.class,
-                LinkMessage.class,
-                LocationMessage.class,
-                MusicMessage.class,
-                NewsMessage.class,
-                SmallVideoMessage.class,
-                TextMessage.class,
-                VideoMessage.class,
-                VoiceMessage.class,
-        });
-    }
+    @Autowired
+    private WeChatAutoConfiguration.WxConfig config;
+
+
+
 
     @Override
     public boolean check(String timestamp, String nonce, String signature, String echostr) {
         String mysig = "";
-        if (context.containsBean("config.WxConfig")) {
-            Config.WxConfig wxConfig = context.getBean("config.WxConfig", Config.WxConfig.class);
-            String[] strs = new String[]{wxConfig.getWxToken(), timestamp, nonce};
+        if (config != null) {
+            String[] strs = new String[]{config.getWxToken(), timestamp, nonce};
             Arrays.sort(strs);
             String str = strs[0] + strs[1] + strs[2];
             try {
@@ -93,19 +84,19 @@ public class WeChatServiceImpl implements WeChatService, ApplicationContextAware
                 文本消息
              */
             case "text":
-                msg = PROCESS_MESSAGE.sendTextMessage(requestMap);
+                msg = processMessage.sendTextMessage(requestMap);
                 break;
             /*
                 图片消息
              */
             case "image":
-                msg = PROCESS_MESSAGE.sendImageMessage(requestMap);
+                msg = processMessage.sendImageMessage(requestMap);
                 break;
             /*
                 语音消息
              */
             case "voice":
-                msg = PROCESS_MESSAGE.sendVoiceMessage(requestMap);
+                msg = processMessage.sendVoiceMessage(requestMap);
                 break;
             /*
                 短视频消息（和 video 属性一样无需重复调用）
@@ -115,7 +106,7 @@ public class WeChatServiceImpl implements WeChatService, ApplicationContextAware
                 视频消息
              */
             case "video":
-                msg = PROCESS_MESSAGE.sendVideoMessage(requestMap);
+                msg = processMessage.sendVideoMessage(requestMap);
                 break;
 
             /*
@@ -123,19 +114,19 @@ public class WeChatServiceImpl implements WeChatService, ApplicationContextAware
              */
             case "location":
                 // msg = new TextMessage(requestMap, "人家还不支持上门识别翻译噢，请发送图片吧！");
-                msg = PROCESS_MESSAGE.sendLocationMessage(requestMap);
+                msg = processMessage.sendLocationMessage(requestMap);
                 break;
             /*
                 链接消息
              */
             case "link":
-                msg = PROCESS_MESSAGE.sendLinkMessage(requestMap);
+                msg = processMessage.sendLinkMessage(requestMap);
                 break;
             default:
                 // msg = notReady(requestMap);
                 break;
         }
-        return XSTREAM.toXML(msg);
+        return xStream.toXML(msg);
     }
 
     private String sha1Encode(String str) throws NoSuchAlgorithmException {
@@ -150,10 +141,5 @@ public class WeChatServiceImpl implements WeChatService, ApplicationContextAware
             sb.append(participating[b >> 4 & 15]).append(participating[b & 15]);
         }
         return sb.toString();
-    }
-
-    @Override
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        context = applicationContext;
     }
 }
