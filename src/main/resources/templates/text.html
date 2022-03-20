@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>文档</title>
+    <div th:replace="~{commons :: #common-text}"></div>
+</head>
+<body>
+<br><br>
+<h1>以下是图片相关内容，该文档将在 [[${expiredTime}]] 分钟后销毁</h1>
+<hr>
+<br>
+<div class="wrapper">
+    <button onclick="copyText()" id="copyText">点击复制所有内容</button>
+    <br>
+    <span id="copySuccess"></span>
+    <br>
+    <hr>
+    <br>
+    <span id="text" th:utext="${document}">NOTHING HERE</span>
+    <label for="input"></label><textarea id="input" readonly></textarea>
+    <br><br>
+</div>
+<div th:replace="~{commons :: #common-footer}"></div>
+</body>
+</html>
