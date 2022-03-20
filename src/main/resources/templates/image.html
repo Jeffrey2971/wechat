@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>图片实景翻译</title>
+    <div th:replace="~{commons :: #common-bootstrap}"></div>
+</head>
+<body>
+    <img src="http://www.jeffrey2971.top/image/accounFileDownloadUtilt.jpg" alt="额，这里原本有张图片但是哪去了..." class="img-responsive center-block" th:src="${base64Image}">
+    <script>alert("图片可放大缩小噢")</script>
+</body>
+</html>
