@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>用户反馈页面</title>
+    <link rel="stylesheet" href="http://jeffrey.top/css/feedback.css" th:href="@{/css/feedback.css}"/>
+</head>
+<body>
+<div class="Content-Main">
+    <div class="Content-Main1">
+        <h1>用户反馈</h1>
+    </div>
+    <form action="" th:action="@{/question}" method="post" class="form-report">
+
+        <span>请输入您遇到的问题</span>
+        <br><br>
+        <label>
+            <input type="text" placeholder="在这里输入您遇到的问题" name="title">
+        </label>
+
+        <br><br><br>
+
+        <span>请输入您遇到问题的详情</span>
+        <br><br>
+        <label>
+            <textarea id="mesaage" name="message" placeholder="在这里输入您遇到问题的具体详情"></textarea>
+        </label>
+
+        <br><br><br>
+
+        <span>请选择联系方式</span>
+        <label>
+            <select name="select" class="select2">
+                <option value="WeChat" name="wechat">微信</option>
+                <option value="Phone" name="phone">手机</option>
+                <option value="Email" name="email">邮件</option>
+                <option value="QQ" name="qq">QQ</option>
+            </select>
+        </label>
+        <br><br>
+        <label>
+            <input type="text" placeholder="在这里输入您选中对应的联系方式" name="details" id="contact">
+        </label>
+        <br>
+        <input type="hidden" name="openid" value="" th:value="${openid}">
+        <label>
+            <input type="submit" class="button" value="提交" style="display: block; margin: auto">
+        </label>
+    </form>
+</div>
+<footer th:replace="~{commons :: #common-footer}"></footer>
+</body>
+</html>
