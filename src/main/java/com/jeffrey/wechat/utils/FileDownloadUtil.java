@@ -1,7 +1,9 @@
 package com.jeffrey.wechat.utils;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.DigestUtils;
 import org.springframework.util.FileCopyUtils;
+import org.springframework.util.StringUtils;
 
 import java.io.*;
 import java.net.URL;
@@ -11,7 +13,7 @@ import java.net.URL;
  * @since JDK 1.8
  */
 
-
+@Slf4j
 public class FileDownloadUtil {
 
     /**
@@ -24,6 +26,10 @@ public class FileDownloadUtil {
      * @return 按照给定的 File 选择性返回
      */
     public static String download(File savePath, String httpUrl) {
+        log.info("开始下载：{}", httpUrl);
+        if (!StringUtils.hasText(httpUrl) || savePath == null) {
+            throw new RuntimeException("提供的参数为空");
+        }
         try {
             InputStream is = new URL(httpUrl).openConnection().getInputStream();
             ByteArrayOutputStream os = new ByteArrayOutputStream(4 * (1024 * 1024));
@@ -34,7 +40,7 @@ public class FileDownloadUtil {
             }
             os.close();
             if (savePath.isDirectory()) {
-                String md5Name = DigestUtils.md5DigestAsHex(os.toByteArray()); // 计算 MD5
+                String md5Name = DigestUtils.md5DigestAsHex(os.toByteArray());
                 FileCopyUtils.copy(os.toByteArray(), new FileOutputStream(new File(savePath, (md5Name + ".png")).toString()));
                 return md5Name;
             } else {
@@ -45,9 +51,5 @@ public class FileDownloadUtil {
             e.printStackTrace();
         }
         throw new RuntimeException("文件下载异常");
-    }
-
-    public static void main(String[] args) {
-        System.out.println(download(new File("/Users/jeffrey/IdeaProjects/wechat/src/test"), "http://mmbiz.qpic.cn/mmbiz_jpg/F5kt9ZMIMgFtFwwvqlxYEP65GnTf2gy3MsHcydHN9fv1LbSmeic4DquOJ81U2vUN6iblDBjZNyuIhWmUfK2svZpA/0"));
     }
 }
