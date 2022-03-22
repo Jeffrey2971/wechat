@@ -1,6 +1,7 @@
 package com.jeffrey.wechat.config;
 
 import com.google.gson.Gson;
+import com.jeffrey.wechat.entity.TransResponseWrapper;
 import com.jeffrey.wechat.entity.message.*;
 import com.thoughtworks.xstream.XStream;
 import lombok.Data;
@@ -11,6 +12,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+import java.util.HashMap;
 import java.util.concurrent.Executor;
 
 
@@ -21,7 +23,8 @@ import java.util.concurrent.Executor;
         WeChatAutoConfiguration.EmailConfig.class,
         WeChatAutoConfiguration.BaiduTranslationConfig.class,
         WeChatAutoConfiguration.CliConfig.class,
-        WeChatAutoConfiguration.ThreadPoolConfig.class
+        WeChatAutoConfiguration.ThreadPoolConfig.class,
+        WeChatAutoConfiguration.ServerInfo.class
 })
 public class WeChatAutoConfiguration {
 
@@ -29,7 +32,7 @@ public class WeChatAutoConfiguration {
     private ThreadPoolConfig config;
 
     @Bean
-    public Executor taskExecutor(){
+    public Executor taskExecutor() {
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
         executor.setCorePoolSize(config.corePoolSize);
         executor.setMaxPoolSize(config.maxPoolSize);
@@ -39,12 +42,27 @@ public class WeChatAutoConfiguration {
     }
 
     @Bean
-    public Gson gson(){
+    public HashMap<String, Long> userBlackMap(){
+        return new HashMap<>();
+    }
+
+    @Bean
+    public HashMap<String, Integer> userFrequency(){
+        return new HashMap<>();
+    }
+
+    @Bean
+    public HashMap<Long, TransResponseWrapper> userDataItem() {
+        return new HashMap<>();
+    }
+
+    @Bean
+    public Gson gson() {
         return new Gson();
     }
 
     @Bean
-    public XStream xStream(){
+    public XStream xStream() {
         XStream xStream = new XStream();
         // 批量解析标注了 @XStreamAlias 的类，这些类只需要被解析一次
         xStream.processAnnotations(new Class[]{
@@ -63,7 +81,7 @@ public class WeChatAutoConfiguration {
 
     @Data
     @ConfigurationProperties(prefix = "pool")
-    public static class ThreadPoolConfig{
+    public static class ThreadPoolConfig {
         private int corePoolSize;
         private int maxPoolSize;
         private int keepAliveSeconds;
@@ -76,6 +94,8 @@ public class WeChatAutoConfiguration {
         private String wxToken;
         private String wxAppId;
         private String wxAppSecret;
+        private String wxCustomerUrl;
+        private String wxGetTokenUrl;
     }
 
     @Data
@@ -104,7 +124,6 @@ public class WeChatAutoConfiguration {
         private String zh, en, jp, kor, fra, spa, ru, pt, de, it, dan, nl, may, swe, id, pl, rom, tr, el, hu, auto;
         private String reqUrl;
         private String fileContentType;
-
     }
 
     @Data
@@ -112,6 +131,12 @@ public class WeChatAutoConfiguration {
     public static class CliConfig {
         private String cliStyleId;
         private String cliActionType;
+    }
+
+    @Data
+    @ConfigurationProperties(prefix = "domain")
+    public static class ServerInfo{
+        private String domain;
     }
 }
 
