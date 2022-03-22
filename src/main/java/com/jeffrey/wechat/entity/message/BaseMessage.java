@@ -13,6 +13,7 @@ import java.util.Map;
 
 @Data
 @ToString(callSuper = true)
+@NoArgsConstructor
 public abstract class BaseMessage {
 
     private String ToUserName;
