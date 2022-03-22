@@ -7,7 +7,7 @@ import java.util.Map;
 /**
  * 所有响应的消息
  */
-public interface MessageService {
+public interface ProcessMessageService {
     /**
      * 返回文本消息
      *
