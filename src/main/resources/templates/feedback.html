@@ -10,7 +10,7 @@
     <div class="Content-Main1">
         <h1>用户反馈</h1>
     </div>
-    <form action="" th:action="@{/question}" method="post" class="form-report">
+    <form th:action="@{/question}" method="post" class="form-report">
 
         <span>请输入您遇到的问题</span>
         <br><br>
@@ -31,8 +31,8 @@
         <span>请选择联系方式</span>
         <label>
             <select name="select" class="select2">
+                <option value="Phone" name="phone" selected>手机</option>
                 <option value="WeChat" name="wechat">微信</option>
-                <option value="Phone" name="phone">手机</option>
                 <option value="Email" name="email">邮件</option>
                 <option value="QQ" name="qq">QQ</option>
             </select>

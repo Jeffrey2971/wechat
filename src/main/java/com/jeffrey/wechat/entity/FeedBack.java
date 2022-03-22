@@ -1,8 +1,6 @@
 package com.jeffrey.wechat.entity;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /**
  * 封装用户表单反馈结果
@@ -11,14 +9,35 @@ import lombok.NoArgsConstructor;
  */
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class FeedBack {
+
+    /**
+     * 问题标题
+     */
     private String title;
+
+    /**
+     * 问题详情
+     */
     private String message;
+
+    /**
+     * 联系方式
+     */
     private String select;
-    private String way;
+
+    /**
+     * 联系方式详情
+     */
     private String details;
-    private String table;
-    private Long timeStamp;
+
+    /**
+     * 反馈用户的 openid
+     */
+    private String openid;
+
+    /**
+     * 反馈问题的时间
+     */
+    private Long ctime;
 }
