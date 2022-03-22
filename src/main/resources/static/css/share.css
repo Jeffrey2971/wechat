@@ -1,0 +1,12 @@
+table {
+    text-align: center;
+    margin: auto;
+}
+#t1 {
+    color: red;
+    font-size: 40px;
+}
+.t2 {
+    color: green;
+    font-size: 30px;
+}
