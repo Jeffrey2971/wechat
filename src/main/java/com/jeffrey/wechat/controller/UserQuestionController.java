@@ -83,6 +83,15 @@ public class UserQuestionController {
                     }
                 }
 
+                if ("select".equals(field.getName()) && "Email".equals(field.get(feedBack))) {
+                    Matcher emailRule = Pattern.compile("^([a-z0-9A-Z]+[-|.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$").matcher(feedBack.getDetails());
+                    if (!emailRule.matches()) {
+                        model.addAttribute("label1", "400");
+                        model.addAttribute("label2", "邮箱格式不正确");
+                        return "4xx";
+                    }
+                }
+
                 if (!StringUtils.hasText((String) field.get(feedBack))) {
                     model.addAttribute("label1", "403");
                     model.addAttribute("label2", String.format("表单项 %s 不能为空", fieldName(field.getName())));
@@ -96,7 +105,7 @@ public class UserQuestionController {
 
         feedBack.setCtime(System.currentTimeMillis());
 
-        return userQuestionService.feedBackStatusMsg(feedBack);
+        return userQuestionService.feedBackStatusMsg(feedBack, model);
     }
 
     private String fieldName(String field) {
