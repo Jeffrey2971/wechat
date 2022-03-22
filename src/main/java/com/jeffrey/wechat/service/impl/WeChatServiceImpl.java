@@ -3,6 +3,8 @@ package com.jeffrey.wechat.service.impl;
 import java.util.*;
 
 import com.jeffrey.wechat.entity.message.BaseMessage;
+import com.jeffrey.wechat.entity.message.EmptyMessage;
+import com.jeffrey.wechat.service.ProcessEventMessage;
 import com.thoughtworks.xstream.XStream;
 import org.dom4j.Element;
 import org.dom4j.Document;
@@ -23,15 +25,15 @@ public class WeChatServiceImpl implements WeChatService {
 
     @Autowired
     private XStream xStream;
-    
+
     @Autowired
     private ProcessMessage processMessage;
 
     @Autowired
+    private ProcessEventMessage processEventMessage;
+
+    @Autowired
     private WeChatAutoConfiguration.WxConfig config;
-
-
-
 
     @Override
     public boolean check(String timestamp, String nonce, String signature, String echostr) {
@@ -78,7 +80,43 @@ public class WeChatServiceImpl implements WeChatService {
                 事件消息
              */
             case "event":
-                // msg = sendEvent(requestMap);
+                switch (requestMap.get("Event").toLowerCase()) {
+                    case "subscribe":
+                        processEventMessage.processSubscribe(requestMap);
+                        break;
+                    case "unsubscribe":
+                        processEventMessage.processUnsubscribe(requestMap);
+                        break;
+                    case "click":
+                        processEventMessage.processClick(requestMap);
+                        break;
+                    case "view":
+                        processEventMessage.processView(requestMap);
+                        break;
+                    case "pic_photo_or_album":
+                        processEventMessage.processPicPhotoOrAlbum(requestMap);
+                        break;
+                    case "scancode_push":
+                        processEventMessage.processScancodePush(requestMap);
+                        break;
+                    case "scancode_waitmsg":
+                        processEventMessage.processScancodeWaitMsg(requestMap);
+                        break;
+                    case "pic_sysphoto":
+                        processEventMessage.processPicSysPhoto(requestMap);
+                        break;
+                    case "pic_weixin":
+                        processEventMessage.processPicWeiXin(requestMap);
+                        break;
+                    case "location_select":
+                        processEventMessage.processLocationSelect(requestMap);
+                        break;
+                    case "view_miniprogram":
+                        processEventMessage.processViewMiniProgram(requestMap);
+                        break;
+                    default:
+                        msg = new EmptyMessage();
+                }
                 break;
             /*
                 文本消息
@@ -125,6 +163,10 @@ public class WeChatServiceImpl implements WeChatService {
             default:
                 // msg = notReady(requestMap);
                 break;
+        }
+        if (msg instanceof EmptyMessage) {
+            log.info("收到的消息类型为空，返回空字符串避免微信重复请求");
+            return "";
         }
         return xStream.toXML(msg);
     }
