@@ -1,16 +1,18 @@
 package com.jeffrey.wechat.translate;
 
 import okhttp3.*;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+@Component
 public class HttpClient {
     private final OkHttpClient client;
 
     public HttpClient() {
-        client = new OkHttpClient.Builder().connectTimeout(5, TimeUnit.SECONDS).readTimeout(5, TimeUnit.SECONDS).build();
+        client = new OkHttpClient.Builder().connectTimeout(15, TimeUnit.SECONDS).readTimeout(15, TimeUnit.SECONDS).build();
     }
 
     public String post(String host, HttpParams params) {
