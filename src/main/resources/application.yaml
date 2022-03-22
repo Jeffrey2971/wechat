@@ -1,21 +1,47 @@
 spring:
   application:
     name: wechat
+  main:
+    allow-bean-definition-overriding: true
 
   datasource:
     url: jdbc:mysql://120.76.100.173?characterEncoding=UTF-8
     username: root
     password: Aa664490254
 
+  gson:
+    disable-html-escaping: true
+
+  mail:
+    host: smtp.yeah.net
+    port: 465
+    password: KOLXLPATXBOOXILT
+    username: safety_report@yeah.net
+    properties:
+      mail.smtp.auth: true
+      mail.smtp.starttls.enable: true
+      mail.smtp.starttls.required: true
+      mail.smtp.ssl.enable: true
+
+
+pool:
+  core-pool-size: 10
+  max-pool-size: 100
+  keep-alive-seconds: 300
+  queue-capacity: 150
+
 wechat:
   wx-token: Jeffrey
-  wx-app-id: wx3304ba44a60dedd7
-  wx-app-secret: 2a3f2e232db36e2242c08e20f322f563
+  wx-app-id: wx1ea22b7747f6a666 # 测试号
+  wx-app-secret: 80819212b09ec541339f68533bbeb348 # 测试号
+  wx-customer-url: https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token={token}
+  wx-get-token-url: https://api.weixin.qq.com/cgi-bin/token?grant_type={grant_type}&appid={appid}&secret={secret}
+
+
 
 email:
   email-from: safety_report@yeah.net
   email-to: jeffrey2971@outlook.com
-  email-host: smtp.yeah.net
   email-port: 465
   email-c-c: 664490254@qq.com
   email-pass-code: KOLXLPATXBOOXILT
@@ -54,12 +80,19 @@ baidu:
   req-url: https://fanyi-api.baidu.com/api/trans/sdk/picture
   file-content-type: mutipart/form-data
 
-
-
-
 cli:
   cli-style-id: QR_LIMIT_STR_SCENE
-#  cli-action-type: 5BDCCgromMMhMHYqLtJUP68
+  cli-action-type: 5BDCCgromMMhMHYqLtJUP68
+
+global:
+  frequency-threshold: 15
+  blackUser-wait-time: 300000
+  frequency-check-time: 15000
+
+
+domain:
+  # domain: http://jeffrey2971.top
+  domain: http://hap5rq.natappfree.cc
 
 server:
   port: 80
