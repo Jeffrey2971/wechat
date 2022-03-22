@@ -57,14 +57,12 @@ public class GetAccessTokenUtil {
             throw new RuntimeException("获取微信 Token 所需参数为空");
         }
 
-        final String targetUrl = "https://api.weixin.qq.com/cgi-bin/token?grant_type={grant_type}&appid={appid}&secret={secret}";
-
         final HashMap<String, Object> params = new HashMap<>(3);
         params.put("grant_type", "client_credential");
         params.put("appid", config.getWxAppId());
         params.put("secret", config.getWxAppSecret());
 
-        final ResponseEntity<AccessToken> token = RequestUtil.getEntity(targetUrl, AccessToken.class, params);
+        final ResponseEntity<AccessToken> token = RequestUtil.getEntity(config.getWxGetTokenUrl(), AccessToken.class, params);
 
         if (token.getStatusCodeValue() == 200 && token.getBody() != null && StringUtils.hasText(token.getBody().getAccess_token())) {
             expires_in = token.getBody().getExpires_in();
