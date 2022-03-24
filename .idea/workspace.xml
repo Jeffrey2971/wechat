@@ -4,61 +4,49 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="876406d9-6f11-4fef-880e-df13bea4a4ba" name="Changes" comment="WeChat：添加注释">
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_sun_activation_jakarta_activation_1_2_2.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_sun_mail_jakarta_mail_1_6_5.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_attoparser_attoparser_2_0_5_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_mail_2_3_7_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_thymeleaf_2_3_7_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_context_support_5_2_12_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_thymeleaf_extras_thymeleaf_extras_java8time_3_0_4_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_thymeleaf_thymeleaf_3_0_11_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_thymeleaf_thymeleaf_spring5_3_0_11_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_unbescape_unbescape_1_1_6_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/dao/UserQuestionService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/entity/TransResponseWrapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/entity/message/EmptyMessage.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/entity/message/customer/CustomerResponseStatusMessage.java" afterDir="false" />
+    <list default="true" id="876406d9-6f11-4fef-880e-df13bea4a4ba" name="Changes" comment="WeChat：">
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_alibaba_druid_1_1_17.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_alibaba_druid_spring_boot_starter_1_1_17.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_zaxxer_HikariCP_3_4_5.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__mysql_mysql_connector_java_8_0_22.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_mybatis_mybatis_3_5_6.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_mybatis_mybatis_spring_2_0_6.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_mybatis_spring_boot_mybatis_spring_boot_autoconfigure_2_1_4.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_mybatis_spring_boot_mybatis_spring_boot_starter_2_1_4.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_jdbc_2_3_7_RELEASE.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_jdbc_5_2_12_RELEASE.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_tx_5_2_12_RELEASE.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/setting.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/dao/ProcessEventMessageDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/entity/mybatis/UserInfo.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/exception/WeChatException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/listener/ListenerRemoveExpiredData.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/service/GetDocInfoService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/service/UserQuestionService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/service/impl/GetDocInfoServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/service/impl/UserQuestionServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/utils/EditDistance.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/utils/GetRequestAddressUtil.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/utils/RequestUtil.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/utils/SimpleSendCustomerTextUtil.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/css/share.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/share.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/service/CheckRequestInterceptor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/mybatis/global.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/mybatis/mapper/feedbackMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/mybatis/mapper/processEventMessageMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/mybatis/mapper/wechatMapper.xml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/test/java/service/WxTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/380282e6-7ce9-4fcd-ba0c-8514904819ea.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/380282e6-7ce9-4fcd-ba0c-8514904819ea/storage_v2/_src_/schema/mysql.osA4Bg.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/380282e6-7ce9-4fcd-ba0c-8514904819ea/storage_v2/_src_/schema/performance_schema.kIw0nw.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/380282e6-7ce9-4fcd-ba0c-8514904819ea/storage_v2/_src_/schema/sys.zb4BAA.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/d5aefed0-3b26-47d7-a1c8-b40c8c75c34f.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/d5aefed0-3b26-47d7-a1c8-b40c8c75c34f/storage_v2/_src_/schema/information_schema.FNRwLQ.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/d5aefed0-3b26-47d7-a1c8-b40c8c75c34f/storage_v2/_src_/schema/mysql.osA4Bg.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/d5aefed0-3b26-47d7-a1c8-b40c8c75c34f/storage_v2/_src_/schema/performance_schema.kIw0nw.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/d5aefed0-3b26-47d7-a1c8-b40c8c75c34f/storage_v2/_src_/schema/sys.zb4BAA.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/WechatApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/WechatApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/config/WeChatAutoConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/config/WeChatAutoConfiguration.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/config/WeChatConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/config/WeChatConfiguration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/controller/GetFreeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/controller/GetFreeController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/controller/GetResponseResultController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/controller/GetResponseResultController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/controller/UserQuestionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/controller/UserQuestionController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/interceptor/FollowInterceptor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/interceptor/FollowInterceptor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/interceptor/FrequencyInterceptor.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/dao/UserQuestionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/dao/UserQuestionServiceDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/dao/WeChatServiceDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/dao/WeChatServiceDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/entity/FeedBack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/entity/FeedBack.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/interceptor/BlackUserInterceptor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/interceptor/BlackUserInterceptor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/interceptor/RequestInterceptor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/interceptor/RequestInterceptor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/listener/ListenerRemoveExpiredData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/listener/ListenerRemoveExpiredData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/listener/ListenerUserFrequency.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/listener/ListenerUserFrequency.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/service/ProcessEventMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/service/ProcessEventMessage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/service/UserQuestionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/service/UserQuestionService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/service/impl/GetDocInfoServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/service/impl/GetDocInfoServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/service/impl/ProcessEventMessageImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/service/impl/ProcessEventMessageImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/service/impl/ProcessMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/service/impl/ProcessMessage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/translate/GetTranslateMetaData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/translate/GetTranslateMetaData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/utils/FileDownloadUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/utils/FileDownloadUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/utils/GetAccessTokenUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/utils/GetAccessTokenUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/service/impl/UserQuestionServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/service/impl/UserQuestionServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/service/AccessTokenTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/feedback.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/feedback.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/wechat.iml" beforeDir="false" afterPath="$PROJECT_DIR$/wechat.iml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -73,8 +61,8 @@
         <option value="JavaScript File" />
         <option value="HTML File" />
         <option value="CSS File" />
-        <option value="Interface" />
         <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -93,8 +81,11 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/service/impl/ProcessMessage.java" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/entity/TransResponseWrapper.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/service/WeChatService.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/controller/WeChatAccessController.java" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/entity/translation/TranslationData.java" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/dao/WeChatServiceDao.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/service/impl/WeChatServiceImpl.java" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
@@ -102,6 +93,9 @@
         <option name="userSettingsFile" value="/usr/local/apache-maven-3.5.2/conf/settings.xml" />
       </MavenGeneralSettings>
     </option>
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedIndex" value="1" />
   </component>
   <component name="ProjectId" id="232gUM00FEzxibrByiTdpDSdpd4" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
@@ -123,7 +117,9 @@
     <property name="RequestMappingsPanelWidth2" value="75" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="database.data.extractors.current.export.id" value="Comma-separated (CSV)_id" />
     <property name="last.edited.regexp" value="13169523261" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/database" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
@@ -143,9 +139,9 @@
       <recent name="$PROJECT_DIR$/src/main/resources/static" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/resources" />
       <recent name="$PROJECT_DIR$/src/main/resources/static/js" />
       <recent name="$PROJECT_DIR$/src/main/resources/static/css" />
-      <recent name="$PROJECT_DIR$/src/main/resources" />
       <recent name="$PROJECT_DIR$/src/main/resources/static/js/bootstrap" />
       <recent name="$PROJECT_DIR$/src/main/resources/static/css/bootstrap" />
     </key>
@@ -186,11 +182,17 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="WxTest.t" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="WxTest.testMyBatis" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="wechat" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
       <option name="PACKAGE_NAME" value="service" />
       <option name="MAIN_CLASS_NAME" value="service.WxTest" />
-      <option name="METHOD_NAME" value="t" />
+      <option name="METHOD_NAME" value="testMyBatis" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -222,19 +224,19 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="JUnit.WxTest.t" />
+      <item itemvalue="Application.EditDistance" />
       <item itemvalue="JUnit.WxTest.testRequestUtil" />
       <item itemvalue="JUnit.WxTest.sendTestEmail" />
+      <item itemvalue="JUnit.WxTest.testMyBatis" />
       <item itemvalue="Spring Boot.WechatApplication" />
-      <item itemvalue="Application.EditDistance" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Spring Boot.WechatApplication" />
+        <item itemvalue="JUnit.WxTest.testMyBatis" />
         <item itemvalue="Application.EditDistance" />
         <item itemvalue="JUnit.WxTest.sendTestEmail" />
         <item itemvalue="JUnit.WxTest.testRequestUtil" />
-        <item itemvalue="JUnit.WxTest.t" />
       </list>
     </recent_temporary>
   </component>
@@ -291,175 +293,9 @@
       <workItem from="1647397076318" duration="38680000" />
       <workItem from="1647568404368" duration="28895000" />
       <workItem from="1647617372311" duration="90674000" />
-      <workItem from="1647834785881" duration="50328000" />
-    </task>
-    <task id="LOCAL-00009" summary="WeChat: wechat.iml">
-      <created>1647259074520</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1647259074520</updated>
-    </task>
-    <task id="LOCAL-00010" summary="WeChat: 翻译功能相关组件，不包括配置或配置类">
-      <created>1647259151062</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1647259151062</updated>
-    </task>
-    <task id="LOCAL-00011" summary="WeChat: 用户反馈表单封装对象">
-      <created>1647259225159</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1647259225159</updated>
-    </task>
-    <task id="LOCAL-00012" summary="WeChat: 文件下载工具类（存在 is 流重复读问题，对于仅指定了目录的操作会出现异常）">
-      <created>1647259308173</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1647259308173</updated>
-    </task>
-    <task id="LOCAL-00013" summary="WeChat: 绑定了各组件的自动配置类">
-      <created>1647259366745</created>
-      <option name="number" value="00013" />
-      <option name="presentableId" value="LOCAL-00013" />
-      <option name="project" value="LOCAL" />
-      <updated>1647259366745</updated>
-    </task>
-    <task id="LOCAL-00014" summary="WeChat: 获取免费使用功能 controller、dao">
-      <created>1647259456131</created>
-      <option name="number" value="00014" />
-      <option name="presentableId" value="LOCAL-00014" />
-      <option name="project" value="LOCAL" />
-      <updated>1647259456131</updated>
-    </task>
-    <task id="LOCAL-00015" summary="WeChat: 主函数类">
-      <created>1647259520270</created>
-      <option name="number" value="00015" />
-      <option name="presentableId" value="LOCAL-00015" />
-      <option name="project" value="LOCAL" />
-      <updated>1647259520270</updated>
-    </task>
-    <task id="LOCAL-00016" summary="WeChat: 处理所有消息的接口以及实现，设计其目的是不在 service 层编写过多关于消息处理的代码">
-      <created>1647259586828</created>
-      <option name="number" value="00016" />
-      <option name="presentableId" value="LOCAL-00016" />
-      <option name="project" value="LOCAL" />
-      <updated>1647259586828</updated>
-    </task>
-    <task id="LOCAL-00017" summary="WeChat: 负责处理微信签名验证、各种消息的响应、各种事件的处理等">
-      <created>1647259654010</created>
-      <option name="number" value="00017" />
-      <option name="presentableId" value="LOCAL-00017" />
-      <option name="project" value="LOCAL" />
-      <updated>1647259654010</updated>
-    </task>
-    <task id="LOCAL-00018" summary="WeChat: 用户反馈 controller">
-      <created>1647259682158</created>
-      <option name="number" value="00018" />
-      <option name="presentableId" value="LOCAL-00018" />
-      <option name="project" value="LOCAL" />
-      <updated>1647259682158</updated>
-    </task>
-    <task id="LOCAL-00019" summary="WeChat: 自定义 springmvc 组件配置">
-      <created>1647259738312</created>
-      <option name="number" value="00019" />
-      <option name="presentableId" value="LOCAL-00019" />
-      <option name="project" value="LOCAL" />
-      <updated>1647259738312</updated>
-    </task>
-    <task id="LOCAL-00020" summary="WeChat: 获取翻译相关结果 controller">
-      <created>1647259755936</created>
-      <option name="number" value="00020" />
-      <option name="presentableId" value="LOCAL-00020" />
-      <option name="project" value="LOCAL" />
-      <updated>1647259755936</updated>
-    </task>
-    <task id="LOCAL-00021" summary="WeChat: .idea/">
-      <created>1647260463006</created>
-      <option name="number" value="00021" />
-      <option name="presentableId" value="LOCAL-00021" />
-      <option name="project" value="LOCAL" />
-      <updated>1647260463006</updated>
-    </task>
-    <task id="LOCAL-00022" summary="WeChat: .idea/">
-      <created>1647260512367</created>
-      <option name="number" value="00022" />
-      <option name="presentableId" value="LOCAL-00022" />
-      <option name="project" value="LOCAL" />
-      <updated>1647260512367</updated>
-    </task>
-    <task id="LOCAL-00023" summary="WeChat: 文件下载工具类（解决上版本 InputStream 异常）">
-      <created>1647272872544</created>
-      <option name="number" value="00023" />
-      <option name="presentableId" value="LOCAL-00023" />
-      <option name="project" value="LOCAL" />
-      <updated>1647272872544</updated>
-    </task>
-    <task id="LOCAL-00024" summary="WeChat: 客服消息类型">
-      <created>1647364722721</created>
-      <option name="number" value="00024" />
-      <option name="presentableId" value="LOCAL-00024" />
-      <option name="project" value="LOCAL" />
-      <updated>1647364722721</updated>
-    </task>
-    <task id="LOCAL-00025" summary="WeChat: notnull">
-      <created>1647364737456</created>
-      <option name="number" value="00025" />
-      <option name="presentableId" value="LOCAL-00025" />
-      <option name="project" value="LOCAL" />
-      <updated>1647364737456</updated>
-    </task>
-    <task id="LOCAL-00026" summary="WeChat: 修改为抽象类">
-      <created>1647364776967</created>
-      <option name="number" value="00026" />
-      <option name="presentableId" value="LOCAL-00026" />
-      <option name="project" value="LOCAL" />
-      <updated>1647364776968</updated>
-    </task>
-    <task id="LOCAL-00027" summary="WeChat: 修改权限修饰符">
-      <created>1647401598373</created>
-      <option name="number" value="00027" />
-      <option name="presentableId" value="LOCAL-00027" />
-      <option name="project" value="LOCAL" />
-      <updated>1647401598373</updated>
-    </task>
-    <task id="LOCAL-00028" summary="WeChat: 修改权限修饰符">
-      <created>1647417008949</created>
-      <option name="number" value="00028" />
-      <option name="presentableId" value="LOCAL-00028" />
-      <option name="project" value="LOCAL" />
-      <updated>1647417008949</updated>
-    </task>
-    <task id="LOCAL-00029" summary="WeChat: 获取微信 accessToken 相关类">
-      <created>1647540660522</created>
-      <option name="number" value="00029" />
-      <option name="presentableId" value="LOCAL-00029" />
-      <option name="project" value="LOCAL" />
-      <updated>1647540660522</updated>
-    </task>
-    <task id="LOCAL-00030" summary="WeChat: 修改组件加载方式">
-      <created>1647540765117</created>
-      <option name="number" value="00030" />
-      <option name="presentableId" value="LOCAL-00030" />
-      <option name="project" value="LOCAL" />
-      <updated>1647540765117</updated>
-    </task>
-    <task id="LOCAL-00031" summary="WeChat: 添加注释">
-      <created>1647540804219</created>
-      <option name="number" value="00031" />
-      <option name="presentableId" value="LOCAL-00031" />
-      <option name="project" value="LOCAL" />
-      <updated>1647540804219</updated>
-    </task>
-    <task id="LOCAL-00032" summary="WeChat: favicon.ico">
-      <created>1647768045442</created>
-      <option name="number" value="00032" />
-      <option name="presentableId" value="LOCAL-00032" />
-      <option name="project" value="LOCAL" />
-      <updated>1647768045442</updated>
+      <workItem from="1647834785881" duration="51203000" />
+      <workItem from="1648015324754" duration="29677000" />
+      <workItem from="1648093454335" duration="891000" />
     </task>
     <task id="LOCAL-00033" summary="WeChat: bootstrap 相关组件">
       <created>1647768096757</created>
@@ -636,7 +472,175 @@
       <option name="project" value="LOCAL" />
       <updated>1647956753768</updated>
     </task>
-    <option name="localTasksCounter" value="58" />
+    <task id="LOCAL-00058" summary="WeChat：简单发送客服消息工具类">
+      <created>1647956860487</created>
+      <option name="number" value="00058" />
+      <option name="presentableId" value="LOCAL-00058" />
+      <option name="project" value="LOCAL" />
+      <updated>1647956860487</updated>
+    </task>
+    <task id="LOCAL-00059" summary="WeChat：分享页面以及样式文件">
+      <created>1647956896829</created>
+      <option name="number" value="00059" />
+      <option name="presentableId" value="LOCAL-00059" />
+      <option name="project" value="LOCAL" />
+      <updated>1647956896829</updated>
+    </task>
+    <task id="LOCAL-00060" summary="WeChat：获取响应结果">
+      <created>1647956993109</created>
+      <option name="number" value="00060" />
+      <option name="presentableId" value="LOCAL-00060" />
+      <option name="project" value="LOCAL" />
+      <updated>1647956993109</updated>
+    </task>
+    <task id="LOCAL-00061" summary="WeChat：获取字符串相似度工具类">
+      <created>1647957016433</created>
+      <option name="number" value="00061" />
+      <option name="presentableId" value="LOCAL-00061" />
+      <option name="project" value="LOCAL" />
+      <updated>1647957016433</updated>
+    </task>
+    <task id="LOCAL-00062" summary="WeChat：监听并移除用户文档">
+      <created>1647957056241</created>
+      <option name="number" value="00062" />
+      <option name="presentableId" value="LOCAL-00062" />
+      <option name="project" value="LOCAL" />
+      <updated>1647957056241</updated>
+    </task>
+    <task id="LOCAL-00063" summary="WeChat：获取请求 IP 工具类">
+      <created>1647957076769</created>
+      <option name="number" value="00063" />
+      <option name="presentableId" value="LOCAL-00063" />
+      <option name="project" value="LOCAL" />
+      <updated>1647957076770</updated>
+    </task>
+    <task id="LOCAL-00064" summary="WeChat：请求免费使用 Controller">
+      <created>1647957111528</created>
+      <option name="number" value="00064" />
+      <option name="presentableId" value="LOCAL-00064" />
+      <option name="project" value="LOCAL" />
+      <updated>1647957111529</updated>
+    </task>
+    <task id="LOCAL-00065" summary="WeChat：客服消息响应状态">
+      <created>1647957152628</created>
+      <option name="number" value="00065" />
+      <option name="presentableId" value="LOCAL-00065" />
+      <option name="project" value="LOCAL" />
+      <updated>1647957152628</updated>
+    </task>
+    <task id="LOCAL-00066" summary="WeChat：代码健壮性修改">
+      <created>1647957180690</created>
+      <option name="number" value="00066" />
+      <option name="presentableId" value="LOCAL-00066" />
+      <option name="project" value="LOCAL" />
+      <updated>1647957180690</updated>
+    </task>
+    <task id="LOCAL-00067" summary="WeChat：代码健壮性修改">
+      <created>1647957191233</created>
+      <option name="number" value="00067" />
+      <option name="presentableId" value="LOCAL-00067" />
+      <option name="project" value="LOCAL" />
+      <updated>1647957191233</updated>
+    </task>
+    <task id="LOCAL-00068" summary="WeChat：代码健壮性修改">
+      <created>1647957200070</created>
+      <option name="number" value="00068" />
+      <option name="presentableId" value="LOCAL-00068" />
+      <option name="project" value="LOCAL" />
+      <updated>1647957200070</updated>
+    </task>
+    <task id="LOCAL-00069" summary="WeChat：处理图片信息并通过客服接口响应">
+      <created>1647957236266</created>
+      <option name="number" value="00069" />
+      <option name="presentableId" value="LOCAL-00069" />
+      <option name="project" value="LOCAL" />
+      <updated>1647957236267</updated>
+    </task>
+    <task id="LOCAL-00070" summary="WeChat：发送 Http 请求工具类">
+      <created>1647957248158</created>
+      <option name="number" value="00070" />
+      <option name="presentableId" value="LOCAL-00070" />
+      <option name="project" value="LOCAL" />
+      <updated>1647957248158</updated>
+    </task>
+    <task id="LOCAL-00071" summary="WeChat：封装每次请求结果的数据">
+      <created>1647957265623</created>
+      <option name="number" value="00071" />
+      <option name="presentableId" value="LOCAL-00071" />
+      <option name="project" value="LOCAL" />
+      <updated>1647957265623</updated>
+    </task>
+    <task id="LOCAL-00072" summary="WeChat：添加邮箱校验">
+      <created>1647957295509</created>
+      <option name="number" value="00072" />
+      <option name="presentableId" value="LOCAL-00072" />
+      <option name="project" value="LOCAL" />
+      <updated>1647957295509</updated>
+    </task>
+    <task id="LOCAL-00073" summary="WeChat：用户反馈功能">
+      <created>1647957323180</created>
+      <option name="number" value="00073" />
+      <option name="presentableId" value="LOCAL-00073" />
+      <option name="project" value="LOCAL" />
+      <updated>1647957323181</updated>
+    </task>
+    <task id="LOCAL-00074" summary="WeChat：删除无用代码">
+      <created>1647957356393</created>
+      <option name="number" value="00074" />
+      <option name="presentableId" value="LOCAL-00074" />
+      <option name="project" value="LOCAL" />
+      <updated>1647957356394</updated>
+    </task>
+    <task id="LOCAL-00075" summary="WeChat：删除无用代码">
+      <created>1647957360431</created>
+      <option name="number" value="00075" />
+      <option name="presentableId" value="LOCAL-00075" />
+      <option name="project" value="LOCAL" />
+      <updated>1647957360431</updated>
+    </task>
+    <task id="LOCAL-00076" summary="WeChat：data">
+      <created>1647957385013</created>
+      <option name="number" value="00076" />
+      <option name="presentableId" value="LOCAL-00076" />
+      <option name="project" value="LOCAL" />
+      <updated>1647957385013</updated>
+    </task>
+    <task id="LOCAL-00077" summary="WeChat：空消息类型">
+      <created>1647957396628</created>
+      <option name="number" value="00077" />
+      <option name="presentableId" value="LOCAL-00077" />
+      <option name="project" value="LOCAL" />
+      <updated>1647957396628</updated>
+    </task>
+    <task id="LOCAL-00078" summary="WeChat：data">
+      <created>1647957406774</created>
+      <option name="number" value="00078" />
+      <option name="presentableId" value="LOCAL-00078" />
+      <option name="project" value="LOCAL" />
+      <updated>1647957406774</updated>
+    </task>
+    <task id="LOCAL-00079" summary="WeChat：配置添加、修改">
+      <created>1647957420551</created>
+      <option name="number" value="00079" />
+      <option name="presentableId" value="LOCAL-00079" />
+      <option name="project" value="LOCAL" />
+      <updated>1647957420551</updated>
+    </task>
+    <task id="LOCAL-00080" summary="WeChat：矩阵变量配置、拦截器配置">
+      <created>1647957453158</created>
+      <option name="number" value="00080" />
+      <option name="presentableId" value="LOCAL-00080" />
+      <option name="project" value="LOCAL" />
+      <updated>1647957453158</updated>
+    </task>
+    <task id="LOCAL-00081" summary="WeChat：注入一些集合组件及配置">
+      <created>1647957512604</created>
+      <option name="number" value="00081" />
+      <option name="presentableId" value="LOCAL-00081" />
+      <option name="project" value="LOCAL" />
+      <updated>1647957512604</updated>
+    </task>
+    <option name="localTasksCounter" value="82" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -658,32 +662,32 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="WeChat: favicon.ico" />
-    <MESSAGE value="WeChat: bootstrap 相关组件" />
-    <MESSAGE value="WeChat: jquery-3.3.1.min.js" />
-    <MESSAGE value="WeChat: npm.js" />
-    <MESSAGE value="WeChat: 公众号图片" />
-    <MESSAGE value="WeChat: 警徽图片" />
-    <MESSAGE value="WeChat: commons.html 包含了一些公共的代码片段" />
-    <MESSAGE value="WeChat: 反馈相关页面以及样式文件" />
-    <MESSAGE value="WeChat: 页脚样式文件" />
-    <MESSAGE value="WeChat: 显示文本相关页面以及样式、脚本文件" />
-    <MESSAGE value="WeChat:bootstrap 字体文件" />
-    <MESSAGE value="WeChat: 展示图片译文页面" />
-    <MESSAGE value="WeChat: 新增 thymeleaf 场景依赖" />
-    <MESSAGE value="WeChat: 文档找不到显示页面" />
-    <MESSAGE value="WeChat: 用户反馈表单校验" />
-    <MESSAGE value="WeChat：事件消息的处理" />
-    <MESSAGE value="WeChat：重命名" />
-    <MESSAGE value="WeChat：修改提示信息" />
-    <MESSAGE value="WeChat：修改反馈成功表单" />
-    <MESSAGE value="WeChat：修改标题" />
     <MESSAGE value="WeChat：添加无参构造器" />
     <MESSAGE value="WeChat：用户异常访问频率拦截功能" />
     <MESSAGE value="WeChat：修改反馈功能相关代码" />
     <MESSAGE value="WeChat：修改 okhttp 访问超时时间" />
     <MESSAGE value="WeChat：添加注释" />
-    <option name="LAST_COMMIT_MESSAGE" value="WeChat：添加注释" />
+    <MESSAGE value="WeChat：简单发送客服消息工具类" />
+    <MESSAGE value="WeChat：分享页面以及样式文件" />
+    <MESSAGE value="WeChat：获取响应结果" />
+    <MESSAGE value="WeChat：获取字符串相似度工具类" />
+    <MESSAGE value="WeChat：监听并移除用户文档" />
+    <MESSAGE value="WeChat：获取请求 IP 工具类" />
+    <MESSAGE value="WeChat：请求免费使用 Controller" />
+    <MESSAGE value="WeChat：客服消息响应状态" />
+    <MESSAGE value="WeChat：代码健壮性修改" />
+    <MESSAGE value="WeChat：处理图片信息并通过客服接口响应" />
+    <MESSAGE value="WeChat：发送 Http 请求工具类" />
+    <MESSAGE value="WeChat：封装每次请求结果的数据" />
+    <MESSAGE value="WeChat：添加邮箱校验" />
+    <MESSAGE value="WeChat：用户反馈功能" />
+    <MESSAGE value="WeChat：删除无用代码" />
+    <MESSAGE value="WeChat：空消息类型" />
+    <MESSAGE value="WeChat：data" />
+    <MESSAGE value="WeChat：配置添加、修改" />
+    <MESSAGE value="WeChat：矩阵变量配置、拦截器配置" />
+    <MESSAGE value="WeChat：注入一些集合组件及配置" />
+    <option name="LAST_COMMIT_MESSAGE" value="WeChat：注入一些集合组件及配置" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -749,19 +753,29 @@
           <option name="timeStamp" value="25" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/controller/GetResponseResultController.java</url>
+          <url>file://$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/controller/GetDocInfoController.java</url>
           <line>31</line>
           <option name="timeStamp" value="26" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/service/impl/ProcessMessage.java</url>
-          <line>84</line>
+          <line>83</line>
           <option name="timeStamp" value="40" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
+        <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/interceptor/BlackUserInterceptor.java</url>
-          <line>47</line>
+          <line>52</line>
           <option name="timeStamp" value="47" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/listener/ListenerUserFrequency.java</url>
+          <line>47</line>
+          <option name="timeStamp" value="52" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/controller/UserQuestionController.java</url>
+          <line>111</line>
+          <option name="timeStamp" value="53" />
         </line-breakpoint>
         <breakpoint enabled="true" type="java-exception">
           <properties class="org.springframework.web.client.UnknownContentTypeException" package="org.springframework.web.client" />
