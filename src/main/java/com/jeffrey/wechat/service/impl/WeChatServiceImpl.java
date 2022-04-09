@@ -2,186 +2,154 @@ package com.jeffrey.wechat.service.impl;
 
 import java.util.*;
 
+import com.jeffrey.wechat.aop.UserShareAOP;
+import com.jeffrey.wechat.dao.WeChatServiceDao;
 import com.jeffrey.wechat.entity.message.BaseMessage;
 import com.jeffrey.wechat.entity.message.EmptyMessage;
 import com.jeffrey.wechat.service.ProcessEventMessage;
 import com.thoughtworks.xstream.XStream;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.dom4j.Element;
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import lombok.extern.slf4j.Slf4j;
-import org.dom4j.DocumentException;
-import java.security.MessageDigest;
 import com.jeffrey.wechat.config.WeChatAutoConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.security.NoSuchAlgorithmException;
-
 import com.jeffrey.wechat.service.WeChatService;
 
 @Service
 @Slf4j
 public class WeChatServiceImpl implements WeChatService {
 
-    @Autowired
-    private XStream xStream;
+    private final XStream xStream;
+
+    private final ProcessMessage processMessage;
+
+    private final ProcessEventMessage processEventMessage;
+
+    private final WeChatAutoConfiguration.WxConfig config;
+
+    private final WeChatServiceDao weChatServiceDao;
 
     @Autowired
-    private ProcessMessage processMessage;
-
-    @Autowired
-    private ProcessEventMessage processEventMessage;
-
-    @Autowired
-    private WeChatAutoConfiguration.WxConfig config;
+    public WeChatServiceImpl(XStream xStream, ProcessMessage processMessage, ProcessEventMessage processEventMessage, WeChatAutoConfiguration.WxConfig config, WeChatServiceDao weChatServiceDao) {
+        this.xStream = xStream;
+        this.processMessage = processMessage;
+        this.processEventMessage = processEventMessage;
+        this.config = config;
+        this.weChatServiceDao = weChatServiceDao;
+    }
 
     @Override
     public boolean check(String timestamp, String nonce, String signature, String echostr) {
-        String mysig = "";
+
         if (config != null) {
             String[] strs = new String[]{config.getWxToken(), timestamp, nonce};
             Arrays.sort(strs);
-            String str = strs[0] + strs[1] + strs[2];
-            try {
-                mysig = sha1Encode(str);
-                return signature.equalsIgnoreCase(mysig);
-            } catch (NoSuchAlgorithmException e) {
-                e.printStackTrace();
-            }
+            return signature.equalsIgnoreCase(DigestUtils.sha1Hex(strs[0] + strs[1] + strs[2]));
         }
-        log.info("微信接入校验失败\n原参与校验的参数：{}, {}, {}\n正确的结果应该为：{}\n但校验后得到的结果：{}", timestamp, nonce, signature, echostr, mysig);
+        log.info("微信接入校验失败");
         return false;
     }
 
     @Override
-    public Map<String, String> parseRequestInputStream(String context) {
+    public Map<String, String> parseRequestInputStream(String context) throws Exception{
         Map<String, String> requestMap = new HashMap<>();
-        try {
-            Document document = DocumentHelper.parseText(context);
-            Element rootElement = document.getRootElement();
-            List<Element> elements = rootElement.elements();
-            for (Element element : elements) {
-                requestMap.put(element.getName(), element.getStringValue());
-            }
-        } catch (DocumentException e) {
-            throw new RuntimeException("解析 XML 过程中发生了错误");
-        }
 
+        Document document = DocumentHelper.parseText(context);
+        Element rootElement = document.getRootElement();
+        List<Element> elements = rootElement.elements();
+        for (Element element : elements) {
+            requestMap.put(element.getName(), element.getStringValue());
+        }
 
         return requestMap;
     }
 
     @Override
-    public String getResponse(Map<String, String> requestMap) {
+    @UserShareAOP
+    public String getResponse(Map<String, String> requestMap) throws Exception{
         String msgType = requestMap.get("MsgType");
         BaseMessage msg = null;
         switch (msgType) {
-            /*
-                事件消息
-             */
             case "event":
                 switch (requestMap.get("Event").toLowerCase()) {
                     case "subscribe":
-                        processEventMessage.processSubscribe(requestMap);
+                        msg = processEventMessage.processSubscribe(requestMap);
                         break;
                     case "unsubscribe":
-                        processEventMessage.processUnsubscribe(requestMap);
+                        msg = processEventMessage.processUnsubscribe(requestMap);
                         break;
                     case "click":
-                        processEventMessage.processClick(requestMap);
+                        msg = processEventMessage.processClick(requestMap);
                         break;
                     case "view":
-                        processEventMessage.processView(requestMap);
+                        msg = processEventMessage.processView(requestMap);
                         break;
                     case "pic_photo_or_album":
-                        processEventMessage.processPicPhotoOrAlbum(requestMap);
+                        msg = processEventMessage.processPicPhotoOrAlbum(requestMap);
                         break;
                     case "scancode_push":
-                        processEventMessage.processScancodePush(requestMap);
+                        msg = processEventMessage.processScancodePush(requestMap);
                         break;
                     case "scancode_waitmsg":
-                        processEventMessage.processScancodeWaitMsg(requestMap);
+                        msg = processEventMessage.processScancodeWaitMsg(requestMap);
                         break;
                     case "pic_sysphoto":
-                        processEventMessage.processPicSysPhoto(requestMap);
+                        msg = processEventMessage.processPicSysPhoto(requestMap);
                         break;
                     case "pic_weixin":
-                        processEventMessage.processPicWeiXin(requestMap);
+                        msg = processEventMessage.processPicWeiXin(requestMap);
                         break;
                     case "location_select":
-                        processEventMessage.processLocationSelect(requestMap);
+                        msg = processEventMessage.processLocationSelect(requestMap);
                         break;
                     case "view_miniprogram":
-                        processEventMessage.processViewMiniProgram(requestMap);
+                        msg = processEventMessage.processViewMiniProgram(requestMap);
                         break;
                     default:
                         msg = new EmptyMessage();
                 }
                 break;
-            /*
-                文本消息
-             */
             case "text":
                 msg = processMessage.sendTextMessage(requestMap);
                 break;
-            /*
-                图片消息
-             */
             case "image":
                 msg = processMessage.sendImageMessage(requestMap);
                 break;
-            /*
-                语音消息
-             */
             case "voice":
                 msg = processMessage.sendVoiceMessage(requestMap);
                 break;
-            /*
-                短视频消息（和 video 属性一样无需重复调用）
-             */
             case "shortvideo":
-            /*
-                视频消息
-             */
             case "video":
                 msg = processMessage.sendVideoMessage(requestMap);
                 break;
-
-            /*
-                地理位置消息
-             */
             case "location":
-                // msg = new TextMessage(requestMap, "人家还不支持上门识别翻译噢，请发送图片吧！");
                 msg = processMessage.sendLocationMessage(requestMap);
                 break;
-            /*
-                链接消息
-             */
             case "link":
                 msg = processMessage.sendLinkMessage(requestMap);
                 break;
             default:
-                // msg = notReady(requestMap);
                 break;
         }
-        if (msg instanceof EmptyMessage) {
+
+        if (msg instanceof EmptyMessage || msg == null) {
             log.info("收到的消息类型为空，返回空字符串避免微信重复请求");
             return "";
         }
+
         return xStream.toXML(msg);
     }
 
-    private String sha1Encode(String str) throws NoSuchAlgorithmException {
-        MessageDigest md = MessageDigest.getInstance("sha1");
-        byte[] digest = md.digest(str.getBytes());
-        char[] participating = {
-                '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
-                'a', 'b', 'c', 'd', 'e', 'f'
-        };
-        StringBuilder sb = new StringBuilder();
-        for (byte b : digest) {
-            sb.append(participating[b >> 4 & 15]).append(participating[b & 15]);
-        }
-        return sb.toString();
+    @Override
+    public boolean isUser(String openid) {
+        return weChatServiceDao.isUser(openid) > 0;
+    }
+
+    @Override
+    public List<String> selectUserOpenIdList() {
+        return weChatServiceDao.selectUserOpenIdList();
     }
 }
