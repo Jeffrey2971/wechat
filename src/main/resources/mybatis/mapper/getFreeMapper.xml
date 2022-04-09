@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jeffrey.wechat.dao.GetFreeServiceDao">
+    <delete id="deleteListUser">
+        DELETE FROM ${param1} WHERE `openid` IN (
+            <foreach collection="param2" item="item" index="index" separator=",">
+                #{item}
+            </foreach>
+        )
+    </delete>
+</mapper>
+
+
+
