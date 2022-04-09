@@ -1,4 +1,4 @@
-package com.jeffrey.wechat.entity.message.customer;
+package com.jeffrey.wechat.entity;
 
 import lombok.Data;
 
@@ -8,7 +8,7 @@ import lombok.Data;
  */
 
 @Data
-public class CustomerResponseStatusMessage {
+public class BasicResultMessage {
     private Integer errcode;
     private String errmsg;
 }
