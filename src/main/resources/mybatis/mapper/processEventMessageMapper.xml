@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jeffrey.wechat.dao.ProcessEventMessageDao">
+
+    <insert id="insertUserInfo" parameterType="com.jeffrey.wechat.entity.mybatis.UserInfo">
+        INSERT INTO `basic_user_info` (subscribe, openid, language, subscribe_time, unionid, remark, groupid,
+                                       tagid_list, subscribe_scene, qr_scene, qr_scene_str)
+        VALUES (#{subscribe}, #{openid}, #{language}, FROM_UNIXTIME(#{subscribe_time}, '%Y-%m-%d %H:%m:%s'), #{unionid},
+                #{remark}, #{groupid}, #{tagid_list}, #{subscribe_scene}, #{qr_scene}, #{qr_scene_str})
+    </insert>
+
+</mapper>
+
+
+

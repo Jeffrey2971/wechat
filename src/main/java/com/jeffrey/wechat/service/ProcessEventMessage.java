@@ -1,7 +1,6 @@
 package com.jeffrey.wechat.service;
 
 import com.jeffrey.wechat.entity.message.BaseMessage;
-
 import java.util.Map;
 
 /**
