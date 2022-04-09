@@ -50,14 +50,4 @@ public class TransResponseWrapper {
      * 当前对象的过期时间
      */
     private Long expiredTimeStamp;
-
-    /**
-     * 反馈链接
-     */
-    private String feedBackLink;
-
-    /**
-     * 获取免费使用链接
-     */
-    private String getFreeLink;
 }
