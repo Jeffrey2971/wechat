@@ -4,49 +4,104 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="876406d9-6f11-4fef-880e-df13bea4a4ba" name="Changes" comment="WeChat：">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_alibaba_druid_1_1_17.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_alibaba_druid_spring_boot_starter_1_1_17.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_zaxxer_HikariCP_3_4_5.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__mysql_mysql_connector_java_8_0_22.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_mybatis_mybatis_3_5_6.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_mybatis_mybatis_spring_2_0_6.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_mybatis_spring_boot_mybatis_spring_boot_autoconfigure_2_1_4.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_mybatis_spring_boot_mybatis_spring_boot_starter_2_1_4.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_jdbc_2_3_7_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_jdbc_5_2_12_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_tx_5_2_12_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/setting.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
+    <list default="true" id="876406d9-6f11-4fef-880e-df13bea4a4ba" name="Changes" comment="WeChat：data">
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_classmate_1_5_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_code_gson_gson_2_8_9.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__commons_codec_commons_codec_1_14.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__jakarta_validation_jakarta_validation_api_2_0_2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_aspectj_aspectjrt_1_9_6.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_aspectj_aspectjweaver_1_9_6.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_hibernate_validator_hibernate_validator_6_1_6_Final.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_jboss_logging_jboss_logging_3_4_1_Final.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_validation_2_3_7_RELEASE.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/aop/FeedBackAspect.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/aop/SqlExceptionAOP.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/aop/SqlExceptionAspect.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/aop/UserShareAOP.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/aop/UserShareAspect.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/dao/ProcessEventMessageDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/entity/QrCodeResult.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/entity/UploadMediaResult.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/entity/enumeration/WxMediaType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/entity/menu/AbstractButton.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/entity/menu/Button.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/entity/menu/ClickButton.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/entity/menu/PicPhotoOrAlbumButton.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/entity/menu/SubButton.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/entity/menu/ViewButton.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/entity/mybatis/ShareTableEntity.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/entity/mybatis/UserInfo.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/exception/WeChatException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/service/CheckRequestInterceptor.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/mybatis/global.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/entity/mybatis/UserUseTotalEntity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/entity/user/GetBatchUserOpenIdList.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/entity/user/SetBatchUserOpenId.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/entity/user/UserOpenIdList.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/exception/WeChatExceptionHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/service/GetFreeService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/service/impl/GetFreeServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/task/DayFlushSheetData.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/translate/GetTranslateMetaDataBackus.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/utils/FileUploadMediaDataUtil.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/utils/FileUploadUtil.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/utils/GetQrCodeUtil.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/utils/VerifyWeChatMessage.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/main/resources/mybatis/mapper/feedbackMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/mybatis/mapper/getFreeMapper.xml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/main/resources/mybatis/mapper/processEventMessageMapper.xml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/main/resources/mybatis/mapper/wechatMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/css/500.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/css/choose.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/image/error.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/image/me.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/choose.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/error/5XX.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/management/CreateMenu.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/management/GetUserOpenIdList.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/test/java/service/WxTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_code_gson_gson_2_8_6.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/WechatApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/WechatApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/config/WeChatAutoConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/config/WeChatAutoConfiguration.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/config/WeChatConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/config/WeChatConfiguration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/controller/GetDocInfoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/controller/GetDocInfoController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/controller/GetFreeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/controller/GetFreeController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/controller/UserQuestionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/controller/UserQuestionController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/controller/WeChatAccessController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/controller/WeChatAccessController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/dao/GetFreeServiceDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/dao/GetFreeServiceDao.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/dao/UserQuestionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/dao/UserQuestionServiceDao.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/dao/WeChatServiceDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/dao/WeChatServiceDao.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/entity/FeedBack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/entity/FeedBack.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/interceptor/BlackUserInterceptor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/interceptor/BlackUserInterceptor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/interceptor/RequestInterceptor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/interceptor/RequestInterceptor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/entity/TransResponseWrapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/entity/TransResponseWrapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/entity/message/customer/CustomerImageMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/entity/message/customer/CustomerImageMessage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/entity/message/customer/CustomerResponseStatusMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/entity/BasicResultMessage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/interceptor/BlackUserInterceptor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/interceptor/UserRequestInterceptor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/interceptor/FollowInterceptor.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/interceptor/RequestInterceptor.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/interceptor/TotalInterceptor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/interceptor/TotalInterceptor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/listener/ListenerRemoveExpiredData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/listener/ListenerRemoveExpiredData.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/listener/ListenerUserFrequency.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/listener/ListenerUserFrequency.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/service/GetDocInfoService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/service/GetDocInfoService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/service/ProcessEventMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/service/ProcessEventMessage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/service/ProcessMessageService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/service/ProcessMessageService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/service/UserQuestionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/service/UserQuestionService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/service/WeChatService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/service/WeChatService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/service/impl/GetDocInfoServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/service/impl/GetDocInfoServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/service/impl/ProcessEventMessageImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/service/impl/ProcessEventMessageImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/service/impl/ProcessMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/service/impl/ProcessMessage.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/service/impl/UserQuestionServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/service/impl/UserQuestionServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/service/impl/WeChatServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/service/impl/WeChatServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/translate/GetTranslateMetaData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/translate/GetTranslateMetaData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/utils/FileDownloadUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/utils/FileDownloadInputStreamUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/utils/GetAccessTokenUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/utils/GetAccessTokenUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/utils/GetRequestAddressUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/utils/GetRequestAddressUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/utils/RequestUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/utils/RequestUtil.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/css/feedBack.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/css/feedback.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/4xx.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/error/4XX.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/templates/feedback.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/feedback.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/feedback_status.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/feedback_success.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/share.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/share.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/wechat.iml" beforeDir="false" afterPath="$PROJECT_DIR$/wechat.iml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -59,10 +114,11 @@
       <list>
         <option value="myBatisMapper" />
         <option value="JavaScript File" />
+        <option value="Interface" />
         <option value="HTML File" />
         <option value="CSS File" />
+        <option value="AnnotationType" />
         <option value="Class" />
-        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -79,23 +135,31 @@
     </file-type-list>
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="jar:///usr/local/maven_repository/org/aspectj/aspectjrt/1.9.6/aspectjrt-1.9.6-sources.jar!/org/aspectj/lang/annotation/AfterThrowing.java" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/src/test/java/service/WxTest.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/resources/application.yaml" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/service/impl/ProcessMessage.java" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/entity/TransResponseWrapper.java" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/service/WeChatService.java" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/controller/WeChatAccessController.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/utils/GetQrCodeUtil.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/utils/FileUploadUtil.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/utils/GetAccessTokenUtil.java" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/entity/translation/TranslationData.java" root0="SKIP_INSPECTION" />
-    <setting file="file://$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/dao/WeChatServiceDao.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/utils/GetRequestAddressUtil.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/service/WeChatService.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/utils/SimpleSendCustomerTextUtil.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/utils/EditDistance.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/controller/WeChatAccessController.java" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/service/impl/WeChatServiceImpl.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/utils/VerifyWeChatMessage.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/dao/WeChatServiceDao.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/entity/TransResponseWrapper.java" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
       <MavenGeneralSettings>
+        <option name="mavenHome" value="/usr/local/apache-maven-3.5.2" />
         <option name="userSettingsFile" value="/usr/local/apache-maven-3.5.2/conf/settings.xml" />
       </MavenGeneralSettings>
     </option>
-  </component>
-  <component name="ProblemsViewState">
-    <option name="selectedIndex" value="1" />
   </component>
   <component name="ProjectId" id="232gUM00FEzxibrByiTdpDSdpd4" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
@@ -119,86 +183,95 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="database.data.extractors.current.export.id" value="Comma-separated (CSV)_id" />
-    <property name="last.edited.regexp" value="13169523261" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/database" />
+    <property name="database.data.extractors.current.export.id" value="SQL Inserts" />
+    <property name="last.edited.regexp" value="" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/resources/templates/error" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.3894189" />
+    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="com.jeffrey.wechat.service.impl" />
+      <recent name="com.jeffrey.wechat.exception" />
       <recent name="com.jeffrey.wechat.dao.impl" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/database" />
-      <recent name="$PROJECT_DIR$/src/main/resources/static/css" />
+      <recent name="$PROJECT_DIR$/src/main/resources/templates/error" />
       <recent name="$PROJECT_DIR$/src/main/resources/static/image" />
-      <recent name="$PROJECT_DIR$/src/main/resources/static/js" />
-      <recent name="$PROJECT_DIR$/src/main/resources/static" />
+      <recent name="$PROJECT_DIR$/src/main/resources/public" />
+      <recent name="$PROJECT_DIR$/src/main/resources/templates" />
+      <recent name="$PROJECT_DIR$/database" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/resources/templates/error" />
+      <recent name="$PROJECT_DIR$/src/main/resources/templates" />
+      <recent name="$PROJECT_DIR$/src/main/resources/public" />
+      <recent name="$PROJECT_DIR$/src/main/resources/publicTemplate" />
       <recent name="$PROJECT_DIR$/src/main/resources" />
-      <recent name="$PROJECT_DIR$/src/main/resources/static/js" />
-      <recent name="$PROJECT_DIR$/src/main/resources/static/css" />
-      <recent name="$PROJECT_DIR$/src/main/resources/static/js/bootstrap" />
-      <recent name="$PROJECT_DIR$/src/main/resources/static/css/bootstrap" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="com.jeffrey.wechat.entity.message.customer.abs" />
-      <recent name="com.jeffrey.wechat.entity.message.customer" />
-      <recent name="com.jeffrey.wechat.translation.http" />
-      <recent name="com.jeffrey.wechat.entity" />
+      <recent name="com.jeffrey.wechat.aop" />
+      <recent name="com.jeffrey.wechat.entity.menu" />
+      <recent name="com.jeffrey.menu" />
+      <recent name="com.jeffrey.wechat.utils" />
+      <recent name="com.jeffrey.wechat.translate" />
     </key>
   </component>
   <component name="RunManager" selected="Spring Boot.WechatApplication">
-    <configuration name="EditDistance" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.jeffrey.wechat.utils.EditDistance" />
+    <configuration name="CreateMenu.createMenu" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="wechat" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.jeffrey.wechat.utils.*" />
+          <option name="PATTERN" value="management.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="WxTest.sendTestEmail" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="wechat" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="service.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="service" />
-      <option name="MAIN_CLASS_NAME" value="service.WxTest" />
-      <option name="METHOD_NAME" value="sendTestEmail" />
+      <option name="PACKAGE_NAME" value="management" />
+      <option name="MAIN_CLASS_NAME" value="management.CreateMenu" />
+      <option name="METHOD_NAME" value="createMenu" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="WxTest.testMyBatis" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="GetUserOpenIdList.getBatchOpenIdList" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="wechat" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="service.*" />
+          <option name="PATTERN" value="management.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="service" />
-      <option name="MAIN_CLASS_NAME" value="service.WxTest" />
-      <option name="METHOD_NAME" value="testMyBatis" />
+      <option name="PACKAGE_NAME" value="management" />
+      <option name="MAIN_CLASS_NAME" value="management.GetUserOpenIdList" />
+      <option name="METHOD_NAME" value="getBatchOpenIdList" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="WxTest.testRequestUtil" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="GetUserOpenIdList.getUserOpenIdList" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="wechat" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="management.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="management" />
+      <option name="MAIN_CLASS_NAME" value="management.GetUserOpenIdList" />
+      <option name="METHOD_NAME" value="getUserOpenIdList" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="WxTest.retain" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="wechat" />
       <extension name="coverage">
         <pattern>
@@ -208,7 +281,7 @@
       </extension>
       <option name="PACKAGE_NAME" value="service" />
       <option name="MAIN_CLASS_NAME" value="service.WxTest" />
-      <option name="METHOD_NAME" value="testRequestUtil" />
+      <option name="METHOD_NAME" value="retain" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -224,19 +297,19 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="Application.EditDistance" />
-      <item itemvalue="JUnit.WxTest.testRequestUtil" />
-      <item itemvalue="JUnit.WxTest.sendTestEmail" />
-      <item itemvalue="JUnit.WxTest.testMyBatis" />
+      <item itemvalue="JUnit.CreateMenu.createMenu" />
+      <item itemvalue="JUnit.WxTest.retain" />
+      <item itemvalue="JUnit.GetUserOpenIdList.getBatchOpenIdList" />
+      <item itemvalue="JUnit.GetUserOpenIdList.getUserOpenIdList" />
       <item itemvalue="Spring Boot.WechatApplication" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Spring Boot.WechatApplication" />
-        <item itemvalue="JUnit.WxTest.testMyBatis" />
-        <item itemvalue="Application.EditDistance" />
-        <item itemvalue="JUnit.WxTest.sendTestEmail" />
-        <item itemvalue="JUnit.WxTest.testRequestUtil" />
+        <item itemvalue="JUnit.GetUserOpenIdList.getUserOpenIdList" />
+        <item itemvalue="JUnit.GetUserOpenIdList.getBatchOpenIdList" />
+        <item itemvalue="JUnit.WxTest.retain" />
+        <item itemvalue="JUnit.CreateMenu.createMenu" />
       </list>
     </recent_temporary>
   </component>
@@ -295,21 +368,34 @@
       <workItem from="1647617372311" duration="90674000" />
       <workItem from="1647834785881" duration="51203000" />
       <workItem from="1648015324754" duration="29677000" />
-      <workItem from="1648093454335" duration="891000" />
-    </task>
-    <task id="LOCAL-00033" summary="WeChat: bootstrap 相关组件">
-      <created>1647768096757</created>
-      <option name="number" value="00033" />
-      <option name="presentableId" value="LOCAL-00033" />
-      <option name="project" value="LOCAL" />
-      <updated>1647768096757</updated>
-    </task>
-    <task id="LOCAL-00034" summary="WeChat: jquery-3.3.1.min.js">
-      <created>1647768126504</created>
-      <option name="number" value="00034" />
-      <option name="presentableId" value="LOCAL-00034" />
-      <option name="project" value="LOCAL" />
-      <updated>1647768126504</updated>
+      <workItem from="1648093454335" duration="10819000" />
+      <workItem from="1648120206935" duration="60645000" />
+      <workItem from="1648233823082" duration="66941000" />
+      <workItem from="1648397032694" duration="18980000" />
+      <workItem from="1648456945624" duration="111000" />
+      <workItem from="1648457078556" duration="161000" />
+      <workItem from="1648457274171" duration="241000" />
+      <workItem from="1648457539053" duration="201000" />
+      <workItem from="1648457752905" duration="71000" />
+      <workItem from="1648466857598" duration="6352000" />
+      <workItem from="1648479958602" duration="3900000" />
+      <workItem from="1648487554072" duration="5338000" />
+      <workItem from="1648562752212" duration="9043000" />
+      <workItem from="1648620388175" duration="993000" />
+      <workItem from="1648623015955" duration="22322000" />
+      <workItem from="1648646979883" duration="18826000" />
+      <workItem from="1648699786407" duration="39402000" />
+      <workItem from="1648784451793" duration="17163000" />
+      <workItem from="1648822224965" duration="68367000" />
+      <workItem from="1649011211826" duration="115000" />
+      <workItem from="1649011851908" duration="356000" />
+      <workItem from="1649056619766" duration="3236000" />
+      <workItem from="1649129716982" duration="1826000" />
+      <workItem from="1649141048949" duration="125000" />
+      <workItem from="1649253085948" duration="27089000" />
+      <workItem from="1649332678222" duration="9577000" />
+      <workItem from="1649354137846" duration="11286000" />
+      <workItem from="1649507272172" duration="726000" />
     </task>
     <task id="LOCAL-00035" summary="WeChat: npm.js">
       <created>1647768145660</created>
@@ -640,7 +726,21 @@
       <option name="project" value="LOCAL" />
       <updated>1647957512604</updated>
     </task>
-    <option name="localTasksCounter" value="82" />
+    <task id="LOCAL-00082" summary="WeChat：data">
+      <created>1648094669492</created>
+      <option name="number" value="00082" />
+      <option name="presentableId" value="LOCAL-00082" />
+      <option name="project" value="LOCAL" />
+      <updated>1648094669493</updated>
+    </task>
+    <task id="LOCAL-00083" summary="WeChat：data">
+      <created>1648094695337</created>
+      <option name="number" value="00083" />
+      <option name="presentableId" value="LOCAL-00083" />
+      <option name="project" value="LOCAL" />
+      <updated>1648094695337</updated>
+    </task>
+    <option name="localTasksCounter" value="84" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -683,11 +783,11 @@
     <MESSAGE value="WeChat：用户反馈功能" />
     <MESSAGE value="WeChat：删除无用代码" />
     <MESSAGE value="WeChat：空消息类型" />
-    <MESSAGE value="WeChat：data" />
     <MESSAGE value="WeChat：配置添加、修改" />
     <MESSAGE value="WeChat：矩阵变量配置、拦截器配置" />
     <MESSAGE value="WeChat：注入一些集合组件及配置" />
-    <option name="LAST_COMMIT_MESSAGE" value="WeChat：注入一些集合组件及配置" />
+    <MESSAGE value="WeChat：data" />
+    <option name="LAST_COMMIT_MESSAGE" value="WeChat：data" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -701,11 +801,6 @@
           <url>file://$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/translation/GetTranslateMetaData.java</url>
           <line>24</line>
           <option name="timeStamp" value="4" />
-        </line-breakpoint>
-        <line-breakpoint type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/controller/WeChatAccessController.java</url>
-          <line>22</line>
-          <option name="timeStamp" value="12" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>jar:///usr/local/maven_repository/org/springframework/spring-webmvc/5.2.12.RELEASE/spring-webmvc-5.2.12.RELEASE-sources.jar!/org/springframework/web/servlet/DispatcherServlet.java</url>
@@ -754,36 +849,193 @@
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/controller/GetDocInfoController.java</url>
-          <line>31</line>
+          <line>39</line>
           <option name="timeStamp" value="26" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/service/impl/ProcessMessage.java</url>
-          <line>83</line>
-          <option name="timeStamp" value="40" />
-        </line-breakpoint>
-        <line-breakpoint type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/interceptor/BlackUserInterceptor.java</url>
-          <line>52</line>
-          <option name="timeStamp" value="47" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/listener/ListenerUserFrequency.java</url>
           <line>47</line>
           <option name="timeStamp" value="52" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
+        <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/controller/UserQuestionController.java</url>
-          <line>111</line>
+          <line>134</line>
           <option name="timeStamp" value="53" />
         </line-breakpoint>
-        <breakpoint enabled="true" type="java-exception">
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/interceptor/UserRequestInterceptor.java</url>
+          <line>43</line>
+          <option name="timeStamp" value="57" />
+        </line-breakpoint>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/service/impl/ProcessEventMessageImpl.java</url>
+          <line>55</line>
+          <option name="timeStamp" value="64" />
+        </line-breakpoint>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/service/WxTest.java</url>
+          <line>173</line>
+          <option name="timeStamp" value="74" />
+        </line-breakpoint>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/service/impl/WeChatServiceImpl.java</url>
+          <line>151</line>
+          <option name="timeStamp" value="76" />
+        </line-breakpoint>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/service/impl/WeChatServiceImpl.java</url>
+          <line>87</line>
+          <option name="timeStamp" value="77" />
+        </line-breakpoint>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/service/impl/ProcessEventMessageImpl.java</url>
+          <line>93</line>
+          <option name="timeStamp" value="80" />
+        </line-breakpoint>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/service/impl/GetDocInfoServiceImpl.java</url>
+          <line>50</line>
+          <option name="timeStamp" value="83" />
+        </line-breakpoint>
+        <line-breakpoint type="java-line">
+          <url>jar:///usr/local/maven_repository/org/springframework/boot/spring-boot-autoconfigure/2.3.7.RELEASE/spring-boot-autoconfigure-2.3.7.RELEASE-sources.jar!/org/springframework/boot/autoconfigure/thymeleaf/ThymeleafAutoConfiguration.java</url>
+          <line>138</line>
+          <option name="timeStamp" value="86" />
+        </line-breakpoint>
+        <line-breakpoint type="java-line">
+          <url>jar:///usr/local/maven_repository/org/springframework/boot/spring-boot-autoconfigure/2.3.7.RELEASE/spring-boot-autoconfigure-2.3.7.RELEASE-sources.jar!/org/springframework/boot/autoconfigure/thymeleaf/ThymeleafAutoConfiguration.java</url>
+          <line>100</line>
+          <option name="timeStamp" value="87" />
+        </line-breakpoint>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/controller/UserQuestionController.java</url>
+          <line>72</line>
+          <option name="timeStamp" value="88" />
+        </line-breakpoint>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/controller/GetDocInfoController.java</url>
+          <line>37</line>
+          <option name="timeStamp" value="96" />
+        </line-breakpoint>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/translate/GetTranslateMetaDataBackus.java</url>
+          <line>57</line>
+          <option name="timeStamp" value="98" />
+        </line-breakpoint>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/translate/HttpClient.java</url>
+          <line>72</line>
+          <option name="timeStamp" value="99" />
+        </line-breakpoint>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/translate/HttpClient.java</url>
+          <line>52</line>
+          <option name="timeStamp" value="100" />
+        </line-breakpoint>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/translate/GetTranslateMetaDataBackus.java</url>
+          <line>93</line>
+          <option name="timeStamp" value="101" />
+        </line-breakpoint>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/service/impl/GetFreeServiceImpl.java</url>
+          <line>57</line>
+          <option name="timeStamp" value="103" />
+        </line-breakpoint>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/aop/SqlExceptionAspect.java</url>
+          <line>50</line>
+          <option name="timeStamp" value="106" />
+        </line-breakpoint>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/service/impl/ProcessEventMessageImpl.java</url>
+          <line>54</line>
+          <option name="timeStamp" value="113" />
+        </line-breakpoint>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/controller/GetFreeController.java</url>
+          <line>35</line>
+          <option name="timeStamp" value="118" />
+        </line-breakpoint>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/service/impl/ProcessEventMessageImpl.java</url>
+          <line>107</line>
+          <option name="timeStamp" value="119" />
+        </line-breakpoint>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/interceptor/TotalInterceptor.java</url>
+          <line>39</line>
+          <option name="timeStamp" value="121" />
+        </line-breakpoint>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/service/impl/ProcessEventMessageImpl.java</url>
+          <line>88</line>
+          <option name="timeStamp" value="122" />
+        </line-breakpoint>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/aop/UserShareAspect.java</url>
+          <line>37</line>
+          <option name="timeStamp" value="123" />
+        </line-breakpoint>
+        <line-breakpoint type="java-line">
+          <url>jar:///usr/local/maven_repository/org/thymeleaf/thymeleaf/3.0.11.RELEASE/thymeleaf-3.0.11.RELEASE-sources.jar!/org/thymeleaf/engine/TemplateManager.java</url>
+          <line>841</line>
+          <option name="timeStamp" value="125" />
+        </line-breakpoint>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/controller/UserQuestionController.java</url>
+          <line>42</line>
+          <option name="timeStamp" value="126" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/management/GetUserOpenIdList.java</url>
+          <line>73</line>
+          <option name="timeStamp" value="146" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/service/impl/ProcessMessage.java</url>
+          <line>70</line>
+          <option name="timeStamp" value="148" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/service/impl/ProcessMessage.java</url>
+          <line>72</line>
+          <option name="timeStamp" value="149" />
+        </line-breakpoint>
+        <breakpoint type="java-exception">
           <properties class="org.springframework.web.client.UnknownContentTypeException" package="org.springframework.web.client" />
           <option name="timeStamp" value="5" />
         </breakpoint>
+        <line-breakpoint type="java-method">
+          <url>file://$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/service/impl/WeChatServiceImpl.java</url>
+          <line>160</line>
+          <properties class="com.jeffrey.wechat.service.impl.WeChatServiceImpl" method="selectUserOpenIdList" />
+          <option name="timeStamp" value="131" />
+        </line-breakpoint>
+        <line-breakpoint type="java-method">
+          <url>file://$PROJECT_DIR$/src/test/java/management/GetUserOpenIdList.java</url>
+          <line>92</line>
+          <properties class="management.GetUserOpenIdList" method="getUserOpenIdList">
+            <option name="EMULATED" value="true" />
+          </properties>
+          <option name="timeStamp" value="132" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+    <pin-to-top-manager>
+      <pinned-members>
+        <PinnedItemInfo parentTag="com.jeffrey.wechat.translate.HttpParams" memberName="params" />
+        <PinnedItemInfo parentTag="com.jeffrey.wechat.translate.HttpParams" memberName="fileWrappers" />
+      </pinned-members>
+    </pin-to-top-manager>
     <watches-manager>
+      <configuration name="JUnit">
+        <watch expression="list" language="JAVA" />
+        <watch expression="list.getUserInfoList()" language="JAVA" />
+        <watch expression="list.getUserInfoList().size()" language="JAVA" />
+        <watch expression="all" language="JAVA" />
+        <watch expression="requestBody" language="JAVA" />
+      </configuration>
       <configuration name="SpringBootApplicationConfigurationType">
         <watch expression="viewResolvers" language="JAVA" />
         <watch expression="viewName" language="JAVA" />
