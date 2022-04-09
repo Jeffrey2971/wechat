@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${title} == null ? 'HTTP 500 - 内部服务器错误-发生错误' : ${title}"></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="http://www.jeffrey2971.top/css/500.css" th:href="@{/css/500.css}"/>
+
+</head>
+<body class="error-page-wrapper">
+<div class="content-container">
+    <div class="head-line"><img src="" th:src="@{/image/error.png}" alt="出错啦" width="120"/></div>
+    <div class="subheader" th:text="${label1} == null ? 'HTTP 500 - 内部服务器错误-你所浏览的页面暂时无法访问' : ${label1}">
+        HTTP 500 - 内部服务器错误-你所浏览的页面暂时无法访问
+    </div>
+    <div class="hr"></div>
+    <div class="context">
+        <p th:text="${label2} == null ? '你可以返回上一页重试，或直接向我们反馈错误报告' : ${label2}">你可以返回上一页重试，或直接向我们反馈错误报告</p>
+    </div>
+    <div class="buttons-container">
+        <a href="" th:text="${label3} == null ? '返回主页' : ${label3}">返回主页</a>
+<!--        <a href="" th:href="@{/question}" th:text="${label4} == null ? '反馈错误' : ${label4}">反馈错误</a>-->
+        <a th:href="@{/question(openid=${openid})}">反馈错误</a>
+
+    </div>
+</div>
+</body>
+
+</html>
