@@ -2,7 +2,7 @@
 <html lang="zh" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title th:text="${title}">4XX</title>
+    <title th:text="${title} == null ? '咦～页面去哪了' : ${title}"></title>
     <div th:replace="~{commons :: #common-bootstrap}"></div>
     <style>
         p {
@@ -14,11 +14,10 @@
 </head>
 <body>
 <br><br><br><br>
-<p>[[${label1}]]</p>
-<p>[[${label2}]]</p>
+<p th:text="${label1} == null ? '404 咦～页面去哪了' : ${label1}"></p>
+<p th:text="${label2} == null ? '欢迎长按以下二维码扫描关注公众号' : ${label2}"></p>
 <div>
     <img src="http://jeffrey.top/image/account.jpg" alt="到公众号重新获取：图文识别翻译 OCR" id="account" th:src="@{/image/account.jpg}" class="img-responsive center-block">
 </div>
 <footer th:replace="~{commons :: #common-footer}"></footer>
 </body>
-</html>
