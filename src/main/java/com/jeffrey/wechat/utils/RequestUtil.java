@@ -1,17 +1,17 @@
 package com.jeffrey.wechat.utils;
 
-import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
 /**
@@ -25,11 +25,8 @@ public class RequestUtil {
 
     private static final RestTemplate REST_TEMPLATE = new RestTemplate();
 
-    private static Gson gson;
-
-    @Autowired
-    public void setGson(Gson gson) {
-        RequestUtil.gson = gson;
+    static {
+        REST_TEMPLATE.getMessageConverters().set(1, new StringHttpMessageConverter(StandardCharsets.UTF_8));
     }
 
 
@@ -46,9 +43,9 @@ public class RequestUtil {
         return REST_TEMPLATE.getForEntity(url, clazz, httpParams);
     }
 
-    public static <T> T getObject(String url, Class<T> clazz, Map<String, Object> httpParams) {
+    public static <T> T getObject(String url, Class<T> responseType, Map<String, Object> httpParams) {
         log.info("请求地址：{}", url);
-        return REST_TEMPLATE.getForObject(url, clazz, httpParams);
+        return REST_TEMPLATE.getForObject(url, responseType, httpParams);
     }
 
     public static <T> ResponseEntity<T> getEntity(String url, Class<T> clazz) {
@@ -56,16 +53,15 @@ public class RequestUtil {
         return REST_TEMPLATE.getForEntity(url, clazz);
     }
 
-    public static <T> T getObject(String url, Class<T> clazz) {
+    public static <T> T getObject(String url, Class<T> responseType) {
         log.info("请求地址：{}", url);
-        return REST_TEMPLATE.getForObject(url, clazz);
+        return REST_TEMPLATE.getForObject(url, responseType);
     }
 
     public static <T> ResponseEntity<T> postEntity(String url, Class<T> clazz, Map<String, Object> requestBody){
         log.info("请求地址：{}", url);
         return null;
     }
-
     /**
      *
      * @param url 目标地址
@@ -89,11 +85,20 @@ public class RequestUtil {
      * @param <T> 返回类型
      * @return ResponseEntity<T>
      */
-    public static <T> ResponseEntity<T> postEntity(String url, HttpEntity<Object> httpEntity, Class<T> responseType, @Nullable Map<String, Object> httpParams) {
+    public static <T> ResponseEntity<T> postEntity(String url, HttpEntity httpEntity, Class<T> responseType, @Nullable Map<String, Object> httpParams) {
         if (httpParams == null || httpParams.isEmpty()) {
             return REST_TEMPLATE.postForEntity(url, httpEntity, responseType);
-        }else {
-            return REST_TEMPLATE.postForEntity(url, httpEntity, responseType, httpParams);
         }
+        return REST_TEMPLATE.postForEntity(url, httpEntity, responseType, httpParams);
+
     }
+
+    public static <T> T postObject(String url, String requestBody, Class<T> responseType, @Nullable Map<String, Object> httpParams) {
+        if (httpParams != null) {
+
+            return REST_TEMPLATE.postForObject(url, requestBody, responseType, httpParams);
+        }
+        return REST_TEMPLATE.postForObject(url, requestBody, responseType);
+    }
+
 }
