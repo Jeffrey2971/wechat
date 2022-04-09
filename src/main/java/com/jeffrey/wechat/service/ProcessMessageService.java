@@ -22,7 +22,7 @@ public interface ProcessMessageService {
      * @param requestMap 请求信息
      * @return ImageMessage
      */
-    BaseMessage sendImageMessage(Map<String, String> requestMap);
+    BaseMessage sendImageMessage(Map<String, String> requestMap) throws Exception;
 
     /**
      * 返回语音消息

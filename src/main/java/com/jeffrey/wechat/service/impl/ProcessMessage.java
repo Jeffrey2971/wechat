@@ -2,21 +2,26 @@ package com.jeffrey.wechat.service.impl;
 
 import com.google.gson.Gson;
 import com.jeffrey.wechat.config.WeChatAutoConfiguration;
+import com.jeffrey.wechat.dao.ProcessEventMessageDao;
 import com.jeffrey.wechat.entity.TransResponseWrapper;
 import com.jeffrey.wechat.entity.message.BaseMessage;
+import com.jeffrey.wechat.entity.message.EmptyMessage;
 import com.jeffrey.wechat.entity.message.TextMessage;
-import com.jeffrey.wechat.entity.message.customer.CustomerResponseStatusMessage;
+import com.jeffrey.wechat.entity.BasicResultMessage;
 import com.jeffrey.wechat.entity.message.customer.CustomerTextMessage;
+import com.jeffrey.wechat.entity.mybatis.UserUseTotalEntity;
 import com.jeffrey.wechat.entity.translation.TranslationData;
+import com.jeffrey.wechat.service.GetFreeService;
 import com.jeffrey.wechat.service.ProcessMessageService;
 import com.jeffrey.wechat.translate.GetTranslateMetaData;
 import com.jeffrey.wechat.utils.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
-import org.springframework.util.ClassUtils;
-import java.io.File;
+import org.springframework.stereotype.Service;
+
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.*;
 
 
@@ -25,51 +30,88 @@ import java.util.*;
  * @since JDK 1.8
  */
 
-@Component
+@Service
 @Slf4j
 public class ProcessMessage implements ProcessMessageService {
 
-    @Autowired
-    private WeChatAutoConfiguration.ServerInfo serverInfo;
+    private final WeChatAutoConfiguration.ServerInfo serverInfo;
+
+    private final HashMap<Long, TransResponseWrapper> userDataItem;
+
+    private final WeChatAutoConfiguration.WxConfig wxConfig;
+
+    private final ProcessEventMessageDao processEventMessageDao;
+
+    private final GetFreeService getFreeService;
 
     @Autowired
-    private Gson gson;
-
-    @Autowired
-    private HashMap<Long, TransResponseWrapper> userDataItem;
-
-    @Autowired
-    private WeChatAutoConfiguration.WxConfig wxConfig;
-
-    @Autowired
-    private WeChatAutoConfiguration.BaiduTranslationConfig baiduConfig;
+    public ProcessMessage(WeChatAutoConfiguration.ServerInfo serverInfo, HashMap<Long, TransResponseWrapper> userDataItem, WeChatAutoConfiguration.WxConfig wxConfig, ProcessEventMessageDao processEventMessageDao, GetFreeService getFreeService) {
+        this.serverInfo = serverInfo;
+        this.userDataItem = userDataItem;
+        this.wxConfig = wxConfig;
+        this.processEventMessageDao = processEventMessageDao;
+        this.getFreeService = getFreeService;
+    }
 
     @Override
     public BaseMessage sendTextMessage(Map<String, String> requestMap) {
-        return new TextMessage(requestMap, "测试");
+        return new TextMessage(requestMap, responseMessage(requestMap));
     }
 
     @Override
     public BaseMessage sendImageMessage(Map<String, String> requestMap) {
 
+        String oid = requestMap.get("FromUserName");
+
+        if (!getFreeService.existsUserUseTotal(oid)) {
+            log.info("旧用户，初始化一条新的数据：{}", oid);
+            getFreeService.initialUserTotal(oid, wxConfig.getWxDayCanUse(), 'F', 0, 'T');
+        }
+
+        if (!getFreeService.continueUser(oid) && getFreeService.getUserTotal(oid) <= 0 && getFreeService.getUserShareTotal(oid) < wxConfig.getWxShareThreshold()) {
+
+            UserUseTotalEntity entityByOpenId = getFreeService.getUserUseTotalTableEntityByOpenId(oid);
+
+            char free = entityByOpenId.getFree();
+
+            String getFreeLink = String.format("<a href=\"%s/%s?openid=%s\">%s</a>", serverInfo.getDomain(), "free", oid, "获取无限次数使用");
+            if ("T".equalsIgnoreCase(String.valueOf(free))) {
+
+                /*
+                    您今日的使用次数已达上限噢，如需永久免费使用请点击：获取永久使用权限
+                    但为了不影响您的使用，您可点击：获取临时使用次数
+                 */
+
+                String getTempChance = String.format("<a href=\"%s/%s?openid=%s\">%s</a>", serverInfo.getDomain(), "temp", oid, "获取临时使用次数");
+
+                return new TextMessage(requestMap, String.format("您今日的使用次数已达上限噢，如需永久免费使用请点击：%s \n但为了不影响您的使用，您可点击：%s", getFreeLink, getTempChance));
+            }
+            return new TextMessage(requestMap, String.format("您今日的使用次数已达上限噢，如需永久免费使用请点击：%s", getFreeLink));
+        }
+
 
         new Thread(() -> {
-            File path = new File(Objects.requireNonNull(Objects.requireNonNull(ClassUtils.getDefaultClassLoader()).getResource("")).getPath(), "/static/image");
 
-            String downloadImageMd5Name = FileDownloadUtil.download(path, requestMap.get("PicUrl"));
+            InputStream imageInputStream;
+
+            try {
+                imageInputStream = FileDownloadInputStreamUtil.download(requestMap.get("PicUrl"));
+            } catch (IOException e) {
+                e.printStackTrace();
+                return;
+            }
+
             String openid = requestMap.get("FromUserName");
 
             StringBuilder src = new StringBuilder(4096);
             StringBuilder dst = new StringBuilder(4096);
 
-            TranslationData metaData = GetTranslateMetaData.getData(new File(path, downloadImageMd5Name + ".png"));
-
-
+            TranslationData metaData = GetTranslateMetaData.getData(imageInputStream);
 
             if (metaData.getError_code() != 0) {
-                String reqBody = gson.toJson(new CustomerTextMessage(openid, new CustomerTextMessage.Text(metaData.getError_msg())));
-                ResponseEntity<CustomerResponseStatusMessage> responseEntity = SimpleSendCustomerTextUtil.send(reqBody, CustomerResponseStatusMessage.class);
-                log.info("发送异步消息状态：{}", responseEntity);
+                String reqBody = new Gson().toJson(new CustomerTextMessage(openid, new CustomerTextMessage.Text(metaData.getError_msg())));
+                ResponseEntity<BasicResultMessage> responseEntity = SimpleSendCustomerTextUtil.send(reqBody, BasicResultMessage.class);
+                log.info("翻译时出现了异常，响应的状态码不为 0，后续翻流程终止 | {}", responseEntity);
                 return;
             }
 
@@ -84,11 +126,8 @@ public class ProcessMessage implements ProcessMessageService {
 
             responseWrapper.setOpenid(openid);
             responseWrapper.setExpiredTimeStamp(System.currentTimeMillis() + (30 * 60 * 1000));
-            responseWrapper.setGetFreeLink(String.format("/free?openid=%s", openid));
-            responseWrapper.setFeedBackLink(String.format("/question?openid=%s", openid));
-
             responseWrapper.setTransOriginalText(src.toString());
-            responseWrapper.setTransSumOriginalText(metaData.getData().getSumSrc());// 分段原文
+            responseWrapper.setTransSumOriginalText(metaData.getData().getSumSrc());
 
             if (!isZh) {
                 responseWrapper.setTransImageBase64("data:image/png;base64," + metaData.getData().getPasteImg());
@@ -105,18 +144,18 @@ public class ProcessMessage implements ProcessMessageService {
                     userDataItem.put(expiresTime, responseWrapper);
 
                     String respString = createRespUrl(openid, expiresTime, isZh);
-                    String data = gson.toJson(new CustomerTextMessage(openid, new CustomerTextMessage.Text(respString)));
+                    String data = new Gson().toJson(new CustomerTextMessage(openid, new CustomerTextMessage.Text(respString)));
 
-                    ResponseEntity<CustomerResponseStatusMessage> responseEntity = SimpleSendCustomerTextUtil.send(data, CustomerResponseStatusMessage.class);
+                    ResponseEntity<BasicResultMessage> responseEntity = SimpleSendCustomerTextUtil.send(data, BasicResultMessage.class);
+
                     log.info("发送异步消息状态：{}", responseEntity);
+
                     break;
                 }
             }
-
         }).start();
 
-
-        return new TextMessage(requestMap, "已收到您发送的图片，处理中，请稍后");
+        return new TextMessage(requestMap, "已收到照片，处理中，请稍后");
     }
 
     @Override
@@ -126,53 +165,76 @@ public class ProcessMessage implements ProcessMessageService {
 
     @Override
     public BaseMessage sendVideoMessage(Map<String, String> requestMap) {
-        return null;
+        return new TextMessage(requestMap, "人家看不懂视频啦");
     }
 
     @Override
     public BaseMessage sendMusicMessage(Map<String, String> requestMap) {
-        return null;
+        return new TextMessage(requestMap, "真好听!");
     }
 
     @Override
     public BaseMessage sendNewsMessage(Map<String, String> requestMap) {
-        return null;
+        return new EmptyMessage();
     }
 
     @Override
     public BaseMessage sendLocationMessage(Map<String, String> requestMap) {
-        return null;
+        return new TextMessage(requestMap, "人家还不支持上门翻译噢");
     }
 
     @Override
     public BaseMessage sendLinkMessage(Map<String, String> requestMap) {
-        return null;
+        return new TextMessage(requestMap, "人家还不支持网页翻译噢");
     }
 
     @Override
     public BaseMessage sendShortVideoMessage(Map<String, String> requestMap) {
-        return null;
+        return new TextMessage(requestMap, "人家看不懂视频啦");
     }
 
     // ****** private method ****** //
 
+    private String responseMessage(Map<String, String> requestMap) {
+        String openid = requestMap.get("FromUserName");
+        List<String> thankKeywords = wxConfig.getThankKeywords();
+        String content = requestMap.get("Content").replace(" ", "").replace("\n", "").replace("\t", "");
+        for (String item : thankKeywords) {
+            if (content.equals(item)) {
+                int count = processEventMessageDao.selectThankedUserTotal();
+                if (!processEventMessageDao.thanked(openid)) {
+                    processEventMessageDao.insertThanksUser(openid);
+                    return String.format("哇，您是第 %s 位道谢的用户，很高心能帮助到您，可以的话将本公众号推荐给更多人噢！！！", count > 0 ? count : 1);
+                }
+                return "很高兴能帮帮助您，可以的话将本公众号推荐给更多人噢！！！";
+            }
+        }
+
+        final String baseUrl = "<a href=\"URL\">TITLE</a>";
+        return "额，不明白您的意思噢，请发送图片，具体使用可点击以下蓝色字体查看\n\n\n" +
+                baseUrl.replace("URL", "https://mp.weixin.qq.com/s/3ypEPH04Q6CN7SS7CwGFXQ").replace("TITLE", "1、点击查看使用方式") + "\n\n" +
+                baseUrl.replace("URL", serverInfo.getDomain() + "/question?openid=" + openid).replace("TITLE", "2、遇到问题或有疑问？");
+    }
+
     private String createRespUrl(String openid, Long timestamp, boolean isZh) {
         StringBuilder sb = new StringBuilder(2048);
         sb.append("以下是图片中相关的信息，可点击蓝色字体查看：\n\n\n");
-        String base = "<a href=\"" + serverInfo.getDomain() + "/info/%s;wrapper=" + timestamp + ";openid=" + openid + "\">点击查看</a>\n\n";
+        String base1 = "<a href=\"" + serverInfo.getDomain() + "/info/%s;wrapper=" + timestamp + ";openid=" + openid + "\">点击查看</a>\n\n";
+        String base2 = "<a href=\"" + serverInfo.getDomain() + "/question?openid=" + openid + "\">点击查看</a>\n\n";
+        String base3 = "<a href=\"" + serverInfo.getDomain() + "/free?openid=" + openid + "\">点击查看</a>\n\n";
         if (isZh) {
-            sb.append("1. 图片原文（分段）：").append(String.format(base, 1)); // noSplitOrigText
-            sb.append("2. 图片原文（不分段）：").append(String.format(base, 2));
-            sb.append("3. 点击永久免费使用：").append(String.format(base, 6));
-            sb.append("4. 反馈问题或提出意见").append(String.format(base, 7));
+            sb.append("1. 图片原文（分段）：").append(String.format(base1, 1));
+            sb.append("2. 图片原文（不分段）：").append(String.format(base1, 2));
+            sb.append("3. 点击永久免费使用：").append(String.format(base3, 6));
+            sb.append("4. 反馈问题或提出意见：").append(base2);
         } else {
-            sb.append("1. 图片实景翻译（推荐）：").append(String.format(base, 5));
-            sb.append("2. 图片原文（分段）：").append(String.format(base, 1));
-            sb.append("3. 图片译文（分段）").append(String.format(base, 3));
-            sb.append("4. 图片原文（不分段）：").append(String.format(base, 2));
-            sb.append("5. 图片译文（不分段）：").append(String.format(base, 4));
-            sb.append("6. 点击永久免费使用：").append(String.format(base, 6));
-            sb.append("7. 反馈问题或提出意见：").append(String.format(base, 7));
+            sb.append("1. 图片实景翻译（推荐）：").append(String.format(base1, 5));
+            sb.append("2. 图片原文（分段）：").append(String.format(base1, 1));
+            sb.append("3. 图片译文（分段）").append(String.format(base1, 3));
+            sb.append("4. 图片原文（不分段）：").append(String.format(base1, 2));
+            sb.append("5. 图片译文（不分段）：").append(String.format(base1, 4));
+            sb.append("6. 点击永久免费使用：").append(String.format(base3, 6));
+            sb.append("7. 反馈问题或提出意见：").append(base2);
         }
 
         return sb.toString();
