@@ -1,6 +1,5 @@
 package com.jeffrey.wechat.config;
 
-import com.google.gson.Gson;
 import com.jeffrey.wechat.entity.TransResponseWrapper;
 import com.jeffrey.wechat.entity.message.*;
 import com.thoughtworks.xstream.XStream;
@@ -11,8 +10,14 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import java.util.HashMap;
+import java.util.List;
 import java.util.concurrent.Executor;
 
 
@@ -28,8 +33,18 @@ import java.util.concurrent.Executor;
 })
 public class WeChatAutoConfiguration {
 
+    private final ThreadPoolConfig config;
+
+    private final EmailConfig emailConfig;
+
+    private final JavaMailSender javaMailSender;
+
     @Autowired
-    private ThreadPoolConfig config;
+    public WeChatAutoConfiguration(ThreadPoolConfig config, EmailConfig emailConfig, JavaMailSender javaMailSender) {
+        this.config = config;
+        this.emailConfig = emailConfig;
+        this.javaMailSender = javaMailSender;
+    }
 
     @Bean
     public Executor taskExecutor() {
@@ -42,23 +57,37 @@ public class WeChatAutoConfiguration {
     }
 
     @Bean
-    public HashMap<String, Long> userBlackMap(){
+    public SimpleMailMessage simpleMailMessage(){
+        SimpleMailMessage smm = new SimpleMailMessage();
+        smm.setFrom(emailConfig.getEmailFrom());
+        smm.setTo(emailConfig.getEmailTo());
+        smm.setCc(emailConfig.getEmailCC());
+        return smm;
+    }
+
+    @Bean
+    public MimeMessageHelper mimeMessageHelper() throws MessagingException {
+        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+        MimeMessageHelper mailHelper = new MimeMessageHelper(mimeMessage, true);
+        mailHelper.setFrom(emailConfig.getEmailFrom());
+        mailHelper.setTo(emailConfig.getEmailTo());
+        mailHelper.setCc(emailConfig.getEmailCC());
+        return mailHelper;
+    }
+
+    @Bean
+    public HashMap<String, Long> userBlackMap() {
         return new HashMap<>();
     }
 
     @Bean
-    public HashMap<String, Integer> userFrequency(){
+    public HashMap<String, Integer> userFrequency() {
         return new HashMap<>();
     }
 
     @Bean
     public HashMap<Long, TransResponseWrapper> userDataItem() {
         return new HashMap<>();
-    }
-
-    @Bean
-    public Gson gson() {
-        return new Gson();
     }
 
     @Bean
@@ -96,6 +125,18 @@ public class WeChatAutoConfiguration {
         private String wxAppSecret;
         private String wxCustomerUrl;
         private String wxGetTokenUrl;
+        private String wxGetUserInfoUrl;
+        private String wxGetQrCodeUrl;
+        private String wxUploadMediaDataUrl;
+        private String wxGetUserOpenIdList;
+        private String wxDeleteMediaDataUrl;
+        private String wxDeleteMenuUrl;
+        private String wxCreateMenuUrl;
+        private String wxShowUseUrl;
+        private String wxGetBatchUserOpenIdList;
+        private Integer wxShareThreshold;
+        private Integer wxDayCanUse;
+        private List<String> thankKeywords;
     }
 
     @Data
@@ -130,12 +171,12 @@ public class WeChatAutoConfiguration {
     @ConfigurationProperties(prefix = "cli")
     public static class CliConfig {
         private String cliStyleId;
-        private String cliActionType;
+        private String getQrCodeStyleUrl;
     }
 
     @Data
     @ConfigurationProperties(prefix = "domain")
-    public static class ServerInfo{
+    public static class ServerInfo {
         private String domain;
     }
 }
