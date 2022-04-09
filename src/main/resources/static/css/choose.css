@@ -1,0 +1,19 @@
+h1 {
+    text-align: center;
+}
+
+#btn {
+    text-align: center;
+    transform: translateY(50%);
+    background-color: white;
+    height: 390px;
+}
+
+button {
+    height: 500px;
+    width: 500px;
+}
+
+span {
+    font-size: 55px;
+}

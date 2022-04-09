@@ -30,11 +30,11 @@
 
         <span>请选择联系方式</span>
         <label>
-            <select name="select" class="select2">
-                <option value="Phone" name="phone" selected>手机</option>
-                <option value="WeChat" name="wechat">微信</option>
-                <option value="Email" name="email">邮件</option>
-                <option value="QQ" name="qq">QQ</option>
+            <select name="way" class="select2">
+                <option value="phone" name="phone" selected>手机</option>
+                <option value="wechat" name="wechat">微信</option>
+                <option value="email" name="email">邮件</option>
+                <option value="qq" name="qq">QQ</option>
             </select>
         </label>
         <br><br>
@@ -42,7 +42,7 @@
             <input type="text" placeholder="在这里输入您选中对应的联系方式" name="details" id="contact">
         </label>
         <br>
-        <input type="hidden" name="openid" value="" th:value="${openid}">
+        <input type="hidden" name="openid" th:value="${#request.queryString}">
         <label>
             <input type="submit" class="button" value="提交" style="display: block; margin: auto">
         </label>

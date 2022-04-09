@@ -24,7 +24,7 @@ public class FeedBack {
     /**
      * 联系方式
      */
-    private String select;
+    private String way;
 
     /**
      * 联系方式详情
@@ -39,5 +39,5 @@ public class FeedBack {
     /**
      * 反馈问题的时间
      */
-    private Long ctime;
+    private String ctime;
 }

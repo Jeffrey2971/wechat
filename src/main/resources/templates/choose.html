@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <div th:replace="~{commons :: #common-bootstrap}"></div>
+    <link rel="stylesheet" href="http://www.jeffrey2971.top/css/choose.css" th:href="@{/css/choose.css}"/>
+    <title>请选择反馈方式</title>
+</head>
+<body>
+
+<br><br>
+<h1>您可选择直接添加作者微信反馈或提交反馈页面</h1>
+<div id="btn">
+    <a href="" th:href="@{/image/me.jpg}">
+        <button type="button" class="btn btn-primary btn-lg" id="btn1"><span>添加作者微信反馈</span></button>
+    </a>
+    <br>
+    <form th:action="@{/feedback}" method="get">
+        <input type="hidden" name="openid" th:value="${openid}">
+        <button type="submit" class="btn btn-default btn-lg" id="btn2"><span>填写表单反馈</span></button>
+    </form>
+
+</div>
+
+<footer th:replace="~{commons :: #common-footer}"></footer>
+
+</body>
+
+</html>
