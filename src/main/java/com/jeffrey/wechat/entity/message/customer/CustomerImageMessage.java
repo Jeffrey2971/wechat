@@ -10,11 +10,8 @@ import lombok.Data;
 
 public class CustomerImageMessage extends BaseCustomerMessageType {
 
-    private Image image;
-
     public CustomerImageMessage(String touser, Image image) {
         super(touser, "image");
-        this.image = image;
     }
 
     @Data
