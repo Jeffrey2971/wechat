@@ -4,10 +4,38 @@ spring:
   main:
     allow-bean-definition-overriding: true
 
+
   datasource:
-    url: jdbc:mysql://120.76.100.173?characterEncoding=UTF-8
-    username: root
-    password: Aa664490254
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://666/wx_public_account?characterEncoding=UTF-8
+    username: 666
+    password: 666
+
+    druid:
+      stat-view-servlet:
+        enabled: true
+        # 允许清空统计数据
+        reset-enable: true
+        # 为 Druid 监控配置访问权限(配置访问监控信息的用户与密码)
+        login-username: 666
+        login-password: 666
+      web-stat-filter:
+        enabled: true
+        urlPattern: /*
+        exclusions: '*.js, *.gif, *.png, *.jpg, *.css, *.ico, /druid/*'
+      filters:
+        stat, wall
+      filter:
+        stat:
+          slow-sql-millis: 2000
+          log-slow-sql: true
+          enabled: true
+        wall:
+          enabled: true
+          config:
+            drop-table-allow: false
+      aop-patterns: com.jeffrey.wechat
+
 
   gson:
     disable-html-escaping: true
@@ -15,8 +43,8 @@ spring:
   mail:
     host: smtp.yeah.net
     port: 465
-    password: KOLXLPATXBOOXILT
-    username: safety_report@yeah.net
+    password: 666
+    username: 666
     properties:
       mail.smtp.auth: true
       mail.smtp.starttls.enable: true
@@ -31,24 +59,46 @@ pool:
   queue-capacity: 150
 
 wechat:
-  wx-token: Jeffrey
-  wx-app-id: wx1ea22b7747f6a666 # 测试号
-  wx-app-secret: 80819212b09ec541339f68533bbeb348 # 测试号
+  wx-token: 666
+  wx-app-id: 666 # 测试号
+  wx-app-secret: 666 # 测试号
   wx-customer-url: https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token={token}
   wx-get-token-url: https://api.weixin.qq.com/cgi-bin/token?grant_type={grant_type}&appid={appid}&secret={secret}
+  wx-get-user-info-url: https://api.weixin.qq.com/cgi-bin/user/info?access_token={token}&openid={openid}&lang={lang}
+  wx-get-qr-code-url: https://api.weixin.qq.com/cgi-bin/qrcode/create?access_token={token}
+  wx-upload-media-data-url: https://api.weixin.qq.com/cgi-bin/material/add_material?access_token={token}&type={type}
+  wx-delete-media-data-url: https://api.weixin.qq.com/cgi-bin/material/del_material?access_token={token}
+  wx-create-menu-url: https://api.weixin.qq.com/cgi-bin/menu/create?access_token={token}
+  wx-get-user-open-id-list: https://api.weixin.qq.com/cgi-bin/user/get?access_token={token}&next_openid={next_openid}
+  wx-delete-menu-url: https://api.weixin.qq.com/cgi-bin/menu/delete?access_token={token}
+  wx-show-use-url: https://mp.weixin.qq.com/s/3ypEPH04Q6CN7SS7CwGFXQ
+  wx-get-batch-user-open-id-list: https://api.weixin.qq.com/cgi-bin/user/info/batchget?access_token={token}
+  wx-share-threshold: 3
+  wx-day-can-use: 5
 
-
+  thank-keywords:
+    - 谢
+    - 谢谢
+    - 感谢
+    - 谢啦
+    - 感激
+    - 感激不尽
+    - 非常感谢
+    - thank
+    - thanks
+    - thankyou
+    - thank you
 
 email:
-  email-from: safety_report@yeah.net
-  email-to: jeffrey2971@outlook.com
-  email-port: 465
-  email-c-c: 664490254@qq.com
-  email-pass-code: KOLXLPATXBOOXILT
+  email-from: 666 # 发送方
+  email-to: 666 # 接收方
+  email-port: 465 # yeah.net smtp 端口
+  email-c-c: 666 # 抄送地址
+  email-pass-code: 666 # 发送方校验码
 
 baidu:
-  baidu-transaction-app-id: 20200709000515966 # appid
-  baidu-transaction-app-key: gkV0xq2Wz5zgCgbft68b # appkey
+  baidu-transaction-app-id: 666 # appid
+  baidu-transaction-app-key: 666 # appkey
   erase-none: 0 # 不擦除
   erase-full: 1 # 全屏擦除
   erase-block: 2 # 区块擦除
@@ -56,6 +106,9 @@ baidu:
   paste-full: 1 # 全屏贴合
   paste-block: 2 # 区块贴合
   close: 0 # 关闭填充
+  version: 3 # 版本，固定值
+  mac: mac # 固定值
+  cuid: APICUID # 固定值
   auto: auto # 自动检测
   zh: zh # 中文
   en: en # 英语
@@ -81,18 +134,16 @@ baidu:
   file-content-type: mutipart/form-data
 
 cli:
-  cli-style-id: QR_LIMIT_STR_SCENE
-  cli-action-type: 5BDCCgromMMhMHYqLtJUP68
+  cli-style-id: 666
+  get-qr-code-style-url: 666
 
-global:
-  frequency-threshold: 15
-  blackUser-wait-time: 300000
-  frequency-check-time: 15000
-
+mybatis:
+  configuration:
+    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl
+  mapper-locations: classpath:mybatis/mapper/*.xml
 
 domain:
-  # domain: http://jeffrey2971.top
-  domain: http://hap5rq.natappfree.cc
+  domain: 666
 
 server:
   port: 80
