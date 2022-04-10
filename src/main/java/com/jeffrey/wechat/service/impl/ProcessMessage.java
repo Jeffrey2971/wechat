@@ -19,7 +19,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
@@ -97,7 +96,7 @@ public class ProcessMessage implements ProcessMessageService {
             try {
                 imageInputStream = FileDownloadInputStreamUtil.download(requestMap.get("PicUrl"));
             } catch (IOException e) {
-                e.printStackTrace();
+                log.error("下载图片字节流发生了异常，后续翻译流程将终止", e);
                 return;
             }
 
@@ -106,12 +105,20 @@ public class ProcessMessage implements ProcessMessageService {
             StringBuilder src = new StringBuilder(4096);
             StringBuilder dst = new StringBuilder(4096);
 
-            TranslationData metaData = GetTranslateMetaData.getData(imageInputStream);
+            TranslationData metaData;
+
+            try {
+                metaData = GetTranslateMetaData.getData(imageInputStream);
+            } catch (IOException e) {
+                log.error("翻译过程中发生了异常", e);
+                return;
+            }
+
 
             if (metaData.getError_code() != 0) {
                 String reqBody = new Gson().toJson(new CustomerTextMessage(openid, new CustomerTextMessage.Text(metaData.getError_msg())));
                 ResponseEntity<BasicResultMessage> responseEntity = SimpleSendCustomerTextUtil.send(reqBody, BasicResultMessage.class);
-                log.info("翻译时出现了异常，响应的状态码不为 0，后续翻流程终止 | {}", responseEntity);
+                log.error("翻译时出现了异常，响应的状态码不为 0，后续翻流程终止 | {}", responseEntity);
                 return;
             }
 
