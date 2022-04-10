@@ -14,10 +14,12 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+import org.springframework.util.LinkedMultiValueMap;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.Executor;
 
 
@@ -54,6 +56,16 @@ public class WeChatAutoConfiguration {
         executor.setKeepAliveSeconds(config.keepAliveSeconds);
         executor.setQueueCapacity(config.queueCapacity);
         return executor;
+    }
+
+    @Bean
+    public LinkedMultiValueMap<String, Object> transValueMap(){
+        return new LinkedMultiValueMap<>();
+    }
+
+    @Bean
+    public Random random(){
+        return new Random();
     }
 
     @Bean
@@ -162,6 +174,9 @@ public class WeChatAutoConfiguration {
         private int pasteFull;
         private int pasteBlock;
         private int close;
+        private int version;
+        private String cuid;
+        private String mac;
         private String zh, en, jp, kor, fra, spa, ru, pt, de, it, dan, nl, may, swe, id, pl, rom, tr, el, hu, auto;
         private String reqUrl;
         private String fileContentType;
