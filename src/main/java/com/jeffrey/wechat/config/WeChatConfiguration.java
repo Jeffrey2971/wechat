@@ -1,20 +1,11 @@
 package com.jeffrey.wechat.config;
 
-import com.jeffrey.wechat.interceptor.BlackUserInterceptor;
-import com.jeffrey.wechat.interceptor.FollowInterceptor;
-import com.jeffrey.wechat.interceptor.RequestInterceptor;
-import org.springframework.context.annotation.Bean;
+import com.jeffrey.wechat.interceptor.TotalInterceptor;
+import com.jeffrey.wechat.interceptor.UserRequestInterceptor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.http.converter.StringHttpMessageConverter;
-import org.springframework.web.servlet.HandlerInterceptor;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.util.UrlPathHelper;
-
-import java.nio.charset.StandardCharsets;
-import java.util.List;
 
 /**
  * @author jeffrey
@@ -23,6 +14,21 @@ import java.util.List;
 
 @Configuration
 public class WeChatConfiguration implements WebMvcConfigurer {
+
+    private final UserRequestInterceptor userRequestInterceptor;
+
+    private final TotalInterceptor totalInterceptor;
+
+    @Autowired
+    public WeChatConfiguration(UserRequestInterceptor userRequestInterceptor, TotalInterceptor totalInterceptor) {
+        this.userRequestInterceptor = userRequestInterceptor;
+        this.totalInterceptor = totalInterceptor;
+    }
+
+    @Override
+    public void addViewControllers(ViewControllerRegistry registry) {
+        registry.addViewController("/feedback").setViewName("feedback.html");
+    }
 
     /**
      * 使矩阵变量生效
@@ -36,13 +42,9 @@ public class WeChatConfiguration implements WebMvcConfigurer {
         configurer.setUrlPathHelper(urlPathHelper);
     }
 
-    @Bean
-    public HandlerInterceptor blackUserInterceptor(){
-        return new BlackUserInterceptor();
-    }
-
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(blackUserInterceptor()).addPathPatterns("/**");
+        registry.addInterceptor(userRequestInterceptor).addPathPatterns("/**").excludePathPatterns("/static/**");
+        registry.addInterceptor(totalInterceptor).addPathPatterns("/**").excludePathPatterns("/static/**");
     }
 }
