@@ -36,7 +36,7 @@ public class ExceptionAspect {
     public void pointCut() {}
 
     @AfterThrowing(value =
-            "execution(* com.jeffrey.wechat.dao..*.*(..)) || " +
+            "execution(* com.jeffrey.wechat.mapper..*.*(..)) || " +
                     "execution(* com.jeffrey.wechat.controller..*.*(..)) || " +
                     "execution(* com.jeffrey.wechat.service..*.*(..))) ", throwing = "exception")
     public void throwExceptionSendMail(JoinPoint jp, Exception exception) {

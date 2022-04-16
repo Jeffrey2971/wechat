@@ -1,7 +1,7 @@
 package com.jeffrey.wechat.service.impl;
 
 import com.jeffrey.wechat.config.WeChatAutoConfiguration;
-import com.jeffrey.wechat.dao.ProcessEventMessageDao;
+import com.jeffrey.wechat.mapper.ProcessEventMessageDao;
 import com.jeffrey.wechat.entity.message.BaseMessage;
 import com.jeffrey.wechat.entity.message.EmptyMessage;
 import com.jeffrey.wechat.entity.message.TextMessage;

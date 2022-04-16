@@ -13,7 +13,7 @@ public interface GetFreeService {
     /**
      * 判断是否为一个用户
      *
-     * @param openid 用户唯一 openid
+     * @param openid 用户唯一 openid，openid 在多张表内有出现，不一定单只判断某张表
      * @return true / false
      */
     boolean isUser(String openid);
@@ -40,7 +40,7 @@ public interface GetFreeService {
      * @param openid
      * @return
      */
-    int getUserTotal(String openid) ;
+    long getUserTotal(String openid) ;
 
     void updateUserTotal(Integer canUse, char freeUser, Integer allUse, char free, String openid);
 
@@ -64,5 +64,5 @@ public interface GetFreeService {
 
     List<String> selectShareUserOpenIdList();
 
-    void deleteListUser(String tName, List<String> lists);
+    int deleteListUser(List<String> lists);
 }

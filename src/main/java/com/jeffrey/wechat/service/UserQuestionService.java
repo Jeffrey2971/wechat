@@ -24,6 +24,6 @@ public interface UserQuestionService {
      * @param openid 用户唯一 id
      * @return
      */
-    int feedBackIsExists(String openid);
+    Long feedBackIsExists(String openid);
 
 }

@@ -3,7 +3,7 @@ package service;
 import com.google.gson.Gson;
 import com.jeffrey.wechat.WechatApplication;
 import com.jeffrey.wechat.config.WeChatAutoConfiguration;
-import com.jeffrey.wechat.dao.ProcessEventMessageDao;
+import com.jeffrey.wechat.mapper.ProcessEventMessageDao;
 import com.jeffrey.wechat.entity.AccessToken;
 import com.jeffrey.wechat.entity.QrCodeResult;
 import com.jeffrey.wechat.entity.UploadMediaResult;

@@ -1,6 +1,9 @@
 package com.jeffrey.wechat.entity.mybatis;
 
+import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @author jeffrey
@@ -8,6 +11,9 @@ import lombok.Data;
  */
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
+@TableName("user_use_total")
 public class UserUseTotalEntity {
 
     /**

@@ -1,6 +1,7 @@
 package com.jeffrey.wechat.service.impl;
 
-import com.jeffrey.wechat.dao.UserQuestionServiceDao;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.jeffrey.wechat.mapper.UserQuestionServiceDao;
 import com.jeffrey.wechat.entity.FeedBack;
 import com.jeffrey.wechat.service.UserQuestionService;
 import com.jeffrey.wechat.service.WeChatService;
@@ -35,19 +36,22 @@ public class UserQuestionServiceImpl implements UserQuestionService {
     }
 
     @Override
-    public int feedBackIsExists(String openid) {
-        return userQuestionServiceDao.feedBackIsExists(openid);
+    public Long feedBackIsExists(String openid) {
+
+        return userQuestionServiceDao.selectCount(new QueryWrapper<FeedBack>().eq("openid", openid));
+
     }
 
     @Override
     public String feedBackStatusMsg(FeedBack feedBack, Model model) {
 
-        if (userQuestionServiceDao.saveFeedback(feedBack)) {
+        if (userQuestionServiceDao.insert(feedBack) > 0) {
             log.info(feedBack.toString());
             model.addAttribute("title", "反馈成功");
             model.addAttribute("msg", "反馈成功");
             return "feedback_success";
         }
+
         return "4xx";
     }
 }

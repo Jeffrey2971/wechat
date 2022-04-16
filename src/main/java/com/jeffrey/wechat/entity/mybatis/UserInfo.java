@@ -1,5 +1,6 @@
 package com.jeffrey.wechat.entity.mybatis;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 /**
@@ -8,6 +9,7 @@ import lombok.Data;
  */
 
 @Data
+@TableName("basic_user_info")
 public class UserInfo {
     private Integer subscribe;
     private String openid;

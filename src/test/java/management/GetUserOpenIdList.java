@@ -3,7 +3,7 @@ package management;
 import com.google.gson.Gson;
 import com.jeffrey.wechat.WechatApplication;
 import com.jeffrey.wechat.config.WeChatAutoConfiguration;
-import com.jeffrey.wechat.dao.ProcessEventMessageDao;
+import com.jeffrey.wechat.mapper.ProcessEventMessageDao;
 import com.jeffrey.wechat.entity.user.GetBatchUserOpenIdList;
 import com.jeffrey.wechat.entity.user.SetBatchUserOpenId;
 import com.jeffrey.wechat.entity.user.UserOpenIdList;
