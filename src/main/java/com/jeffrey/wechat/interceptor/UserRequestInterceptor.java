@@ -2,7 +2,6 @@ package com.jeffrey.wechat.interceptor;
 
 import com.google.gson.Gson;
 import com.jeffrey.wechat.config.WeChatAutoConfiguration;
-import com.jeffrey.wechat.dao.ProcessEventMessageDao;
 import com.jeffrey.wechat.entity.BasicResultMessage;
 import com.jeffrey.wechat.entity.message.customer.CustomerTextMessage;
 import com.jeffrey.wechat.utils.GetRequestAddressUtil;
@@ -33,13 +32,11 @@ public class UserRequestInterceptor implements HandlerInterceptor {
 
     private final HashMap<String, Long> userBlackMap;
 
-    private final ProcessEventMessageDao processEventMessageDao;
 
     @Autowired
-    public UserRequestInterceptor(WeChatAutoConfiguration.WxConfig config, HashMap<String, Long> userBlackMap, ProcessEventMessageDao processEventMessageDao) {
+    public UserRequestInterceptor(WeChatAutoConfiguration.WxConfig config, HashMap<String, Long> userBlackMap) {
         this.config = config;
         this.userBlackMap = userBlackMap;
-        this.processEventMessageDao = processEventMessageDao;
     }
 
     @Override

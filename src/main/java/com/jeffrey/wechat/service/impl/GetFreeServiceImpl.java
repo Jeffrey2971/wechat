@@ -11,7 +11,6 @@ import com.jeffrey.wechat.utils.GetQrCodeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
@@ -29,11 +28,6 @@ public class GetFreeServiceImpl implements GetFreeService {
     @Autowired
     public GetFreeServiceImpl(GetFreeServiceDao getFreeServiceDao) {
         this.getFreeServiceDao = getFreeServiceDao;
-    }
-
-    @Override
-    public boolean isUser(String openid) {
-        return getFreeServiceDao.isUser(openid) > 0;
     }
 
     @Override

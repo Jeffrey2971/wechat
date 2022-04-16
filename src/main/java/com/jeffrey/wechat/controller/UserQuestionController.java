@@ -1,5 +1,6 @@
 package com.jeffrey.wechat.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.jeffrey.wechat.entity.FeedBack;
 import com.jeffrey.wechat.service.UserQuestionService;
 import lombok.extern.slf4j.Slf4j;
@@ -8,7 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Field;
 import java.nio.charset.StandardCharsets;
@@ -45,7 +45,9 @@ public class UserQuestionController {
             model.addAttribute("label2", "参数错误，请不要修改链接中的内容");
             return "error/4XX";
         }
-        if (!userQuestionService.isUser(openid)) {
+
+
+        if (BaseCode.notUser(openid, model)) {
             model.addAttribute("label1", "401");
             model.addAttribute("label2", "请先长按以下二维码关注本公众号后再继续");
             return "error/4XX";
@@ -83,11 +85,12 @@ public class UserQuestionController {
             }
 
             // 校验用户 openid
-            if ("openid".equalsIgnoreCase(field.getName()) && !checkUser((String) field.get(feedBack), model))
+            if ("openid".equalsIgnoreCase(field.getName()) && BaseCode.notUser((String) field.get(feedBack), model))
                 return "error/4XX";
 
             // 校验用户是否已反馈过
-            if ("openid".equalsIgnoreCase(field.getName()) && userQuestionService.feedBackIsExists((String) field.get(feedBack)) > 0) {
+
+            if ("openid".equalsIgnoreCase(field.getName()) && userQuestionService.count(new QueryWrapper<FeedBack>().eq("openid", field.get(feedBack))) > 0){
                 model.addAttribute("label1", "403");
                 model.addAttribute("label2", "您已反馈过，请等待处理");
                 return "error/4XX";
@@ -134,7 +137,14 @@ public class UserQuestionController {
 
         feedBack.setCtime(new SimpleDateFormat("yyyy-MM-dd hh-mm-ss").format(new Date(System.currentTimeMillis())));
 
-        return userQuestionService.feedBackStatusMsg(feedBack, model);
+        if (userQuestionService.save(feedBack)) {
+            log.info(feedBack.toString());
+            model.addAttribute("title", "反馈成功");
+            model.addAttribute("msg", "反馈成功");
+            return "feedback_success";
+        }
+        return "error/4XX";
+
     }
 
     private String fieldName(String field) {
@@ -147,20 +157,5 @@ public class UserQuestionController {
         } else {
             return "联系方式详情";
         }
-    }
-
-    private boolean checkUser(String openid, Model model) {
-
-        if (!StringUtils.hasText(openid) && openid.length() < 28) {
-            model.addAttribute("label1", "400 Bad Request");
-            model.addAttribute("label2", "请求参数错误，请不要修改链接中的内容");
-            return false;
-        } else if (!StringUtils.hasText(openid) && openid.length() < 28 && !userQuestionService.isUser(openid)) {
-            model.addAttribute("label1", "401 Unauthorized");
-            model.addAttribute("label2", "请先长按以下二维码关注本公众号后再继续");
-            return false;
-        }
-
-        return true;
     }
 }

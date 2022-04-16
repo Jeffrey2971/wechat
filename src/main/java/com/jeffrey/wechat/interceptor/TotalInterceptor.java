@@ -1,7 +1,8 @@
 package com.jeffrey.wechat.interceptor;
 
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.jeffrey.wechat.entity.mybatis.UserUseTotalEntity;
-import com.jeffrey.wechat.service.GetFreeService;
+import com.jeffrey.wechat.service.GetFreeServiceUserUseTotalTable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -11,8 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 
 /**
- *
- *
  * @author jeffrey
  * @since JDK 1.8
  */
@@ -20,11 +19,11 @@ import java.util.HashMap;
 @Component
 public class TotalInterceptor implements HandlerInterceptor {
 
-    private final GetFreeService getFreeService;
+    private final GetFreeServiceUserUseTotalTable getFreeServiceUserUseTotalTable;
 
     @Autowired
-    public TotalInterceptor(GetFreeService getFreeService) {
-        this.getFreeService = getFreeService;
+    public TotalInterceptor(GetFreeServiceUserUseTotalTable getFreeServiceUserUseTotalTable) {
+        this.getFreeServiceUserUseTotalTable = getFreeServiceUserUseTotalTable;
     }
 
     /**
@@ -39,16 +38,14 @@ public class TotalInterceptor implements HandlerInterceptor {
             if (StringUtils.hasText(oid)) {
                 if ("image".equalsIgnoreCase((String) requestMap.get("MsgType"))) {
 
-                    UserUseTotalEntity userUseTotalEntity = getFreeService.getUserUseTotalTableEntityByOpenId(oid);
+                    UserUseTotalEntity userUseTotalEntity = getFreeServiceUserUseTotalTable.getById(oid);
 
                     // 如果结果不为 0 或 不为 null，在基础上 -1
                     Integer canUse = userUseTotalEntity.getCanUse();
 
-                    // 在基础上 +1
-                    Integer allUse = userUseTotalEntity.getAllUse();
-
                     if ("F".equalsIgnoreCase(String.valueOf(userUseTotalEntity.getFreeUser())) && canUse != null && canUse != 0) {
-                        getFreeService.updateUserTotal(--canUse, userUseTotalEntity.getFreeUser(), ++allUse, userUseTotalEntity.getFree(), oid);
+                        // getFreeServiceUserUseTotalTable.update(--canUse, userUseTotalEntity.getFreeUser(), ++allUse, userUseTotalEntity.getFree(), oid);
+                        getFreeServiceUserUseTotalTable.update(new LambdaUpdateWrapper<UserUseTotalEntity>().eq(UserUseTotalEntity::getOpenid, oid).setEntity(new UserUseTotalEntity(null, oid, --canUse, userUseTotalEntity.getFreeUser(), userUseTotalEntity.getAllUse() + 1, userUseTotalEntity.getFree())));
                     }
                 }
             }

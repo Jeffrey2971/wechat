@@ -1,13 +1,17 @@
 package com.jeffrey.wechat.aop;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.jeffrey.wechat.entity.mybatis.ShareTableEntity;
 import com.jeffrey.wechat.entity.mybatis.UserUseTotalEntity;
-import com.jeffrey.wechat.service.GetFreeService;
+import com.jeffrey.wechat.service.GetFreeServiceShareTable;
+import com.jeffrey.wechat.service.GetFreeServiceUserUseTotalTable;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
@@ -23,10 +27,13 @@ import java.util.Map;
 @Component
 public class UserShareAspect {
 
-    private final GetFreeService getFreeService;
+    private final GetFreeServiceUserUseTotalTable getFreeServiceUserUseTotalTable;
+    private final GetFreeServiceShareTable getFreeServiceShareTable;
 
-    public UserShareAspect(GetFreeService getFreeService) {
-        this.getFreeService = getFreeService;
+    @Autowired
+    public UserShareAspect(GetFreeServiceUserUseTotalTable getFreeServiceUserUseTotalTable, GetFreeServiceShareTable getFreeServiceShareTable) {
+        this.getFreeServiceUserUseTotalTable = getFreeServiceUserUseTotalTable;
+        this.getFreeServiceShareTable = getFreeServiceShareTable;
     }
 
     @Pointcut("@annotation(com.jeffrey.wechat.aop.UserShareAOP)")
@@ -54,15 +61,33 @@ public class UserShareAspect {
 
                 log.info("用户 {} 通过分享者 {} 分享的二维码关注了", requestMap.get("FromUserName"), sharer);
 
-                UserUseTotalEntity userUseTotalEntity = getFreeService.getUserUseTotalTableEntityByOpenId(sharer);
+                UserUseTotalEntity userUseTotalEntity = getFreeServiceUserUseTotalTable.getOne(new QueryWrapper<UserUseTotalEntity>().eq("openid", sharer));
 
-                ShareTableEntity shareTableEntity = getFreeService.getShareTableEntityByOpenId(sharer);
+//                UserUseTotalEntity userUseTotalEntity = getFreeService.getUserUseTotalTableEntityByOpenId(sharer);
+
+//                ShareTableEntity shareTableEntity = getFreeService.getShareTableEntityByOpenId(sharer);
+
+                ShareTableEntity shareTableEntity = getFreeServiceShareTable.getOne(new QueryWrapper<ShareTableEntity>().eq("openid", sharer));
+
 
                 Integer shareTotal = shareTableEntity.getShareTotal();
 
-                getFreeService.updateShareTotal(++shareTotal, sharer);
 
-                getFreeService.updateUserTotal(userUseTotalEntity.getCanUse(), shareTotal >= 3 ? 'T' : 'F', userUseTotalEntity.getAllUse(), userUseTotalEntity.getFree(), sharer);
+                getFreeServiceShareTable.update(new UpdateWrapper<ShareTableEntity>().eq("openid", sharer).set("shareTotal", ++shareTotal));
+
+//                getFreeService.updateShareTotal(++shareTotal, sharer);
+
+//                getFreeService.updateUserTotal(userUseTotalEntity.getCanUse(), shareTotal >= 3 ? 'T' : 'F', userUseTotalEntity.getAllUse(), userUseTotalEntity.getFree(), sharer);
+                getFreeServiceUserUseTotalTable.update(new UpdateWrapper<UserUseTotalEntity>().eq("openid", sharer).setEntity(
+                        new UserUseTotalEntity(
+                                null,
+                                sharer,
+                                userUseTotalEntity.getCanUse(),
+                                shareTotal >= 3 ? 'T' : 'F',
+                                userUseTotalEntity.getAllUse(),
+                                userUseTotalEntity.getFree())
+                        )
+                );
 
             }
         }

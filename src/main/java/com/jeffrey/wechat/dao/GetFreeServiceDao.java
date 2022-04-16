@@ -21,24 +21,9 @@ public interface GetFreeServiceDao {
     @Select("SELECT `shareLink` FROM `share` WHERE openid = #{openid}")
     String getUserShareLink(String openid);
 
-    /**
-     * 缓存生成的二维码分享链接
-     *
-     * @param openid     用户唯一 openid
-     * @param shareLink  分享的二维码链接（位于微信素材库内）
-     * @param shareTotal 当前链接的分享数，默认为 0
-     * @param mediaId    素材 mediaId
-     * @return 是否缓存成功
-     */
     @Insert("INSERT INTO `share` (openid, shareLink, shareTotal, media_id) VALUE (#{param1}, #{param2}, #{param3}, #{param4})")
     boolean cacheShareLink(String openid, String shareLink, Integer shareTotal, String mediaId);
 
-    /**
-     * 获取用户已分享的次数
-     *
-     * @param openid 用户唯一 openid
-     * @return 分享数
-     */
     @Select("SELECT `shareTotal` FROM `share` WHERE openid = #{openid}")
     Integer getShareTotal(String openid);
 
@@ -62,9 +47,6 @@ public interface GetFreeServiceDao {
 
     @Select("SELECT * FROM `share` WHERE `openid` = #{openid}")
     ShareTableEntity getShareTableEntityByOpenId(String openid);
-
-    @Select("SELECT COUNT(`openid`) FROM `basic_user_info` WHERE `openid` = #{openid}")
-    int isUser(String openid);
 
     @Select("SELECT COUNT(`openid`) FROM `user_use_total` WHERE `openid` = #{openid}")
     int existsUserUseTotal(String openid);

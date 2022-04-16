@@ -1,5 +1,6 @@
 package com.jeffrey.wechat.entity.mybatis;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 /**
@@ -8,6 +9,7 @@ import lombok.Data;
  */
 
 @Data
+@AllArgsConstructor
 public class UserUseTotalEntity {
 
     /**

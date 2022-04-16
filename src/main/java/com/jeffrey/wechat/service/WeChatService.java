@@ -1,5 +1,10 @@
 package com.jeffrey.wechat.service;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.service.IService;
+import com.jeffrey.wechat.entity.mybatis.ShareTableEntity;
+import com.jeffrey.wechat.entity.mybatis.UserInfo;
+
 import java.util.List;
 import java.util.Map;
 
@@ -9,7 +14,7 @@ import java.util.Map;
  */
 
 
-public interface WeChatService {
+public interface WeChatService extends IService<UserInfo> {
 
     /**
      * 微信接入校验
@@ -35,16 +40,4 @@ public interface WeChatService {
      */
     String getResponse(Map<String, String> requestMap) throws Exception;
 
-    /**
-     * 判断用户是否关注公众号（表 basic_user_info）
-     * @param openid 用户唯一 openid
-     * @return true / false
-     */
-    boolean isUser(String openid);
-
-    /**
-     * 获取所有用户基本信息
-     * @return 用户信息集合
-     */
-    List<String> selectUserOpenIdList();
 }

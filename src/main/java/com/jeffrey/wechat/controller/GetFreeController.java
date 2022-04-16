@@ -33,7 +33,7 @@ public class GetFreeController {
 
         request.setAttribute("openid", openid);
 
-        if (StringUtils.hasText(openid) && getFreeService.isUser(openid)) {
+        if (StringUtils.hasText(openid) && !BaseCode.notUser(openid, null)) {
             model.addAttribute("shareImg", getFreeService.getUserShareLink(openid));
             model.addAttribute("count", getFreeService.getUserShareTotal(openid));
 
@@ -53,13 +53,15 @@ public class GetFreeController {
 
         request.setAttribute("openid", openid);
 
-        if (StringUtils.hasText(openid) && getFreeService.isUser(openid)) {
+        if (StringUtils.hasText(openid) && !BaseCode.notUser(openid, null)) {
             if (getFreeService.getTempUseChance(openid)) {
                 model.addAttribute("title", "获取成功");
                 model.addAttribute("msg", "获取成功，请关闭该页面");
                 return "feedback_success";
             }
         }
+
+
 
         model.addAttribute("title", "获取失败");
         model.addAttribute("label1", "获取失败");

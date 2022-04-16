@@ -2,10 +2,12 @@ package com.jeffrey.wechat.service.impl;
 
 import java.util.*;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.jeffrey.wechat.aop.UserShareAOP;
 import com.jeffrey.wechat.dao.WeChatServiceDao;
 import com.jeffrey.wechat.entity.message.BaseMessage;
 import com.jeffrey.wechat.entity.message.EmptyMessage;
+import com.jeffrey.wechat.entity.mybatis.UserInfo;
 import com.jeffrey.wechat.service.ProcessEventMessage;
 import com.thoughtworks.xstream.XStream;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -20,7 +22,7 @@ import com.jeffrey.wechat.service.WeChatService;
 
 @Service
 @Slf4j
-public class WeChatServiceImpl implements WeChatService {
+public class WeChatServiceImpl extends ServiceImpl<WeChatServiceDao, UserInfo> implements WeChatService {
 
     private final XStream xStream;
 
@@ -30,15 +32,12 @@ public class WeChatServiceImpl implements WeChatService {
 
     private final WeChatAutoConfiguration.WxConfig config;
 
-    private final WeChatServiceDao weChatServiceDao;
-
     @Autowired
-    public WeChatServiceImpl(XStream xStream, ProcessMessage processMessage, ProcessEventMessage processEventMessage, WeChatAutoConfiguration.WxConfig config, WeChatServiceDao weChatServiceDao) {
+    public WeChatServiceImpl(XStream xStream, ProcessMessage processMessage, ProcessEventMessage processEventMessage, WeChatAutoConfiguration.WxConfig config) {
         this.xStream = xStream;
         this.processMessage = processMessage;
         this.processEventMessage = processEventMessage;
         this.config = config;
-        this.weChatServiceDao = weChatServiceDao;
     }
 
     @Override
@@ -141,15 +140,5 @@ public class WeChatServiceImpl implements WeChatService {
         }
 
         return xStream.toXML(msg);
-    }
-
-    @Override
-    public boolean isUser(String openid) {
-        return weChatServiceDao.isUser(openid) > 0;
-    }
-
-    @Override
-    public List<String> selectUserOpenIdList() {
-        return weChatServiceDao.selectUserOpenIdList();
     }
 }
