@@ -4,35 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="876406d9-6f11-4fef-880e-df13bea4a4ba" name="Changes" comment="WeChat：myBatisPlus 替代 myBatis ，没写完没测试，主要更改在数据层，更改了包名接口名">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_baomidou_mybatis_plus_3_5_1.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_baomidou_mybatis_plus_annotation_3_5_1.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_baomidou_mybatis_plus_boot_starter_3_5_1.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_baomidou_mybatis_plus_core_3_5_1.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_baomidou_mybatis_plus_extension_3_5_1.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_github_jsqlparser_jsqlparser_4_3.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_lettuce_lettuce_core_5_3_5_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_buffer_4_1_55_Final.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_codec_4_1_55_Final.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_common_4_1_55_Final.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_handler_4_1_55_Final.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_resolver_4_1_55_Final.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_transport_4_1_55_Final.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_projectreactor_reactor_core_3_3_12_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_reactivestreams_reactive_streams_1_0_3.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_data_redis_2_3_7_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_data_spring_data_commons_2_3_6_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_data_spring_data_keyvalue_2_3_6_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_data_spring_data_redis_2_3_6_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_oxm_5_2_12_RELEASE.xml" afterDir="false" />
+    <list default="true" id="876406d9-6f11-4fef-880e-df13bea4a4ba" name="Changes" comment="WeChat：data">
       <change afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/entity/enumeration/WxEventType.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/entity/enumeration/WxMessageType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/mapper/AbstractGetFreeServiceDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/mapper/GerFreeServiceForUserUseTotalTableDao.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/mapper/GetFreeServiceForShareTotalEntityTableDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/mapper/ProcessEventMessageDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/mapper/UserQuestionServiceDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/mapper/WeChatServiceDao.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wechat.iml" beforeDir="false" afterPath="$PROJECT_DIR$/wechat.iml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -315,27 +296,6 @@
       <workItem from="1649354137846" duration="11286000" />
       <workItem from="1649507272172" duration="19713000" />
       <workItem from="1649571999326" duration="2509000" />
-    </task>
-    <task id="LOCAL-00081" summary="WeChat：注入一些集合组件及配置">
-      <created>1647957512604</created>
-      <option name="number" value="00081" />
-      <option name="presentableId" value="LOCAL-00081" />
-      <option name="project" value="LOCAL" />
-      <updated>1647957512604</updated>
-    </task>
-    <task id="LOCAL-00082" summary="WeChat：data">
-      <created>1648094669492</created>
-      <option name="number" value="00082" />
-      <option name="presentableId" value="LOCAL-00082" />
-      <option name="project" value="LOCAL" />
-      <updated>1648094669493</updated>
-    </task>
-    <task id="LOCAL-00083" summary="WeChat：data">
-      <created>1648094695337</created>
-      <option name="number" value="00083" />
-      <option name="presentableId" value="LOCAL-00083" />
-      <option name="project" value="LOCAL" />
-      <updated>1648094695337</updated>
     </task>
     <task id="LOCAL-00084" summary="WeChat：data">
       <created>1649508123225</created>
@@ -659,7 +619,28 @@
       <option name="project" value="LOCAL" />
       <updated>1650135184085</updated>
     </task>
-    <option name="localTasksCounter" value="130" />
+    <task id="LOCAL-00130" summary="WeChat：myBatisPlus 替代 myBatis ，没写完没测试，主要更改在数据层，更改了包名接口名">
+      <created>1650136735482</created>
+      <option name="number" value="00130" />
+      <option name="presentableId" value="LOCAL-00130" />
+      <option name="project" value="LOCAL" />
+      <updated>1650136735482</updated>
+    </task>
+    <task id="LOCAL-00131" summary="WeChat：pom">
+      <created>1650136746724</created>
+      <option name="number" value="00131" />
+      <option name="presentableId" value="LOCAL-00131" />
+      <option name="project" value="LOCAL" />
+      <updated>1650136746724</updated>
+    </task>
+    <task id="LOCAL-00132" summary="WeChat：data">
+      <created>1650136753681</created>
+      <option name="number" value="00132" />
+      <option name="presentableId" value="LOCAL-00132" />
+      <option name="project" value="LOCAL" />
+      <updated>1650136753681</updated>
+    </task>
+    <option name="localTasksCounter" value="133" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -681,8 +662,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="WeChat：处理微信事件消息类型的相关代码" />
-    <MESSAGE value="WeChat：生成微信二维码相关工具类" />
     <MESSAGE value="WeChat：每日清除 share 以及 user_use_total 表无用数据" />
     <MESSAGE value="WeChat：处理各种消息类型代码" />
     <MESSAGE value="WeChat：请求频率拦截器" />
@@ -706,7 +685,9 @@
     <MESSAGE value="WeChat：异常处理器" />
     <MESSAGE value="WeChat：新增配置" />
     <MESSAGE value="WeChat：myBatisPlus 替代 myBatis ，没写完没测试，主要更改在数据层，更改了包名接口名" />
-    <option name="LAST_COMMIT_MESSAGE" value="WeChat：myBatisPlus 替代 myBatis ，没写完没测试，主要更改在数据层，更改了包名接口名" />
+    <MESSAGE value="WeChat：pom" />
+    <MESSAGE value="WeChat：data" />
+    <option name="LAST_COMMIT_MESSAGE" value="WeChat：data" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
