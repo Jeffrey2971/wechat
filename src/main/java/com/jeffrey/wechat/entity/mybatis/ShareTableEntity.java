@@ -9,9 +9,28 @@ import lombok.Data;
 
 @Data
 public class ShareTableEntity {
+    /**
+     * Id 主键
+     */
     private Integer id;
+
+    /**
+     * 用户 openId
+     */
     private String openid;
+
+    /**
+     * 用户分享链接
+     */
     private String shareLink;
+
+    /**
+     * 用户分享数量
+     */
     private Integer shareTotal;
+
+    /**
+     * 媒体 Id
+     */
     private String media_id;
 }
