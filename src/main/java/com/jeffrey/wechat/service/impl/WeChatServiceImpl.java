@@ -7,7 +7,7 @@ import com.jeffrey.wechat.aop.UserShareAOP;
 import com.jeffrey.wechat.mapper.WeChatServiceDao;
 import com.jeffrey.wechat.entity.message.BaseMessage;
 import com.jeffrey.wechat.entity.message.EmptyMessage;
-import com.jeffrey.wechat.entity.mybatis.UserInfo;
+import com.jeffrey.wechat.entity.mapper.UserInfo;
 import com.jeffrey.wechat.service.ProcessEventMessage;
 import com.thoughtworks.xstream.XStream;
 import org.apache.commons.codec.digest.DigestUtils;

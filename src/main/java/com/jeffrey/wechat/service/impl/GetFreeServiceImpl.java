@@ -3,14 +3,14 @@ package com.jeffrey.wechat.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.jeffrey.wechat.entity.QrCodeResult;
-import com.jeffrey.wechat.entity.mybatis.UserInfo;
+import com.jeffrey.wechat.entity.mapper.UserInfo;
 import com.jeffrey.wechat.mapper.GerFreeServiceForUserUseTotalTableDao;
 import com.jeffrey.wechat.mapper.GetFreeServiceForShareTotalEntityTableDao;
 import com.jeffrey.wechat.mapper.WeChatServiceDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.jeffrey.wechat.utils.FileDownloadInputStreamUtil;
-import com.jeffrey.wechat.entity.mybatis.UserUseTotalEntity;
-import com.jeffrey.wechat.entity.mybatis.ShareTableEntity;
+import com.jeffrey.wechat.entity.mapper.UserUseTotalEntity;
+import com.jeffrey.wechat.entity.mapper.ShareTableEntity;
 import com.jeffrey.wechat.utils.FileUploadMediaDataUtil;
 import com.jeffrey.wechat.entity.UploadMediaResult;
 import com.jeffrey.wechat.service.GetFreeService;
@@ -51,7 +51,7 @@ public class GetFreeServiceImpl implements GetFreeService {
 
     @Override
     public Integer getUserShareTotal(String openid) {
-        ShareTableEntity shareTableEntity = getFreeServiceForShareTotalEntityTableDao.selectOne(new QueryWrapper<ShareTableEntity>().eq("openid", openid).select("shareTotal"));
+        ShareTableEntity shareTableEntity = getFreeServiceForShareTotalEntityTableDao.selectOne(new QueryWrapper<ShareTableEntity>().eq("openid", openid).select("share_total"));
         return shareTableEntity.getShareTotal() == null || shareTableEntity.getShareTotal() == 0 ? 0 : shareTableEntity.getShareTotal();
     }
 
@@ -59,11 +59,10 @@ public class GetFreeServiceImpl implements GetFreeService {
     public String getUserShareLink(String openid) throws IOException {
 
 
-        String shareLink = getFreeServiceForShareTotalEntityTableDao.selectOne(new QueryWrapper<ShareTableEntity>().eq("openid", openid).select("shareLink")).getShareLink();
+        ShareTableEntity shareTableEntity = getFreeServiceForShareTotalEntityTableDao.selectOne(new QueryWrapper<ShareTableEntity>().eq("openid", openid).select("share_link"));
 
-        if (StringUtils.hasText(shareLink)) {
-            // 如果已存在分享的链接则直接返回
-            return shareLink;
+        if (shareTableEntity != null) {
+            return shareTableEntity.getShareLink();
         } else {
             // 如不存在分享的链接则先获取保存了场景字符串的微信二维码 URL ，URL 通过草料网进行渲染后返回已渲染的 URL 地址，根据这个地址下载该二维码的输入流并上传到微信永久素材库中返回 URL
 //            String qrCodeUrl = GetQrCodeUtil.getQrCode("QR_LIMIT_STR_SCENE", openid, null, null).getBody().getUrl();
@@ -73,7 +72,7 @@ public class GetFreeServiceImpl implements GetFreeService {
                 InputStream is = FileDownloadInputStreamUtil.download(addStyleQrCodeUrl);
                 UploadMediaResult uploadMediaResult = FileUploadMediaDataUtil.fileUpload(is, openid + "png", "png");
                 if (uploadMediaResult != null && StringUtils.hasText(uploadMediaResult.getMedia_id())) {
-                    if (getFreeServiceForShareTotalEntityTableDao.insert(new ShareTableEntity(null, openid, shareLink, 0, uploadMediaResult.getMedia_id())) > 0) {
+                    if (getFreeServiceForShareTotalEntityTableDao.insert(new ShareTableEntity(null, openid, uploadMediaResult.getUrl(), 0, uploadMediaResult.getMedia_id())) > 0) {
                         return uploadMediaResult.getUrl();
                     }
                 }
@@ -85,13 +84,14 @@ public class GetFreeServiceImpl implements GetFreeService {
 
     @Override
     public long getUserTotal(String openid) {
-        Long useTotal = gerFreeServiceForUserUseTotalTableDao.selectCount(new QueryWrapper<UserUseTotalEntity>().eq("openid", openid));
-        return useTotal == null ? 0 : useTotal;
+        Integer canUse = gerFreeServiceForUserUseTotalTableDao.selectOne(new QueryWrapper<UserUseTotalEntity>().eq("openid", openid).select("can_use")).getCanUse();
+        return canUse == null || canUse == 0 ? 0 : canUse;
     }
 
     @Override
-    public void updateUserTotal(Integer canUse, char freeUser, Integer allUse, char free, String openid) {
-        if (gerFreeServiceForUserUseTotalTableDao.update(new UserUseTotalEntity(null, openid, canUse, freeUser, allUse, free), new UpdateWrapper<UserUseTotalEntity>().eq("openid", openid)) < 0) {
+    public void updateUserTotal(UserUseTotalEntity userUseTotalEntity) {
+
+        if (gerFreeServiceForUserUseTotalTableDao.update(new UserUseTotalEntity(null, userUseTotalEntity.getOpenid(), userUseTotalEntity.getCanUse(), userUseTotalEntity.getFreeUser(), userUseTotalEntity.getAllUse(), userUseTotalEntity.getFree()), new UpdateWrapper<UserUseTotalEntity>().eq("openid", userUseTotalEntity.getOpenid())) < 0) {
             throw new RuntimeException("更新用户失败");
         }
     }
@@ -104,8 +104,8 @@ public class GetFreeServiceImpl implements GetFreeService {
     }
 
     @Override
-    public void initialUserTotal(String openid, Integer canUse, char freeUser, Integer allUse, char free) {
-        if (gerFreeServiceForUserUseTotalTableDao.insert(new UserUseTotalEntity(null, openid, canUse, freeUser, allUse, free)) < 0) {
+    public void initialUserTotal(UserUseTotalEntity userUseTotalEntity) {
+        if (gerFreeServiceForUserUseTotalTableDao.insert(userUseTotalEntity) < 0) {
             throw new RuntimeException("初始化用户数据失败");
         }
     }
@@ -127,8 +127,8 @@ public class GetFreeServiceImpl implements GetFreeService {
     }
 
     @Override
-    public boolean existsUserUseTotal(String openid) {
-        return gerFreeServiceForUserUseTotalTableDao.selectCount(new QueryWrapper<UserUseTotalEntity>().eq("openid", openid)) > 0;
+    public boolean notExistsUserUseTotal(String openid) {
+        return gerFreeServiceForUserUseTotalTableDao.selectCount(new QueryWrapper<UserUseTotalEntity>().eq("openid", openid)) <= 0;
     }
 
     @Override

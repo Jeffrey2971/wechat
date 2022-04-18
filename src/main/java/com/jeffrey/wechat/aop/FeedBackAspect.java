@@ -1,6 +1,6 @@
 package com.jeffrey.wechat.aop;
 
-import com.jeffrey.wechat.entity.FeedBack;
+import com.jeffrey.wechat.entity.mapper.FeedBack;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;

@@ -1,7 +1,7 @@
 package com.jeffrey.wechat.entity.user;
 
 import com.google.gson.annotations.SerializedName;
-import com.jeffrey.wechat.entity.mybatis.UserInfo;
+import com.jeffrey.wechat.entity.mapper.UserInfo;
 import lombok.Data;
 import org.springframework.stereotype.Component;
 

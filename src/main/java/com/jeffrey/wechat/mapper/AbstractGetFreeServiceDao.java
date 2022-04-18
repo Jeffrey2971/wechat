@@ -9,4 +9,4 @@ import org.springframework.stereotype.Repository;
  * 并让三个不同的接口实现当前接口并重写当前方法
  */
 @Repository
-public abstract interface AbstractGetFreeServiceDao<T> extends BaseMapper<T> {}
+public interface AbstractGetFreeServiceDao<T> extends BaseMapper<T> {}

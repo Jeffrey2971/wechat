@@ -1,12 +1,14 @@
 package com.jeffrey.wechat.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.jeffrey.wechat.config.WeChatAutoConfiguration;
+import com.jeffrey.wechat.entity.mapper.UserUseTotalEntity;
 import com.jeffrey.wechat.mapper.ProcessEventMessageDao;
 import com.jeffrey.wechat.entity.message.BaseMessage;
 import com.jeffrey.wechat.entity.message.EmptyMessage;
 import com.jeffrey.wechat.entity.message.TextMessage;
-import com.jeffrey.wechat.entity.mybatis.ShareTableEntity;
-import com.jeffrey.wechat.entity.mybatis.UserInfo;
+import com.jeffrey.wechat.entity.mapper.ShareTableEntity;
+import com.jeffrey.wechat.entity.mapper.UserInfo;
 import com.jeffrey.wechat.service.GetFreeService;
 import com.jeffrey.wechat.service.ProcessEventMessage;
 import com.jeffrey.wechat.utils.GetAccessTokenUtil;
@@ -17,8 +19,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
-
 import java.lang.reflect.Field;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -82,12 +85,18 @@ public class ProcessEventMessageImpl implements ProcessEventMessage {
                 } else if (value instanceof String && !StringUtils.hasText(String.valueOf(value))) {
                     field.set(userInfo, null);
                 }
+
+                if ("subscribe_time".equalsIgnoreCase(field.getName())) {
+                    field.set(userInfo, DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss").format(LocalDateTime.now()));
+                }
             }
 
-            boolean saveSuccess = processEventMessageDao.insertUserInfo(userInfo);
+//            boolean saveSuccess = processEventMessageDao.insert(userInfo) > 0;
+            boolean saveSuccess = processEventMessageDao.insert(userInfo) > 0;
 
-            if (!getFreeService.existsUserUseTotal(oid)) {
-                getFreeService.initialUserTotal(oid, wxConfig.getWxDayCanUse(), 'F', 0, 'T');
+
+            if (getFreeService.notExistsUserUseTotal(oid)) {
+                getFreeService.initialUserTotal(new UserUseTotalEntity(null, oid, wxConfig.getWxDayCanUse(), 'F', 0, 'T'));
             }
 
             log.info("savaStatus:{}", saveSuccess);
@@ -107,16 +116,16 @@ public class ProcessEventMessageImpl implements ProcessEventMessage {
 
         ShareTableEntity shareTableEntity = getFreeService.getShareTableEntityByOpenId(openid);
 
-        if (processEventMessageDao.isUser(openid) > 0) {
-            if (processEventMessageDao.removeUser(openid)) {
+        if (processEventMessageDao.selectCount(new QueryWrapper<UserInfo>().eq("openid", openid)) > 0) {
+            if (processEventMessageDao.delete(new QueryWrapper<UserInfo>().eq("openid", openid)) > 0) {
                 log.info("移除用户：{}", openid);
             }
         }
 
-        if (shareTableEntity != null && StringUtils.hasText(shareTableEntity.getMedia_id())) {
+        if (shareTableEntity != null && StringUtils.hasText(shareTableEntity.getMediaId())) {
             HashMap<String, Object> httpParams = new HashMap<>();
             httpParams.put("token", GetAccessTokenUtil.getToken());
-            String resultMessage = RequestUtil.postObject(wxConfig.getWxDeleteMediaDataUrl(), "{\"media_id\": \"" + shareTableEntity.getMedia_id() + "\"}", String.class, httpParams);
+            String resultMessage = RequestUtil.postObject(wxConfig.getWxDeleteMediaDataUrl(), "{\"media_id\": \"" + shareTableEntity.getMediaId() + "\"}", String.class, httpParams);
             log.info("移除用户相关素材：{}", resultMessage);
         }
 
@@ -173,11 +182,9 @@ public class ProcessEventMessageImpl implements ProcessEventMessage {
 
     private String getFollowedResponseMessage(String openid) {
         final String baseUrl = "<a href=\"URL\">TITLE</a>";
-        StringBuilder sb = new StringBuilder(2048);
-        sb.append("欢迎关注本公众号，点击以下蓝色链接查看使用方式，发送一张照片试试吧！\n\n\n");
-        sb.append(baseUrl.replace("URL", "https://mp.weixin.qq.com/s/3ypEPH04Q6CN7SS7CwGFXQ").replace("TITLE", "1、点击查看使用方式")).append("\n\n\n");
-        sb.append(baseUrl.replace("URL", serverInfo.getDomain() + "/question?openid=" + openid).replace("TITLE", "2、点击反馈问题或提出意见")).append("\n\n\n");
-        sb.append(baseUrl.replace("URL", "https://mp.weixin.qq.com/s/QGIVFfANp0gvXcwwgX15aA").replace("TITLE", "3、点击查看最新事件"));
-        return sb.toString();
+        return "欢迎关注本公众号，点击以下蓝色链接查看使用方式，发送一张照片试试吧！\n\n\n" +
+                baseUrl.replace("URL", "https://mp.weixin.qq.com/s/3ypEPH04Q6CN7SS7CwGFXQ").replace("TITLE", "1、点击查看使用方式") + "\n\n\n" +
+                baseUrl.replace("URL", serverInfo.getDomain() + "/question?openid=" + openid).replace("TITLE", "2、点击反馈问题或提出意见") + "\n\n\n" +
+                baseUrl.replace("URL", "https://mp.weixin.qq.com/s/QGIVFfANp0gvXcwwgX15aA").replace("TITLE", "3、点击查看最新事件");
     }
 }

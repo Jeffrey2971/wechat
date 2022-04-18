@@ -1,6 +1,6 @@
 package com.jeffrey.wechat.controller;
 
-import com.jeffrey.wechat.entity.FeedBack;
+import com.jeffrey.wechat.entity.mapper.FeedBack;
 import com.jeffrey.wechat.service.UserQuestionService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Field;
 import java.nio.charset.StandardCharsets;
@@ -40,14 +39,7 @@ public class UserQuestionController {
 
         request.setAttribute("openid", openid);
 
-        if (!StringUtils.hasText(openid)) {
-            model.addAttribute("label1", "400");
-            model.addAttribute("label2", "参数错误，请不要修改链接中的内容");
-            return "error/4XX";
-        }
-        if (!userQuestionService.isUser(openid)) {
-            model.addAttribute("label1", "401");
-            model.addAttribute("label2", "请先长按以下二维码关注本公众号后再继续");
+        if (isNotUser(openid, model)) {
             return "error/4XX";
         }
 
@@ -78,12 +70,12 @@ public class UserQuestionController {
 
             field.setAccessible(true);
 
-            if ("ctime".equals(field.getName())) {
+            if ("ctime".equalsIgnoreCase(field.getName()) || "id".equalsIgnoreCase(field.getName())) {
                 continue;
             }
 
             // 校验用户 openid
-            if ("openid".equalsIgnoreCase(field.getName()) && !checkUser((String) field.get(feedBack), model))
+            if ("openid".equalsIgnoreCase(field.getName()) && isNotUser((String) field.get(feedBack), model))
                 return "error/4XX";
 
             // 校验用户是否已反馈过
@@ -149,18 +141,21 @@ public class UserQuestionController {
         }
     }
 
-    private boolean checkUser(String openid, Model model) {
+    private boolean isNotUser(String openid, Model model) {
 
-        if (!StringUtils.hasText(openid) && openid.length() < 28) {
+        if (!StringUtils.hasText(openid) || openid.length() < 28) {
             model.addAttribute("label1", "400 Bad Request");
             model.addAttribute("label2", "请求参数错误，请不要修改链接中的内容");
-            return false;
-        } else if (!StringUtils.hasText(openid) && openid.length() < 28 && !userQuestionService.isUser(openid)) {
+            return true;        }
+
+
+
+        if (!userQuestionService.isUser(openid)) {
             model.addAttribute("label1", "401 Unauthorized");
             model.addAttribute("label2", "请先长按以下二维码关注本公众号后再继续");
-            return false;
+            return true;
         }
 
-        return true;
+        return false;
     }
 }

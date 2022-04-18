@@ -1,6 +1,11 @@
-package com.jeffrey.wechat.entity;
+package com.jeffrey.wechat.entity.mapper;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * 封装用户表单反馈结果
@@ -9,7 +14,13 @@ import lombok.Data;
  */
 
 @Data
+@TableName("user_feedback")
+@AllArgsConstructor
+@NoArgsConstructor
 public class FeedBack {
+
+    @TableId(value = "id", type = IdType.AUTO)
+    private Integer id;
 
     /**
      * 问题标题
