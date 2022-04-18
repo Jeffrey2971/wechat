@@ -98,7 +98,7 @@ public class GetFreeServiceImpl implements GetFreeService {
 
     @Override
     public void updateShareTotal(Integer newShareTotal, String openid) {
-        if (getFreeServiceForShareTotalEntityTableDao.update(null, new UpdateWrapper<ShareTableEntity>().eq("openid", openid).set("shareTotal", newShareTotal)) < 0) {
+        if (getFreeServiceForShareTotalEntityTableDao.update(null, new UpdateWrapper<ShareTableEntity>().eq("openid", openid).set("share_total", newShareTotal)) < 0) {
             throw new RuntimeException("更新用户失败");
         }
     }
