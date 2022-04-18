@@ -2,10 +2,12 @@ package com.jeffrey.wechat.service.impl;
 
 import java.util.*;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.jeffrey.wechat.aop.UserShareAOP;
-import com.jeffrey.wechat.dao.WeChatServiceDao;
+import com.jeffrey.wechat.mapper.WeChatServiceDao;
 import com.jeffrey.wechat.entity.message.BaseMessage;
 import com.jeffrey.wechat.entity.message.EmptyMessage;
+import com.jeffrey.wechat.entity.mapper.UserInfo;
 import com.jeffrey.wechat.service.ProcessEventMessage;
 import com.thoughtworks.xstream.XStream;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -145,11 +147,13 @@ public class WeChatServiceImpl implements WeChatService {
 
     @Override
     public boolean isUser(String openid) {
-        return weChatServiceDao.isUser(openid) > 0;
+        return weChatServiceDao.selectCount(new QueryWrapper<UserInfo>().eq("openid", openid)) > 0;
     }
 
     @Override
     public List<String> selectUserOpenIdList() {
-        return weChatServiceDao.selectUserOpenIdList();
+        ArrayList<String> openIdList = new ArrayList<>();
+        weChatServiceDao.selectList(new QueryWrapper<UserInfo>().select("openid")).forEach(item -> openIdList.add(item.getOpenid()));
+        return openIdList;
     }
 }

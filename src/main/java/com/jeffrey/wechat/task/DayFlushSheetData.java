@@ -51,7 +51,7 @@ public class DayFlushSheetData implements InitializingBean {
 
             shareUserOpenIdList.forEach(System.out::print);
 
-            getFreeService.deleteListUser("share", shareUserOpenIdList);
+            log.info("成功移除了 {} 位用户", getFreeService.deleteListUser(shareUserOpenIdList));
         }
 
     }
@@ -73,7 +73,7 @@ public class DayFlushSheetData implements InitializingBean {
 
             GFSUserOpenIdList.forEach(System.out::print);
 
-            getFreeService.deleteListUser("user_use_total", GFSUserOpenIdList);
+            log.info("成功移除了 {} 位用户", getFreeService.deleteListUser(GFSUserOpenIdList));
         }
 
     }

@@ -2,14 +2,13 @@ package com.jeffrey.wechat.service.impl;
 
 import com.google.gson.Gson;
 import com.jeffrey.wechat.config.WeChatAutoConfiguration;
-import com.jeffrey.wechat.dao.ProcessEventMessageDao;
 import com.jeffrey.wechat.entity.TransResponseWrapper;
 import com.jeffrey.wechat.entity.message.BaseMessage;
 import com.jeffrey.wechat.entity.message.EmptyMessage;
 import com.jeffrey.wechat.entity.message.TextMessage;
 import com.jeffrey.wechat.entity.BasicResultMessage;
 import com.jeffrey.wechat.entity.message.customer.CustomerTextMessage;
-import com.jeffrey.wechat.entity.mybatis.UserUseTotalEntity;
+import com.jeffrey.wechat.entity.mapper.UserUseTotalEntity;
 import com.jeffrey.wechat.entity.translation.TranslationData;
 import com.jeffrey.wechat.service.GetFreeService;
 import com.jeffrey.wechat.service.ProcessMessageService;
@@ -39,16 +38,13 @@ public class ProcessMessage implements ProcessMessageService {
 
     private final WeChatAutoConfiguration.WxConfig wxConfig;
 
-    private final ProcessEventMessageDao processEventMessageDao;
-
     private final GetFreeService getFreeService;
 
     @Autowired
-    public ProcessMessage(WeChatAutoConfiguration.ServerInfo serverInfo, HashMap<Long, TransResponseWrapper> userDataItem, WeChatAutoConfiguration.WxConfig wxConfig, ProcessEventMessageDao processEventMessageDao, GetFreeService getFreeService) {
+    public ProcessMessage(WeChatAutoConfiguration.ServerInfo serverInfo, HashMap<Long, TransResponseWrapper> userDataItem, WeChatAutoConfiguration.WxConfig wxConfig, GetFreeService getFreeService) {
         this.serverInfo = serverInfo;
         this.userDataItem = userDataItem;
         this.wxConfig = wxConfig;
-        this.processEventMessageDao = processEventMessageDao;
         this.getFreeService = getFreeService;
     }
 
@@ -62,9 +58,9 @@ public class ProcessMessage implements ProcessMessageService {
 
         String oid = requestMap.get("FromUserName");
 
-        if (!getFreeService.existsUserUseTotal(oid)) {
+        if (getFreeService.notExistsUserUseTotal(oid)) {
             log.info("旧用户，初始化一条新的数据：{}", oid);
-            getFreeService.initialUserTotal(oid, wxConfig.getWxDayCanUse(), 'F', 0, 'T');
+            getFreeService.initialUserTotal(new UserUseTotalEntity(null, oid, wxConfig.getWxDayCanUse(), 'F', 0, 'T'));
         }
 
         if (!getFreeService.continueUser(oid) && getFreeService.getUserTotal(oid) <= 0 && getFreeService.getUserShareTotal(oid) < wxConfig.getWxShareThreshold()) {
@@ -83,7 +79,7 @@ public class ProcessMessage implements ProcessMessageService {
 
                 String getTempChance = String.format("<a href=\"%s/%s?openid=%s\">%s</a>", serverInfo.getDomain(), "temp", oid, "获取临时使用次数");
 
-                return new TextMessage(requestMap, String.format("您今日的使用次数已达上限噢，如需永久免费使用请点击：%s \n但为了不影响您的使用，您可点击：%s", getFreeLink, getTempChance));
+                return new TextMessage(requestMap, String.format("您今日的使用次数已达上限噢，如需永久免费使用请点击：%s \n\n但为了不影响您的使用，您可点击：%s", getFreeLink, getTempChance));
             }
             return new TextMessage(requestMap, String.format("您今日的使用次数已达上限噢，如需永久免费使用请点击：%s", getFreeLink));
         }
@@ -208,11 +204,6 @@ public class ProcessMessage implements ProcessMessageService {
         String content = requestMap.get("Content").replace(" ", "").replace("\n", "").replace("\t", "");
         for (String item : thankKeywords) {
             if (content.equals(item)) {
-                int count = processEventMessageDao.selectThankedUserTotal();
-                if (!processEventMessageDao.thanked(openid)) {
-                    processEventMessageDao.insertThanksUser(openid);
-                    return String.format("哇，您是第 %s 位道谢的用户，很高心能帮助到您，可以的话将本公众号推荐给更多人噢！！！", count > 0 ? count : 1);
-                }
                 return "很高兴能帮帮助您，可以的话将本公众号推荐给更多人噢！！！";
             }
         }

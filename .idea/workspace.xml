@@ -4,8 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="876406d9-6f11-4fef-880e-df13bea4a4ba" name="Changes" comment="WeChat：微信消息类型以及事件类型枚举类">
+    <list default="true" id="876406d9-6f11-4fef-880e-df13bea4a4ba" name="Changes" comment="WeChat：新增配置">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/entity/enumeration/WxMediaType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/management/CreateMenu.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/service/WxTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/config/WeChatConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/config/WeChatConfiguration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/entity/message/customer/CustomerImageMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/entity/message/customer/CustomerImageMessage.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -27,11 +32,6 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_BRANCH_BY_REPOSITORY">
-      <map>
-        <entry key="$PROJECT_DIR$" value="useRedis" />
-      </map>
-    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="RESET_MODE" value="MIXED" />
   </component>
@@ -200,7 +200,6 @@
         <item itemvalue="JUnit.GetUserOpenIdList.getUserOpenIdList" />
         <item itemvalue="JUnit.GetUserOpenIdList.getBatchOpenIdList" />
         <item itemvalue="JUnit.WxTest.retain" />
-        <item itemvalue="Spring Boot.WechatApplication" />
       </list>
     </recent_temporary>
   </component>
@@ -288,6 +287,13 @@
       <workItem from="1649354137846" duration="11286000" />
       <workItem from="1649507272172" duration="19713000" />
       <workItem from="1649571999326" duration="2509000" />
+    </task>
+    <task id="LOCAL-00080" summary="WeChat：矩阵变量配置、拦截器配置">
+      <created>1647957453158</created>
+      <option name="number" value="00080" />
+      <option name="presentableId" value="LOCAL-00080" />
+      <option name="project" value="LOCAL" />
+      <updated>1647957453158</updated>
     </task>
     <task id="LOCAL-00081" summary="WeChat：注入一些集合组件及配置">
       <created>1647957512604</created>
@@ -625,14 +631,7 @@
       <option name="project" value="LOCAL" />
       <updated>1649574494589</updated>
     </task>
-    <task id="LOCAL-00129" summary="WeChat：微信消息类型以及事件类型枚举类">
-      <created>1650137017362</created>
-      <option name="number" value="00129" />
-      <option name="presentableId" value="LOCAL-00129" />
-      <option name="project" value="LOCAL" />
-      <updated>1650137017362</updated>
-    </task>
-    <option name="localTasksCounter" value="130" />
+    <option name="localTasksCounter" value="129" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -654,6 +653,7 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
+    <MESSAGE value="WeChat：获取免费使用功能的相关代码，包括 controller、service、dao 层的相关代码以及 mapper 文件" />
     <MESSAGE value="WeChat：处理微信事件消息类型的相关代码" />
     <MESSAGE value="WeChat：生成微信二维码相关工具类" />
     <MESSAGE value="WeChat：每日清除 share 以及 user_use_total 表无用数据" />
@@ -678,8 +678,7 @@
     <MESSAGE value="WeChat：新增几个属性以及 bean" />
     <MESSAGE value="WeChat：异常处理器" />
     <MESSAGE value="WeChat：新增配置" />
-    <MESSAGE value="WeChat：微信消息类型以及事件类型枚举类" />
-    <option name="LAST_COMMIT_MESSAGE" value="WeChat：微信消息类型以及事件类型枚举类" />
+    <option name="LAST_COMMIT_MESSAGE" value="WeChat：新增配置" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -886,7 +885,7 @@
         <line-breakpoint type="java-method">
           <url>file://$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/service/impl/WeChatServiceImpl.java</url>
           <line>151</line>
-          <properties class="com.jeffrey.wechat.service.impl.WeChatServiceImpl" />
+          <properties class="com.jeffrey.wechat.service.impl.WeChatServiceImpl" method="selectUserOpenIdList" />
           <option name="timeStamp" value="131" />
         </line-breakpoint>
         <line-breakpoint type="java-method">

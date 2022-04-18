@@ -8,7 +8,7 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import java.util.Objects;
 
 @SpringBootApplication
-@MapperScan("com.jeffrey.wechat.dao")
+@MapperScan("com.jeffrey.wechat.mapper")
 @Slf4j
 @EnableAspectJAutoProxy(proxyTargetClass = true)
 public class WechatApplication {

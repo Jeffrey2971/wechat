@@ -1,6 +1,6 @@
 package com.jeffrey.wechat.interceptor;
 
-import com.jeffrey.wechat.entity.mybatis.UserUseTotalEntity;
+import com.jeffrey.wechat.entity.mapper.UserUseTotalEntity;
 import com.jeffrey.wechat.service.GetFreeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -48,7 +48,7 @@ public class TotalInterceptor implements HandlerInterceptor {
                     Integer allUse = userUseTotalEntity.getAllUse();
 
                     if ("F".equalsIgnoreCase(String.valueOf(userUseTotalEntity.getFreeUser())) && canUse != null && canUse != 0) {
-                        getFreeService.updateUserTotal(--canUse, userUseTotalEntity.getFreeUser(), ++allUse, userUseTotalEntity.getFree(), oid);
+                        getFreeService.updateUserTotal(new UserUseTotalEntity(null, oid, --canUse, userUseTotalEntity.getFreeUser(), ++allUse, userUseTotalEntity.getFree()));
                     }
                 }
             }

@@ -3,11 +3,11 @@ package management;
 import com.google.gson.Gson;
 import com.jeffrey.wechat.WechatApplication;
 import com.jeffrey.wechat.config.WeChatAutoConfiguration;
-import com.jeffrey.wechat.dao.ProcessEventMessageDao;
+import com.jeffrey.wechat.mapper.ProcessEventMessageDao;
 import com.jeffrey.wechat.entity.user.GetBatchUserOpenIdList;
 import com.jeffrey.wechat.entity.user.SetBatchUserOpenId;
 import com.jeffrey.wechat.entity.user.UserOpenIdList;
-import com.jeffrey.wechat.entity.mybatis.UserInfo;
+import com.jeffrey.wechat.entity.mapper.UserInfo;
 import com.jeffrey.wechat.utils.GetAccessTokenUtil;
 import com.jeffrey.wechat.utils.RequestUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -106,7 +106,7 @@ public class GetUserOpenIdList {
             ResponseEntity<UserInfo> entity = RequestUtil.getEntity(wxConfig.getWxGetUserInfoUrl(), UserInfo.class, httpParams);
             if (entity.getStatusCodeValue() == 200 && entity.getBody() != null) {
                 UserInfo userInfo = convertType(entity.getBody());
-                log.info("savaStatus:{}", processEventMessageDao.insertUserInfo(userInfo));
+                log.info("savaStatus:{}", processEventMessageDao.insert(userInfo));
             }
 
         }

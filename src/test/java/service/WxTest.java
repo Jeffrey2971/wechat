@@ -3,12 +3,12 @@ package service;
 import com.google.gson.Gson;
 import com.jeffrey.wechat.WechatApplication;
 import com.jeffrey.wechat.config.WeChatAutoConfiguration;
-import com.jeffrey.wechat.dao.ProcessEventMessageDao;
+import com.jeffrey.wechat.mapper.ProcessEventMessageDao;
 import com.jeffrey.wechat.entity.AccessToken;
 import com.jeffrey.wechat.entity.QrCodeResult;
 import com.jeffrey.wechat.entity.UploadMediaResult;
 import com.jeffrey.wechat.entity.message.customer.CustomerTextMessage;
-import com.jeffrey.wechat.entity.mybatis.UserInfo;
+import com.jeffrey.wechat.entity.mapper.UserInfo;
 import com.jeffrey.wechat.entity.translation.TranslationData;
 import com.jeffrey.wechat.service.GetFreeService;
 import com.jeffrey.wechat.service.WeChatService;
@@ -188,7 +188,7 @@ public class WxTest {
                 }
             }
 
-            processEventMessageDao.insertUserInfo(userInfo);
+            processEventMessageDao.insert(userInfo);
         }
 
 

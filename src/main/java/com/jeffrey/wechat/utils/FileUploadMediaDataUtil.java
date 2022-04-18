@@ -64,7 +64,6 @@ public class FileUploadMediaDataUtil {
 
         if (resultResponseEntity.getStatusCodeValue() == 200 && resultResponseEntity.getBody() != null) {
             String body = resultResponseEntity.getBody();
-            System.out.println(body);
             return new Gson().fromJson(body, UploadMediaResult.class);
         }
 

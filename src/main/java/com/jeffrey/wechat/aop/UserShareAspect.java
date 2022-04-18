@@ -1,7 +1,7 @@
 package com.jeffrey.wechat.aop;
 
-import com.jeffrey.wechat.entity.mybatis.ShareTableEntity;
-import com.jeffrey.wechat.entity.mybatis.UserUseTotalEntity;
+import com.jeffrey.wechat.entity.mapper.ShareTableEntity;
+import com.jeffrey.wechat.entity.mapper.UserUseTotalEntity;
 import com.jeffrey.wechat.service.GetFreeService;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
@@ -62,7 +62,7 @@ public class UserShareAspect {
 
                 getFreeService.updateShareTotal(++shareTotal, sharer);
 
-                getFreeService.updateUserTotal(userUseTotalEntity.getCanUse(), shareTotal >= 3 ? 'T' : 'F', userUseTotalEntity.getAllUse(), userUseTotalEntity.getFree(), sharer);
+                getFreeService.updateUserTotal(new UserUseTotalEntity(null, sharer, userUseTotalEntity.getCanUse(), shareTotal >= 3 ? 'T' : 'F', userUseTotalEntity.getAllUse(), userUseTotalEntity.getFree()));
 
             }
         }
