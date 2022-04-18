@@ -1,13 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="SqlDialectMappings">
-    <file url="file://$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/mapper/AbstractGetFreeServiceDao.java" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/mapper/ProcessEventMessageDao.java" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/mapper/UserQuestionServiceDao.java" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/mapper/WeChatServiceDao.java" dialect="MySQL" />
-    <file url="file://$PROJECT_DIR$/src/main/resources/mybatis/mapper/feedbackMapper.xml" dialect="MySQL" />
-    <file url="file://$PROJECT_DIR$/src/main/resources/mybatis/mapper/getFreeMapper.xml" dialect="MySQL" />
-    <file url="file://$PROJECT_DIR$/src/main/resources/mybatis/mapper/processEventMessageMapper.xml" dialect="MySQL" />
-    <file url="file://$PROJECT_DIR$/src/main/resources/mybatis/mapper/wechatMapper.xml" dialect="MySQL" />
   </component>
 </project>

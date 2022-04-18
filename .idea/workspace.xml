@@ -4,16 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="876406d9-6f11-4fef-880e-df13bea4a4ba" name="Changes" comment="WeChat：data">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/entity/enumeration/WxEventType.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/entity/enumeration/WxMessageType.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/mapper/AbstractGetFreeServiceDao.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/mapper/GerFreeServiceForUserUseTotalTableDao.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/mapper/GetFreeServiceForShareTotalEntityTableDao.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/mapper/ProcessEventMessageDao.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/mapper/UserQuestionServiceDao.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/mapper/WeChatServiceDao.java" afterDir="false" />
+    <list default="true" id="876406d9-6f11-4fef-880e-df13bea4a4ba" name="Changes" comment="WeChat：使用 myBatisPlus 替代 myBatis 框架，对 dao 以及 entity 包下的 dao 重命名为 mapper，重命名数据库字段 shareLink 为 share_link 、shareTotal 为 share_total，删除了一些已经无用的代码，以及其他一些细微的改动">
+      <change afterPath="$PROJECT_DIR$/src/test/java/TimeTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_mybatis_mybatis_3_5_6.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_mybatis_mybatis_3_5_9.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_mybatis_spring_boot_mybatis_spring_boot_autoconfigure_2_1_4.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_mybatis_spring_boot_mybatis_spring_boot_starter_2_1_4.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/management/GetUserOpenIdList.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/management/GetUserOpenIdList.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/service/WxTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/service/WxTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wechat.iml" beforeDir="false" afterPath="$PROJECT_DIR$/wechat.iml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,16 +29,16 @@
         <option value="HTML File" />
         <option value="CSS File" />
         <option value="AnnotationType" />
-        <option value="Class" />
         <option value="Interface" />
         <option value="Enum" />
+        <option value="Class" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="useRedis" />
+        <entry key="$PROJECT_DIR$" value="master" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -53,7 +54,6 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="jar:///usr/local/maven_repository/org/aspectj/aspectjrt/1.9.6/aspectjrt-1.9.6-sources.jar!/org/aspectj/lang/annotation/AfterThrowing.java" root0="SKIP_INSPECTION" />
-    <setting file="file://$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/mapper/GerFreeServiceForUserUseTotalTableDao.java" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/test/java/service/WxTest.java" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/main/resources/application.yaml" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/service/impl/ProcessMessage.java" root0="FORCE_HIGHLIGHTING" />
@@ -66,6 +66,7 @@
     <setting file="file://$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/utils/EditDistance.java" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/controller/WeChatAccessController.java" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/service/impl/WeChatServiceImpl.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/mapper/GerFreeServiceForUserUseTotalTableDao.java" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/utils/VerifyWeChatMessage.java" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/mapper/WeChatServiceDao.java" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/entity/TransResponseWrapper.java" root0="FORCE_HIGHLIGHTING" />
@@ -77,6 +78,9 @@
         <option name="userSettingsFile" value="/usr/local/apache-maven-3.5.2/conf/settings.xml" />
       </MavenGeneralSettings>
     </option>
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedIndex" value="1" />
   </component>
   <component name="ProjectId" id="232gUM00FEzxibrByiTdpDSdpd4" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
@@ -110,6 +114,9 @@
     <property name="project.structure.side.proportion" value="0.3894189" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+  </component>
+  <component name="ReactorSettings">
+    <option name="notificationShown" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
@@ -172,17 +179,21 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="WxTest.retain" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="TimeTest.t" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="wechat" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="service.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="service" />
-      <option name="MAIN_CLASS_NAME" value="service.WxTest" />
-      <option name="METHOD_NAME" value="retain" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="TimeTest" />
+      <option name="METHOD_NAME" value="t" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TimeTest.tt" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="wechat" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="TimeTest" />
+      <option name="METHOD_NAME" value="tt" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -198,17 +209,19 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="JUnit.WxTest.retain" />
       <item itemvalue="JUnit.GetUserOpenIdList.getBatchOpenIdList" />
       <item itemvalue="JUnit.GetUserOpenIdList.getUserOpenIdList" />
+      <item itemvalue="JUnit.TimeTest.t" />
+      <item itemvalue="JUnit.TimeTest.tt" />
       <item itemvalue="Spring Boot.WechatApplication" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Spring Boot.WechatApplication" />
+        <item itemvalue="JUnit.TimeTest.tt" />
+        <item itemvalue="JUnit.TimeTest.t" />
         <item itemvalue="JUnit.GetUserOpenIdList.getUserOpenIdList" />
         <item itemvalue="JUnit.GetUserOpenIdList.getBatchOpenIdList" />
-        <item itemvalue="JUnit.WxTest.retain" />
       </list>
     </recent_temporary>
   </component>
@@ -296,13 +309,8 @@
       <workItem from="1649354137846" duration="11286000" />
       <workItem from="1649507272172" duration="19713000" />
       <workItem from="1649571999326" duration="2509000" />
-    </task>
-    <task id="LOCAL-00084" summary="WeChat：data">
-      <created>1649508123225</created>
-      <option name="number" value="00084" />
-      <option name="presentableId" value="LOCAL-00084" />
-      <option name="project" value="LOCAL" />
-      <updated>1649508123225</updated>
+      <workItem from="1650276486156" duration="88000" />
+      <workItem from="1650276714057" duration="12182000" />
     </task>
     <task id="LOCAL-00085" summary="WeChat：移除无用代码">
       <created>1649508182068</created>
@@ -640,7 +648,14 @@
       <option name="project" value="LOCAL" />
       <updated>1650136753681</updated>
     </task>
-    <option name="localTasksCounter" value="133" />
+    <task id="LOCAL-00133" summary="WeChat：使用 myBatisPlus 替代 myBatis 框架，对 dao 以及 entity 包下的 dao 重命名为 mapper，重命名数据库字段 shareLink 为 share_link 、shareTotal 为 share_total，删除了一些已经无用的代码，以及其他一些细微的改动">
+      <created>1650293046207</created>
+      <option name="number" value="00133" />
+      <option name="presentableId" value="LOCAL-00133" />
+      <option name="project" value="LOCAL" />
+      <updated>1650293046208</updated>
+    </task>
+    <option name="localTasksCounter" value="134" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -662,7 +677,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="WeChat：每日清除 share 以及 user_use_total 表无用数据" />
     <MESSAGE value="WeChat：处理各种消息类型代码" />
     <MESSAGE value="WeChat：请求频率拦截器" />
     <MESSAGE value="WeChat：封装了数据库查询结果实体类" />
@@ -687,7 +701,8 @@
     <MESSAGE value="WeChat：myBatisPlus 替代 myBatis ，没写完没测试，主要更改在数据层，更改了包名接口名" />
     <MESSAGE value="WeChat：pom" />
     <MESSAGE value="WeChat：data" />
-    <option name="LAST_COMMIT_MESSAGE" value="WeChat：data" />
+    <MESSAGE value="WeChat：使用 myBatisPlus 替代 myBatis 框架，对 dao 以及 entity 包下的 dao 重命名为 mapper，重命名数据库字段 shareLink 为 share_link 、shareTotal 为 share_total，删除了一些已经无用的代码，以及其他一些细微的改动" />
+    <option name="LAST_COMMIT_MESSAGE" value="WeChat：使用 myBatisPlus 替代 myBatis 框架，对 dao 以及 entity 包下的 dao 重命名为 mapper，重命名数据库字段 shareLink 为 share_link 、shareTotal 为 share_total，删除了一些已经无用的代码，以及其他一些细微的改动" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -759,7 +774,7 @@
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/controller/UserQuestionController.java</url>
-          <line>134</line>
+          <line>126</line>
           <option name="timeStamp" value="53" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
@@ -769,7 +784,7 @@
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/service/impl/ProcessEventMessageImpl.java</url>
-          <line>55</line>
+          <line>58</line>
           <option name="timeStamp" value="64" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
@@ -789,7 +804,7 @@
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/service/impl/ProcessEventMessageImpl.java</url>
-          <line>93</line>
+          <line>102</line>
           <option name="timeStamp" value="80" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
@@ -809,7 +824,7 @@
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/controller/UserQuestionController.java</url>
-          <line>72</line>
+          <line>64</line>
           <option name="timeStamp" value="88" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
@@ -824,7 +839,7 @@
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/service/impl/ProcessEventMessageImpl.java</url>
-          <line>54</line>
+          <line>57</line>
           <option name="timeStamp" value="113" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
@@ -834,7 +849,7 @@
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/service/impl/ProcessEventMessageImpl.java</url>
-          <line>107</line>
+          <line>116</line>
           <option name="timeStamp" value="119" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
@@ -844,7 +859,7 @@
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/service/impl/ProcessEventMessageImpl.java</url>
-          <line>88</line>
+          <line>97</line>
           <option name="timeStamp" value="122" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
@@ -858,29 +873,69 @@
           <option name="timeStamp" value="125" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/controller/UserQuestionController.java</url>
-          <line>42</line>
-          <option name="timeStamp" value="126" />
-        </line-breakpoint>
-        <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/test/java/management/GetUserOpenIdList.java</url>
           <line>72</line>
           <option name="timeStamp" value="146" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/service/impl/ProcessMessage.java</url>
-          <line>69</line>
+          <line>65</line>
           <option name="timeStamp" value="148" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/service/impl/ProcessMessage.java</url>
-          <line>71</line>
+          <line>67</line>
           <option name="timeStamp" value="149" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/translate/GetTranslateMetaData.java</url>
           <line>87</line>
           <option name="timeStamp" value="152" />
+        </line-breakpoint>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/service/impl/UserQuestionServiceImpl.java</url>
+          <line>35</line>
+          <option name="timeStamp" value="167" />
+        </line-breakpoint>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/service/impl/UserQuestionServiceImpl.java</url>
+          <line>40</line>
+          <option name="timeStamp" value="168" />
+        </line-breakpoint>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/controller/UserQuestionController.java</url>
+          <line>39</line>
+          <option name="timeStamp" value="171" />
+        </line-breakpoint>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/controller/UserQuestionController.java</url>
+          <line>77</line>
+          <option name="timeStamp" value="172" />
+        </line-breakpoint>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/service/impl/ProcessMessage.java</url>
+          <line>58</line>
+          <option name="timeStamp" value="173" />
+        </line-breakpoint>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/service/impl/ProcessEventMessageImpl.java</url>
+          <line>66</line>
+          <option name="timeStamp" value="177" />
+        </line-breakpoint>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/service/impl/GetFreeServiceImpl.java</url>
+          <line>61</line>
+          <option name="timeStamp" value="178" />
+        </line-breakpoint>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/controller/UserQuestionController.java</url>
+          <line>59</line>
+          <option name="timeStamp" value="179" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/service/impl/UserQuestionServiceImpl.java</url>
+          <line>46</line>
+          <option name="timeStamp" value="180" />
         </line-breakpoint>
         <breakpoint type="java-exception">
           <properties class="org.springframework.web.client.UnknownContentTypeException" package="org.springframework.web.client" />
@@ -899,30 +954,6 @@
             <option name="EMULATED" value="true" />
           </properties>
           <option name="timeStamp" value="132" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/mapper/AbstractGetFreeServiceDao.java</url>
-          <line>79</line>
-          <properties class="com.jeffrey.wechat.mapper.AbstractGetFreeServiceDao">
-            <option name="EMULATED" value="true" />
-          </properties>
-          <option name="timeStamp" value="162" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/mapper/AbstractGetFreeServiceDao.java</url>
-          <line>89</line>
-          <properties class="com.jeffrey.wechat.mapper.AbstractGetFreeServiceDao">
-            <option name="EMULATED" value="true" />
-          </properties>
-          <option name="timeStamp" value="163" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/main/java/com/jeffrey/wechat/mapper/AbstractGetFreeServiceDao.java</url>
-          <line>85</line>
-          <properties class="com.jeffrey.wechat.mapper.AbstractGetFreeServiceDao">
-            <option name="EMULATED" value="true" />
-          </properties>
-          <option name="timeStamp" value="164" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -945,6 +976,8 @@
         <watch expression="viewName" language="JAVA" />
         <watch expression="field" language="JAVA" />
         <watch expression="field.get(feedBack)" language="JAVA" />
+        <watch expression="field.getName()" language="JAVA" />
+        <watch expression="entity.getBody()" language="JAVA" />
       </configuration>
     </watches-manager>
   </component>
