@@ -1,26 +1,26 @@
 package com.jeffrey.wechat.service.impl;
 
+import java.util.*;
+import java.io.InputStream;
+import java.io.IOException;
 import com.google.gson.Gson;
-import com.jeffrey.wechat.config.WeChatAutoConfiguration;
+import lombok.extern.slf4j.Slf4j;
+import com.jeffrey.wechat.utils.*;
 import com.jeffrey.wechat.entity.TransResponseWrapper;
+import com.jeffrey.wechat.config.WeChatAutoConfiguration;
+import com.jeffrey.wechat.entity.message.customer.CustomerTextMessage;
 import com.jeffrey.wechat.entity.message.BaseMessage;
 import com.jeffrey.wechat.entity.message.EmptyMessage;
 import com.jeffrey.wechat.entity.message.TextMessage;
 import com.jeffrey.wechat.entity.BasicResultMessage;
-import com.jeffrey.wechat.entity.message.customer.CustomerTextMessage;
 import com.jeffrey.wechat.entity.mapper.UserUseTotalEntity;
 import com.jeffrey.wechat.entity.translation.TranslationData;
 import com.jeffrey.wechat.service.GetFreeService;
 import com.jeffrey.wechat.service.ProcessMessageService;
 import com.jeffrey.wechat.translate.GetTranslateMetaData;
-import com.jeffrey.wechat.utils.*;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.*;
 
 
 /**
