@@ -52,7 +52,7 @@ public class GetFreeServiceImpl implements GetFreeService {
     @Override
     public Integer getUserShareTotal(String openid) {
         ShareTableEntity shareTableEntity = getFreeServiceForShareTotalEntityTableDao.selectOne(new QueryWrapper<ShareTableEntity>().eq("openid", openid).select("share_total"));
-        return shareTableEntity.getShareTotal() == null || shareTableEntity.getShareTotal() == 0 ? 0 : shareTableEntity.getShareTotal();
+        return shareTableEntity == null || shareTableEntity.getShareTotal() == 0 ? 0 : shareTableEntity.getShareTotal();
     }
 
     @Override
