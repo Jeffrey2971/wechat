@@ -13,14 +13,14 @@ import org.springframework.web.util.UrlPathHelper;
  */
 
 @Configuration
-public class WeChatConfiguration implements WebMvcConfigurer {
+public class WeChatWebConfiguration implements WebMvcConfigurer {
 
     private final UserRequestInterceptor userRequestInterceptor;
 
     private final TotalInterceptor totalInterceptor;
 
     @Autowired
-    public WeChatConfiguration(UserRequestInterceptor userRequestInterceptor, TotalInterceptor totalInterceptor) {
+    public WeChatWebConfiguration(UserRequestInterceptor userRequestInterceptor, TotalInterceptor totalInterceptor) {
         this.userRequestInterceptor = userRequestInterceptor;
         this.totalInterceptor = totalInterceptor;
     }
