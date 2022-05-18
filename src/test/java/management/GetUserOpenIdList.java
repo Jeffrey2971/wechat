@@ -1,5 +1,6 @@
 package management;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.google.gson.Gson;
 import com.jeffrey.wechat.WechatApplication;
 import com.jeffrey.wechat.config.WeChatAutoConfiguration;
@@ -18,6 +19,8 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
 import java.lang.reflect.Field;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -41,10 +44,9 @@ public class GetUserOpenIdList {
 
     private static final List<GetBatchUserOpenIdList> userInfoList = new ArrayList<>();
 
-
     // 一次最多获取 100 位
     @Test
-    void getBatchOpenIdList() {
+    void getBatchOpenIdList() throws IllegalAccessException {
 
 
         HashMap<String, Object> params = new HashMap<>();
@@ -67,21 +69,29 @@ public class GetUserOpenIdList {
                     setBatchUserOpenId.getUserList().clear();
                 } else {
                     setBatchUserOpenId.getUserList().add(new SetBatchUserOpenId.UserItem(openid));
-
-                    if (addSize == openidList.size()) {
-                        // 封装完成
-                        request(gson.toJson(setBatchUserOpenId));
-                        System.out.println("添加：" + addSize);
-                        break;
-                    }
                 }
-
             }
+
+            if (addSize == openidList.size()) {
+                // 封装完成
+                request(gson.toJson(setBatchUserOpenId));
+                System.out.println("添加：" + addSize);
+            } else {
+                throw new RuntimeException(String.format("数据不一致，总条目数 %s 处理条目数 %s", openidList.size(), addSize));
+            }
+
         }
+
         if (userInfoList.size() > 0) {
             for (GetBatchUserOpenIdList batchUserOpenIdList : userInfoList) {
                 for (UserInfo userInfo : batchUserOpenIdList.getUserInfoList()) {
-                    System.out.println(userInfo);
+                    convertType(userInfo);
+                    if (processEventMessageDao.selectCount(new QueryWrapper<UserInfo>().eq("openid", userInfo.getOpenid())) <= 0) {
+                        System.out.println(processEventMessageDao.insert(userInfo) > 0 ? "插入成功" : "插入失败");
+                    } else {
+                        System.out.printf("已存在数据 %s%n", userInfo);
+
+                    }
                 }
             }
         }
@@ -106,7 +116,8 @@ public class GetUserOpenIdList {
             ResponseEntity<UserInfo> entity = RequestUtil.getEntity(wxConfig.getWxGetUserInfoUrl(), UserInfo.class, httpParams);
             if (entity.getStatusCodeValue() == 200 && entity.getBody() != null) {
                 UserInfo userInfo = convertType(entity.getBody());
-                log.info("savaStatus:{}", processEventMessageDao.insert(userInfo));
+                // log.info("savaStatus:{}", processEventMessageDao.insert(userInfo));
+                System.out.println(userInfo);
             }
 
         }
@@ -116,8 +127,10 @@ public class GetUserOpenIdList {
         for (Field field : userInfo.getClass().getDeclaredFields()) {
             field.setAccessible(true);
             Object value = field.get(userInfo);
+            // 如果字段类型为整形且对应的结果为 0 则重新设置为 -1
             if (value instanceof Integer && (int) value == 0) {
                 field.set(userInfo, -1);
+                // 如果字段类型为集合且对应的结果长度小于或等于 0 则重新设置为 -1，否则将原数据转换为 String 类型重新封装到对象中
             } else if (value instanceof List) {
                 if (((List<?>) value).size() <= 0) {
                     field.set(userInfo, "-1");
@@ -128,6 +141,10 @@ public class GetUserOpenIdList {
                 // 如果字段类型为 String 且它没有任何有效的字符则重新设置为 null 后封装到对象中
             } else if (value instanceof String && !StringUtils.hasText(String.valueOf(value))) {
                 field.set(userInfo, null);
+            }
+
+            if ("subscribe_time".equalsIgnoreCase(field.getName())) {
+                field.set(userInfo, DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss").format(LocalDateTime.now()));
             }
         }
         return userInfo;
