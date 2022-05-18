@@ -26,10 +26,13 @@ public class ExceptionAspect {
 
     private final MimeMessageHelper mimeMessageHelper;
 
+    private final MimeMessage mimeMessage;
+
     @Autowired
-    public ExceptionAspect(JavaMailSender javaMailSender, MimeMessageHelper mimeMessageHelper) {
+    public ExceptionAspect(JavaMailSender javaMailSender, MimeMessageHelper mimeMessageHelper, MimeMessage mimeMessage) {
         this.javaMailSender = javaMailSender;
         this.mimeMessageHelper = mimeMessageHelper;
+        this.mimeMessage = mimeMessage;
     }
 
     @Pointcut("@annotation(com.jeffrey.wechat.aop.ExceptionAOP)")
@@ -56,7 +59,6 @@ public class ExceptionAspect {
         details.append("<h3>异常信息<h3/>");
         details.append("<b>").append(exception.getMessage()).append("</b>");
 
-        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
 
         try {
             mimeMessageHelper.setSubject(String.format("---在 [%s] 时抛出了一个异常---", datetime));
