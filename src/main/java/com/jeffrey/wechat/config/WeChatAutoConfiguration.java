@@ -39,13 +39,10 @@ public class WeChatAutoConfiguration {
 
     private final EmailConfig emailConfig;
 
-    private final JavaMailSender javaMailSender;
-
     @Autowired
-    public WeChatAutoConfiguration(ThreadPoolConfig config, EmailConfig emailConfig, JavaMailSender javaMailSender) {
+    public WeChatAutoConfiguration(ThreadPoolConfig config, EmailConfig emailConfig) {
         this.config = config;
         this.emailConfig = emailConfig;
-        this.javaMailSender = javaMailSender;
     }
 
     @Bean
@@ -78,8 +75,12 @@ public class WeChatAutoConfiguration {
     }
 
     @Bean
-    public MimeMessageHelper mimeMessageHelper() throws MessagingException {
-        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+    public MimeMessage mimeMessage(JavaMailSender javaMailSender) {
+        return javaMailSender.createMimeMessage();
+    }
+
+    @Bean
+    public MimeMessageHelper mimeMessageHelper(MimeMessage mimeMessage) throws MessagingException {
         MimeMessageHelper mailHelper = new MimeMessageHelper(mimeMessage, true);
         mailHelper.setFrom(emailConfig.getEmailFrom());
         mailHelper.setTo(emailConfig.getEmailTo());
