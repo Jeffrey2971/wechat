@@ -163,7 +163,7 @@ public class ProcessMessage implements ProcessMessageService {
 
     @Override
     public BaseMessage sendVoiceMessage(Map<String, String> requestMap) {
-        return null;
+        return new TextMessage(requestMap, "在和我说悄悄话嘛？");
     }
 
     @Override
