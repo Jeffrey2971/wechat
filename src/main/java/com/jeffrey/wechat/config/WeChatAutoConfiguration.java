@@ -15,9 +15,11 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.util.LinkedMultiValueMap;
+
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.Executor;
@@ -31,7 +33,8 @@ import java.util.concurrent.Executor;
         WeChatAutoConfiguration.BaiduTranslationConfig.class,
         WeChatAutoConfiguration.CliConfig.class,
         WeChatAutoConfiguration.ThreadPoolConfig.class,
-        WeChatAutoConfiguration.ServerInfo.class
+        WeChatAutoConfiguration.ServerInfo.class,
+        WeChatAutoConfiguration.BaiduDocApplyConfig.class
 })
 public class WeChatAutoConfiguration {
 
@@ -56,17 +59,17 @@ public class WeChatAutoConfiguration {
     }
 
     @Bean
-    public LinkedMultiValueMap<String, Object> transValueMap(){
+    public LinkedMultiValueMap<String, Object> transValueMap() {
         return new LinkedMultiValueMap<>();
     }
 
     @Bean
-    public Random random(){
+    public Random random() {
         return new Random();
     }
 
     @Bean
-    public SimpleMailMessage simpleMailMessage(){
+    public SimpleMailMessage simpleMailMessage() {
         SimpleMailMessage smm = new SimpleMailMessage();
         smm.setFrom(emailConfig.getEmailFrom());
         smm.setTo(emailConfig.getEmailTo());
@@ -103,6 +106,39 @@ public class WeChatAutoConfiguration {
         return new HashMap<>();
     }
 
+    @Data
+    @ConfigurationProperties(prefix = "pool")
+    public static class ThreadPoolConfig {
+        private int corePoolSize;
+        private int maxPoolSize;
+        private int keepAliveSeconds;
+        private int queueCapacity;
+    }
+
+    @Bean
+    public HashSet<String> lang(){
+        HashSet<String> lang = new HashSet<>();
+        lang.add("中文");
+        lang.add("英文");
+        lang.add("韩文");
+        lang.add("日文");
+        return lang;
+    }
+
+    @Bean
+    public HashMap<String, String> types(){
+        HashMap<String, String> types = new HashMap<>();
+        types.put("doc", "application/msword"); // doc
+        types.put("txt", "text/plain"); // txt
+        types.put("docx", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"); // docx
+        types.put("pdf", "application/pdf"); // pdf
+        types.put("xls", "application/vnd.ms-excel"); // xls
+        types.put("xlsx", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"); // xlsx
+        types.put("pptx", "application/vnd.openxmlformats-officedocument.presentationml.presentation"); // pptx
+        types.put("ppt", "application/vnd.ms-powerpoint"); // ppt
+        return types;
+    }
+
     @Bean
     public XStream xStream() {
         XStream xStream = new XStream();
@@ -122,15 +158,6 @@ public class WeChatAutoConfiguration {
     }
 
     @Data
-    @ConfigurationProperties(prefix = "pool")
-    public static class ThreadPoolConfig {
-        private int corePoolSize;
-        private int maxPoolSize;
-        private int keepAliveSeconds;
-        private int queueCapacity;
-    }
-
-    @Data
     @ConfigurationProperties(prefix = "wechat")
     public static class WxConfig {
         private String wxToken;
@@ -147,6 +174,8 @@ public class WeChatAutoConfiguration {
         private String wxCreateMenuUrl;
         private String wxShowUseUrl;
         private String wxGetBatchUserOpenIdList;
+        private String wxSendTemplateMessageUrl;
+        private String wxGetSendTemplateId;
         private Integer wxShareThreshold;
         private Integer wxDayCanUse;
         private List<String> thankKeywords;
@@ -182,6 +211,16 @@ public class WeChatAutoConfiguration {
         private String reqUrl;
         private String fileContentType;
     }
+
+    @Data
+    @ConfigurationProperties(prefix = "baidu.doc")
+    public static class BaiduDocApplyConfig {
+        private String baiduTransactionAppId;
+        private String baiduTransactionAppKey;
+        private String reqCountUrl;
+        private String reqTransUrl;
+    }
+
 
     @Data
     @ConfigurationProperties(prefix = "cli")

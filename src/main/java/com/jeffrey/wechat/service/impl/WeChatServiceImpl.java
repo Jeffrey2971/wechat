@@ -3,7 +3,6 @@ package com.jeffrey.wechat.service.impl;
 import java.util.*;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.jeffrey.wechat.aop.UserShareAOP;
 import com.jeffrey.wechat.mapper.WeChatServiceDao;
 import com.jeffrey.wechat.entity.message.BaseMessage;
 import com.jeffrey.wechat.entity.message.EmptyMessage;
@@ -70,7 +69,6 @@ public class WeChatServiceImpl implements WeChatService {
     }
 
     @Override
-    @UserShareAOP
     public String getResponse(Map<String, String> requestMap) throws Exception{
         String msgType = requestMap.get("MsgType");
         BaseMessage msg = null;

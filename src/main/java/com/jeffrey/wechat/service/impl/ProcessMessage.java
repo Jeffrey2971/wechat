@@ -17,7 +17,7 @@ import com.jeffrey.wechat.entity.mapper.UserUseTotalEntity;
 import com.jeffrey.wechat.entity.translation.TranslationData;
 import com.jeffrey.wechat.service.GetFreeService;
 import com.jeffrey.wechat.service.ProcessMessageService;
-import com.jeffrey.wechat.translate.GetTranslateMetaData;
+import com.jeffrey.wechat.translate.GetTextTranslateMetaData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -104,7 +104,7 @@ public class ProcessMessage implements ProcessMessageService {
             TranslationData metaData;
 
             try {
-                metaData = GetTranslateMetaData.getData(imageInputStream);
+                metaData = GetTextTranslateMetaData.getData(imageInputStream);
             } catch (IOException e) {
                 log.error("翻译过程中发生了异常", e);
                 return;

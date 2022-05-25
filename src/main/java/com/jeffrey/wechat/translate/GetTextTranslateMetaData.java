@@ -23,27 +23,20 @@ import java.util.Random;
  */
 @Component
 @Slf4j
-public class GetTranslateMetaData {
+public class GetTextTranslateMetaData {
 
     private static WeChatAutoConfiguration.BaiduTranslationConfig config;
 
     private static Random random;
 
-    private static LinkedMultiValueMap<String, Object> transValueMap;
-
     @Autowired
     private void setConfig(WeChatAutoConfiguration.BaiduTranslationConfig config) {
-        GetTranslateMetaData.config = config;
+        GetTextTranslateMetaData.config = config;
     }
 
     @Autowired
     private void setRandom(Random random) {
-        GetTranslateMetaData.random = random;
-    }
-
-    @Autowired
-    private void setTransValueMap(LinkedMultiValueMap<String, Object> transValueMap) {
-        GetTranslateMetaData.transValueMap = transValueMap;
+        GetTextTranslateMetaData.random = random;
     }
 
     /**
@@ -82,7 +75,13 @@ public class GetTranslateMetaData {
         transValueMap.add("mac", config.getMac());
         transValueMap.add("version", config.getVersion());
         transValueMap.add("paste", config.getPasteFull());
-        transValueMap.add("sign", DigestUtils.md5DigestAsHex((config.getBaiduTransactionAppId() + imageMd5 + salt + config.getCuid() + config.getMac() + config.getBaiduTransactionAppKey()).getBytes()).toLowerCase());
+        transValueMap.add("sign",
+                DigestUtils.md5DigestAsHex((config.getBaiduTransactionAppId()
+                        + imageMd5 + salt
+                        + config.getCuid()
+                        + config.getMac()
+                        + config.getBaiduTransactionAppKey()).getBytes()
+                ).toLowerCase());
 
         HttpEntity<LinkedMultiValueMap<String, Object>> httpEntity = new HttpEntity<>(transValueMap, httpHeaders);
         ResponseEntity<TranslationData> response = RequestUtil.postEntity(config.getReqUrl(), httpEntity, TranslationData.class, null);

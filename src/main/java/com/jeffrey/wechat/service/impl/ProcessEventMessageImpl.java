@@ -1,8 +1,10 @@
 package com.jeffrey.wechat.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.jeffrey.wechat.aop.UserEventTypeAOP;
 import com.jeffrey.wechat.config.WeChatAutoConfiguration;
 import com.jeffrey.wechat.entity.mapper.UserUseTotalEntity;
+import com.jeffrey.wechat.entity.message.NewsMessage;
 import com.jeffrey.wechat.mapper.ProcessEventMessageDao;
 import com.jeffrey.wechat.entity.message.BaseMessage;
 import com.jeffrey.wechat.entity.message.EmptyMessage;
@@ -53,6 +55,7 @@ public class ProcessEventMessageImpl implements ProcessEventMessage {
 
     @SneakyThrows
     @Override
+    @UserEventTypeAOP
     public BaseMessage processSubscribe(Map<String, String> requestMap) {
 
         String oid = requestMap.get("FromUserName");
@@ -133,11 +136,13 @@ public class ProcessEventMessageImpl implements ProcessEventMessage {
     }
 
     @Override
+    @UserEventTypeAOP
     public BaseMessage processClick(Map<String, String> requestMap) {
-        return new EmptyMessage();
+        return new NewsMessage(requestMap, new NewsMessage.Articles(new NewsMessage.Articles.Item("文档上传", "上传您需要翻译的文档", "https://fanyi-cdn.cdn.bcebos.com/static/cat/asset/chicken.b6cfa9a8.png", "http://6zxas5.natappfree.cc/document?uid=" + requestMap.get("FromUserName"))), 1);
     }
 
     @Override
+    @UserEventTypeAOP
     public BaseMessage processView(Map<String, String> requestMap) {
         return new EmptyMessage();
     }

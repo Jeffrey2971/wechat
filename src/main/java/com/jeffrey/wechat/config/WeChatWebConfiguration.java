@@ -28,6 +28,7 @@ public class WeChatWebConfiguration implements WebMvcConfigurer {
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/feedback").setViewName("feedback.html");
+        registry.addViewController("/document").setViewName("document_upload.html");
     }
 
     /**

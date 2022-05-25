@@ -18,12 +18,14 @@ import java.util.Map;
 @XStreamAlias("xml")
 public class NewsMessage extends BaseMessage {
 
-    private Articles articles;
+    private Articles Articles;
+    private int ArticleCount;
 
-    public NewsMessage(Map<String, String> requestMap, Articles articles) {
+    public NewsMessage(Map<String, String> requestMap, Articles Articles, int ArticleCount) {
         super(requestMap);
         setMsgType("news");
-        this.articles = articles;
+        this.ArticleCount = ArticleCount;
+        this.Articles = Articles;
     }
 
     @Getter

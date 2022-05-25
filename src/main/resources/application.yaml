@@ -3,11 +3,15 @@ spring:
     name: wechat
   main:
     allow-bean-definition-overriding: true
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 51MB
 
 
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
-    url: jdbc:mysql://666/wx_public_account?characterEncoding=UTF-8
+    url: jdbc:mysql://ip/wx_public_account?characterEncoding=UTF-8
     username: 666
     password: 666
 
@@ -19,6 +23,7 @@ spring:
         # 为 Druid 监控配置访问权限(配置访问监控信息的用户与密码)
         login-username: 666
         login-password: 666
+        allow:
       web-stat-filter:
         enabled: true
         urlPattern: /*
@@ -60,8 +65,8 @@ pool:
 
 wechat:
   wx-token: 666
-  wx-app-id: 666 # 测试号
-  wx-app-secret: 666 # 测试号
+  wx-app-id: 666
+  wx-app-secret: 666
   wx-customer-url: https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token={token}
   wx-get-token-url: https://api.weixin.qq.com/cgi-bin/token?grant_type={grant_type}&appid={appid}&secret={secret}
   wx-get-user-info-url: https://api.weixin.qq.com/cgi-bin/user/info?access_token={token}&openid={openid}&lang={lang}
@@ -72,10 +77,11 @@ wechat:
   wx-get-user-open-id-list: https://api.weixin.qq.com/cgi-bin/user/get?access_token={token}&next_openid={next_openid}
   wx-delete-menu-url: https://api.weixin.qq.com/cgi-bin/menu/delete?access_token={token}
   wx-show-use-url: https://mp.weixin.qq.com/s/3ypEPH04Q6CN7SS7CwGFXQ
+  wx-send-template-message-url: https://api.weixin.qq.com/cgi-bin/message/template/send?access_token={token}
   wx-get-batch-user-open-id-list: https://api.weixin.qq.com/cgi-bin/user/info/batchget?access_token={token}
+  wx-get-send-template-id: 0F67osdbSET8n_tJCt_IXsbaeSZmF9gNRDrORklqWUU
   wx-share-threshold: 3
   wx-day-can-use: 5
-
   thank-keywords:
     - 谢
     - 谢谢
@@ -133,17 +139,19 @@ baidu:
   req-url: https://fanyi-api.baidu.com/api/trans/sdk/picture
   file-content-type: mutipart/form-data
 
+baidu.doc:
+  baidu-transaction-app-id: 666
+  baidu-transaction-app-key: 666
+  req-count-url: https://fanyi-api.baidu.com/api/trans/vip/doccount
+  req-trans-url: https://fanyi-api.baidu.com/api/trans/vip/doctrans
+
+
 cli:
   cli-style-id: 666
-  get-qr-code-style-url: 666
-
-mybatis:
-  configuration:
-    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl
-  mapper-locations: classpath:mybatis/mapper/*.xml
+  get-qr-code-style-url: https://cli.im/api/qrcode/code?text={text}&mhid={mhid};
 
 domain:
-  domain: 666
+  domain: ip
 
 server:
   port: 80
