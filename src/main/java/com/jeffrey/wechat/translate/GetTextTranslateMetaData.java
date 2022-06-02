@@ -27,16 +27,9 @@ public class GetTextTranslateMetaData {
 
     private static WeChatAutoConfiguration.BaiduTranslationConfig config;
 
-    private static Random random;
-
     @Autowired
     private void setConfig(WeChatAutoConfiguration.BaiduTranslationConfig config) {
         GetTextTranslateMetaData.config = config;
-    }
-
-    @Autowired
-    private void setRandom(Random random) {
-        GetTextTranslateMetaData.random = random;
     }
 
     /**
@@ -61,6 +54,8 @@ public class GetTextTranslateMetaData {
         httpHeaders.setContentLength(bar.contentLength());
 
         StringBuilder salt = new StringBuilder(9);
+
+        Random random = new Random();
 
         for (int i = 0; i < 10; i++) {salt.append(random.nextInt(9));}
 

@@ -2,6 +2,7 @@ package com.jeffrey.wechat.config;
 
 import com.jeffrey.wechat.entity.TransResponseWrapper;
 import com.jeffrey.wechat.entity.message.*;
+import com.jeffrey.wechat.entity.translation.DocTranslation;
 import com.thoughtworks.xstream.XStream;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -106,6 +107,11 @@ public class WeChatAutoConfiguration {
         return new HashMap<>();
     }
 
+    @Bean
+    public HashMap<String, DocTranslation> applyMap(){
+        return new HashMap<>();
+    }
+
     @Data
     @ConfigurationProperties(prefix = "pool")
     public static class ThreadPoolConfig {
@@ -123,6 +129,11 @@ public class WeChatAutoConfiguration {
         lang.add("韩文");
         lang.add("日文");
         return lang;
+    }
+
+    @Bean
+    public HashMap<String, String> documentMd5Map(){
+        return new HashMap<>();
     }
 
     @Bean
