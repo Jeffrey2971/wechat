@@ -45,7 +45,6 @@
                 if ($input.val().length > 0) {
                     $("#trans").removeClass("disabled")
                 }
-
             });
 
             $("#trans").on("click", function () {
@@ -64,7 +63,12 @@
                     return false;
                 }
 
+                let $trans = $("#trans");
+                $trans.after($trans.clone().val(""));
+                $trans.remove();
+
                 $("#upload").click();
+
             });
 
             $("#switch").on("click", function () {
@@ -210,7 +214,7 @@
 <h2>点击图片选择并上传文档</h2>
 
 <!-- doc、docx、xls、xlsx、ppt、pptx、xml、html、htm、txt、pdf application/pdf-->
-<form action="http://6zxas5.natappfree.cc/check-doc-count" method="post" enctype="multipart/form-data">
+<form action="http://www.jeffrey2971.top/document_upload" method="post" enctype="multipart/form-data">
     <input type="text" name="uid" th:value="${param.uid}" hidden>
     <div id="out">
         <div class="lanmu">
@@ -227,8 +231,8 @@
                 <input id="select-file"
                        name="select-file"
                        type="file"
-                       class="mouse"
-                       accept=".doc,.docx,.pdf,.xls,.xlsx,.ppt,.pptx,.txt">
+                       class="mouse">
+                       <!--accept=".doc/.docx/.pdf/.xls/.xlsx/.ppt.pptx/.txt"-->
                 <table id="tab">
 
                     <tr>
