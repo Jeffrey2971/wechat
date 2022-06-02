@@ -138,7 +138,13 @@ public class ProcessEventMessageImpl implements ProcessEventMessage {
     @Override
     @UserEventTypeAOP
     public BaseMessage processClick(Map<String, String> requestMap) {
-        return new NewsMessage(requestMap, new NewsMessage.Articles(new NewsMessage.Articles.Item("文档上传", "上传您需要翻译的文档", "https://fanyi-cdn.cdn.bcebos.com/static/cat/asset/chicken.b6cfa9a8.png", "http://6zxas5.natappfree.cc/document?uid=" + requestMap.get("FromUserName"))), 1);
+        return new NewsMessage(requestMap, new NewsMessage.Articles(new NewsMessage.Articles.Item(
+                "文档上传",
+                "上传您需要翻译的文档",
+                String.format("%s/image/newsImg.png", serverInfo.getDomain()),
+                String.format("%s/document?uid=%s", serverInfo.getDomain(), requestMap.get("FromUserName")))),
+                1
+        );
     }
 
     @Override
