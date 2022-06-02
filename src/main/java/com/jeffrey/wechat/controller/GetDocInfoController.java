@@ -41,13 +41,13 @@ public class GetDocInfoController {
                 return docInfoService.prepareData(id, wrapper, model, userDataItem);
             } else {
                 model.addAttribute("title", "请先关注");
-                model.addAttribute("label1", "您好像没有关注本公众号");
+                model.addAttribute("label1", "401 Unauthorized");
                 model.addAttribute("label2", "请先长按以下二维码关注本公众号后再继续");
                 return "error/4XX";
             }
         } else {
             model.addAttribute("title", "文档已过期");
-            model.addAttribute("label1", "该文档不存在或已过期");
+            model.addAttribute("label1", "404 Not Fount");
             model.addAttribute("label2", "可长按识别以下二维码到公众号重新获取");
             return "error/4XX";
         }
