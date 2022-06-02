@@ -69,7 +69,7 @@ public class ProcessMessage implements ProcessMessageService {
 
             char free = entityByOpenId.getFree();
 
-            String getFreeLink = String.format("<a href=\"%s/%s?openid=%s\">%s</a>", serverInfo.getDomain(), "free", oid, "获取无限次数使用");
+            String getFreeLink = String.format("<a href=\"%s/%s?openid=%s\">%s</a>", serverInfo.getDomain(), "free", oid, "获取每日使用不限次数权限");
             if ("T".equalsIgnoreCase(String.valueOf(free))) {
 
                 /*
@@ -79,9 +79,9 @@ public class ProcessMessage implements ProcessMessageService {
 
                 String getTempChance = String.format("<a href=\"%s/%s?openid=%s\">%s</a>", serverInfo.getDomain(), "temp", oid, "获取临时使用次数");
 
-                return new TextMessage(requestMap, String.format("您今日的使用次数已达上限噢，如需永久免费使用请点击：%s \n\n但为了不影响您的使用，您可点击：%s", getFreeLink, getTempChance));
+                return new TextMessage(requestMap, String.format("您今日的使用次数已达上限噢，如需每日不限次数使用请点击：%s \n\n但为了不影响您的使用，您可点击：%s", getFreeLink, getTempChance));
             }
-            return new TextMessage(requestMap, String.format("您今日的使用次数已达上限噢，如需永久免费使用请点击：%s", getFreeLink));
+            return new TextMessage(requestMap, String.format("您今日的使用次数已达上限噢，如需每日不限次数使用请点击：%s", getFreeLink));
         }
 
 
@@ -110,7 +110,7 @@ public class ProcessMessage implements ProcessMessageService {
                 return;
             }
 
-
+            log.info("本次翻译状态信息：{} | {}", metaData.getError_code(), metaData.getError_msg());
             if (metaData.getError_code() != 0) {
                 String reqBody = new Gson().toJson(new CustomerTextMessage(openid, new CustomerTextMessage.Text(metaData.getError_msg())));
                 ResponseEntity<BasicResultMessage> responseEntity = SimpleSendCustomerTextUtil.send(reqBody, BasicResultMessage.class);
@@ -223,7 +223,7 @@ public class ProcessMessage implements ProcessMessageService {
         if (isZh) {
             sb.append("1. 图片原文（分段）：").append(String.format(base1, 1));
             sb.append("2. 图片原文（不分段）：").append(String.format(base1, 2));
-            sb.append("3. 点击永久免费使用：").append(String.format(base3, 6));
+            sb.append("3. 点击不限次数使用：").append(String.format(base3, 6));
             sb.append("4. 反馈问题或提出意见：").append(base2);
         } else {
             sb.append("1. 图片实景翻译（推荐）：").append(String.format(base1, 5));
@@ -231,7 +231,7 @@ public class ProcessMessage implements ProcessMessageService {
             sb.append("3. 图片译文（分段）").append(String.format(base1, 3));
             sb.append("4. 图片原文（不分段）：").append(String.format(base1, 2));
             sb.append("5. 图片译文（不分段）：").append(String.format(base1, 4));
-            sb.append("6. 点击永久免费使用：").append(String.format(base3, 6));
+            sb.append("6. 点击不限次数使用：").append(String.format(base3, 6));
             sb.append("7. 反馈问题或提出意见：").append(base2);
         }
 
