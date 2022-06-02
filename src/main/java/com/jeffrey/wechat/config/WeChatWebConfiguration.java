@@ -1,11 +1,16 @@
 package com.jeffrey.wechat.config;
 
+import com.jeffrey.wechat.WechatApplication;
+import com.jeffrey.wechat.interceptor.GetDocumentInterceptor;
 import com.jeffrey.wechat.interceptor.TotalInterceptor;
 import com.jeffrey.wechat.interceptor.UserRequestInterceptor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.util.UrlPathHelper;
+
+import java.io.File;
 
 /**
  * @author jeffrey
@@ -13,22 +18,43 @@ import org.springframework.web.util.UrlPathHelper;
  */
 
 @Configuration
+@Slf4j
 public class WeChatWebConfiguration implements WebMvcConfigurer {
 
     private final UserRequestInterceptor userRequestInterceptor;
 
     private final TotalInterceptor totalInterceptor;
 
+    private final GetDocumentInterceptor getDocumentInterceptor;
+
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+
+        final String documentResPath = WechatApplication.documentResPath;
+        File documentPath = new File(documentResPath, "/doc");
+
+        if (!documentPath.exists() && documentPath.mkdirs()) {
+            log.info("创建：{}", documentPath);
+        }
+
+        registry.addResourceHandler("/doc/**").addResourceLocations(String.format("file:%s/", documentPath));
+        registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
+    }
+
     @Autowired
-    public WeChatWebConfiguration(UserRequestInterceptor userRequestInterceptor, TotalInterceptor totalInterceptor) {
+    public WeChatWebConfiguration(UserRequestInterceptor userRequestInterceptor, TotalInterceptor totalInterceptor, GetDocumentInterceptor getDocumentInterceptor) {
         this.userRequestInterceptor = userRequestInterceptor;
         this.totalInterceptor = totalInterceptor;
+        this.getDocumentInterceptor = getDocumentInterceptor;
     }
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
+
         registry.addViewController("/feedback").setViewName("feedback.html");
         registry.addViewController("/document").setViewName("document_upload.html");
+
+        registry.addViewController("/test").setViewName("test.html");
     }
 
     /**
@@ -43,9 +69,14 @@ public class WeChatWebConfiguration implements WebMvcConfigurer {
         configurer.setUrlPathHelper(urlPathHelper);
     }
 
+    /**
+     * 配置拦截器
+     * @param registry InterceptorRegistry
+     */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(userRequestInterceptor).addPathPatterns("/**").excludePathPatterns("/static/**");
         registry.addInterceptor(totalInterceptor).addPathPatterns("/**").excludePathPatterns("/static/**");
+        registry.addInterceptor(getDocumentInterceptor).addPathPatterns("/doc/**");
     }
 }
