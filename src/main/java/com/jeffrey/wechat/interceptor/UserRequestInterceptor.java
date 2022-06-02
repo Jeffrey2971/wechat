@@ -2,7 +2,6 @@ package com.jeffrey.wechat.interceptor;
 
 import com.google.gson.Gson;
 import com.jeffrey.wechat.config.WeChatAutoConfiguration;
-import com.jeffrey.wechat.mapper.ProcessEventMessageDao;
 import com.jeffrey.wechat.entity.BasicResultMessage;
 import com.jeffrey.wechat.entity.message.customer.CustomerTextMessage;
 import com.jeffrey.wechat.utils.GetRequestAddressUtil;
