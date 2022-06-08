@@ -29,15 +29,7 @@ public class WeChatWebConfiguration implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-
-        final String documentResPath = WechatApplication.documentResPath;
-        File documentPath = new File(documentResPath, "/doc");
-
-        if (!documentPath.exists() && documentPath.mkdirs()) {
-            log.info("创建：{}", documentPath);
-        }
-
-        registry.addResourceHandler("/doc/**").addResourceLocations(String.format("file:%s/", documentPath));
+        registry.addResourceHandler("/doc/**").addResourceLocations(String.format("file:%s/", new File(WechatApplication.documentResPath, "/doc")));
         registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
     }
 
@@ -50,11 +42,8 @@ public class WeChatWebConfiguration implements WebMvcConfigurer {
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-
         registry.addViewController("/feedback").setViewName("feedback.html");
         registry.addViewController("/document").setViewName("document_upload.html");
-
-        registry.addViewController("/test").setViewName("test.html");
     }
 
     /**

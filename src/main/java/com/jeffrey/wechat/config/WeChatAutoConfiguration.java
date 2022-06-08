@@ -19,10 +19,7 @@ import org.springframework.util.LinkedMultiValueMap;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.concurrent.Executor;
 
 
@@ -108,8 +105,32 @@ public class WeChatAutoConfiguration {
     }
 
     @Bean
-    public HashMap<String, DocTranslation> applyMap(){
+    public HashMap<String, DocTranslation> applyMap() {
         return new HashMap<>();
+    }
+
+    @Bean
+    public HashMap<String, String> documentMd5Map() {
+        return new HashMap<>();
+    }
+
+    @Bean
+    public HashMap<String, ArrayList<String>> userCanReadDocument() {
+        return new HashMap<>();
+    }
+
+    @Bean
+    public HashMap<String, String> types() {
+        HashMap<String, String> types = new HashMap<>();
+        types.put("pdf", "application/pdf"); // pdf
+        types.put("doc", "application/msword"); // doc
+        types.put("docx", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"); // docx
+        types.put("txt", "text/plain"); // txt
+        types.put("xls", "application/vnd.ms-excel"); // xls
+        types.put("xlsx", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"); // xlsx
+        types.put("pptx", "application/vnd.openxmlformats-officedocument.presentationml.presentation"); // pptx
+        types.put("ppt", "application/vnd.ms-powerpoint"); // ppt
+        return types;
     }
 
     @Data
@@ -122,32 +143,13 @@ public class WeChatAutoConfiguration {
     }
 
     @Bean
-    public HashSet<String> lang(){
+    public HashSet<String> lang() {
         HashSet<String> lang = new HashSet<>();
         lang.add("中文");
         lang.add("英文");
         lang.add("韩文");
         lang.add("日文");
         return lang;
-    }
-
-    @Bean
-    public HashMap<String, String> documentMd5Map(){
-        return new HashMap<>();
-    }
-
-    @Bean
-    public HashMap<String, String> types(){
-        HashMap<String, String> types = new HashMap<>();
-        types.put("doc", "application/msword"); // doc
-        types.put("txt", "text/plain"); // txt
-        types.put("docx", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"); // docx
-        types.put("pdf", "application/pdf"); // pdf
-        types.put("xls", "application/vnd.ms-excel"); // xls
-        types.put("xlsx", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"); // xlsx
-        types.put("pptx", "application/vnd.openxmlformats-officedocument.presentationml.presentation"); // pptx
-        types.put("ppt", "application/vnd.ms-powerpoint"); // ppt
-        return types;
     }
 
     @Bean
@@ -244,6 +246,8 @@ public class WeChatAutoConfiguration {
     @ConfigurationProperties(prefix = "domain")
     public static class ServerInfo {
         private String domain;
+        private String onlinePreview;
+        private String addTask;
     }
 }
 
