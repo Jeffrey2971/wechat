@@ -24,6 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.io.ByteArrayResource;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -46,6 +47,9 @@ import java.util.*;
 public class WxTest {
 
     @Autowired
+    private StringRedisTemplate stringRedisTemplate;
+
+    @Autowired
     private JavaMailSender javaMailSender;
 
     @Value("${spring.mail.username}")
@@ -62,6 +66,11 @@ public class WxTest {
 
     @Autowired
     private GetFreeService getFreeService;
+
+    @Test
+    public void testStringRedisTemplate(){
+
+    }
 
     @Test
     void retain(){
