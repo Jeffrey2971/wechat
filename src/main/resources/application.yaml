@@ -7,13 +7,13 @@ spring:
     multipart:
       max-file-size: 50MB
       max-request-size: 51MB
-
+      # location: /usr/local/wechat/tmp
 
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
-    url: jdbc:mysql://ip/wx_public_account?characterEncoding=UTF-8
-    username: 666
-    password: 666
+    url: jdbc:mysql://120.76.100.173/wx_public_account?characterEncoding=UTF-8
+    username:
+    password:
 
     druid:
       stat-view-servlet:
@@ -21,8 +21,8 @@ spring:
         # 允许清空统计数据
         reset-enable: true
         # 为 Druid 监控配置访问权限(配置访问监控信息的用户与密码)
-        login-username: 666
-        login-password: 666
+        login-username:
+        login-password:
         allow:
       web-stat-filter:
         enabled: true
@@ -42,14 +42,15 @@ spring:
       aop-patterns: com.jeffrey.wechat
 
 
+
   gson:
     disable-html-escaping: true
 
   mail:
     host: smtp.yeah.net
     port: 465
-    password: 666
-    username: 666
+    password:
+    username: safety_report@yeah.net
     properties:
       mail.smtp.auth: true
       mail.smtp.starttls.enable: true
@@ -64,9 +65,9 @@ pool:
   queue-capacity: 150
 
 wechat:
-  wx-token: 666
-  wx-app-id: 666
-  wx-app-secret: 666
+  wx-token:
+  wx-app-id:
+  wx-app-secret:
   wx-customer-url: https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token={token}
   wx-get-token-url: https://api.weixin.qq.com/cgi-bin/token?grant_type={grant_type}&appid={appid}&secret={secret}
   wx-get-user-info-url: https://api.weixin.qq.com/cgi-bin/user/info?access_token={token}&openid={openid}&lang={lang}
@@ -79,7 +80,7 @@ wechat:
   wx-show-use-url: https://mp.weixin.qq.com/s/3ypEPH04Q6CN7SS7CwGFXQ
   wx-send-template-message-url: https://api.weixin.qq.com/cgi-bin/message/template/send?access_token={token}
   wx-get-batch-user-open-id-list: https://api.weixin.qq.com/cgi-bin/user/info/batchget?access_token={token}
-  wx-get-send-template-id: 0F67osdbSET8n_tJCt_IXsbaeSZmF9gNRDrORklqWUU
+  wx-get-send-template-id: i6B7KecbXjAvfY0qsNqwhJmp5Yh4v_ej7hvi8QMlBGE
   wx-share-threshold: 3
   wx-day-can-use: 5
   thank-keywords:
@@ -96,15 +97,15 @@ wechat:
     - thank you
 
 email:
-  email-from: 666 # 发送方
-  email-to: 666 # 接收方
+  email-from:  # 发送方
+  email-to:  # 接收方
   email-port: 465 # yeah.net smtp 端口
-  email-c-c: 666 # 抄送地址
-  email-pass-code: 666 # 发送方校验码
+  email-c-c:  # 抄送地址
+  email-pass-code:  # 发送方校验码
 
 baidu:
-  baidu-transaction-app-id: 666 # appid
-  baidu-transaction-app-key: 666 # appkey
+  baidu-transaction-app-id:  # appid
+  baidu-transaction-app-key:  # appkey
   erase-none: 0 # 不擦除
   erase-full: 1 # 全屏擦除
   erase-block: 2 # 区块擦除
@@ -140,23 +141,36 @@ baidu:
   file-content-type: mutipart/form-data
 
 baidu.doc:
-  baidu-transaction-app-id: 666
-  baidu-transaction-app-key: 666
-  req-count-url: https://fanyi-api.baidu.com/api/trans/vip/doccount
-  req-trans-url: https://fanyi-api.baidu.com/api/trans/vip/doctrans
+  baidu-transaction-app-id:
+  baidu-transaction-app-key:
+  req-count-url: https://fanyi-api.baidu.com/api/trans/vip/doccount # 文档校验接口
+  req-trans-url: https://fanyi-api.baidu.com/api/trans/vip/doctrans # 文档翻译接口
 
 
 cli:
-  cli-style-id: 666
+  cli-style-id:
   get-qr-code-style-url: https://cli.im/api/qrcode/code?text={text}&mhid={mhid};
 
 domain:
-  domain: ip
+  domain: http://www.jeffrey2971.top
+  online-preview: http://www.jeffrey2971.top:8012/onlinePreview
+  add-task: http://www.jeffrey2971.top:8012/addTask
 
 server:
   port: 80
+  # tomcat:
+    # basedir: /usr/local/wechat/tmp
   servlet:
     encoding:
       charset: UTF-8
       force-request: true
       force-response: true
+
+jodconverter:
+  local:
+    office-home: /usr/local/kkFileView-4.0.0
+    enabled: true
+    port-numbers: 8100
+    max-tasks-per-process: 10
+
+
