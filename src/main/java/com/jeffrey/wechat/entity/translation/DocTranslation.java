@@ -19,5 +19,6 @@ public class DocTranslation {
     private String openid;
     private String langFrom;
     private String langTo;
+    private String mediaType;
     private long timestamp;
 }
