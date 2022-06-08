@@ -12,8 +12,8 @@ spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     url: jdbc:mysql://120.76.100.173/wx_public_account?characterEncoding=UTF-8
-    username:
-    password:
+    username: root
+    password: Aa664490254
 
     druid:
       stat-view-servlet:
@@ -50,7 +50,7 @@ spring:
     host: smtp.yeah.net
     port: 465
     password:
-    username: safety_report@yeah.net
+    username:
     properties:
       mail.smtp.auth: true
       mail.smtp.starttls.enable: true
@@ -158,8 +158,8 @@ domain:
 
 server:
   port: 80
-  # tomcat:
-    # basedir: /usr/local/wechat/tmp
+    # tomcat:
+  # basedir: /usr/local/wechat/tmp
   servlet:
     encoding:
       charset: UTF-8
@@ -172,5 +172,3 @@ jodconverter:
     enabled: true
     port-numbers: 8100
     max-tasks-per-process: 10
-
-
