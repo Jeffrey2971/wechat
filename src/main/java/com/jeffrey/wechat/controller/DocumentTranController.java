@@ -46,31 +46,33 @@ public class DocumentTranController {
     @PostMapping(value = "/document_upload")
     public String receiveDocument(
             @RequestParam(value = "select-file", required = false) MultipartFile file,
-            @RequestParam(value = "from", required = false) String param1,
-            @RequestParam(value = "to", required = false) String param2,
+            @RequestParam(value = "from", required = false) String from,
+            @RequestParam(value = "to", required = false) String to,
             @RequestParam(value = "uid", required = false) String openid,
             Model model) throws IOException, MimeTypeException {
 
+        String originalFilename = file.getOriginalFilename() != null ? file.getOriginalFilename().replace(" ", "") : null;
+
         if (StringUtils.hasText(openid) && documentTransService.isUser(openid)) {
 
-            if (documentTransService.checkParams(file, param1, param2, openid)) {
+            if (documentTransService.checkParams(file, from, to, openid, originalFilename)) {
                 model.addAttribute("title", "上传失败");
                 model.addAttribute("label1", "400 Bad Request");
                 model.addAttribute("label2", "请求参数错误，请重试");
                 return "error/4XX";
             }
 
-            if (!documentTransService.checkFileType(file.getInputStream(), file.getOriginalFilename())) {
+            if (!documentTransService.checkFileType(file.getInputStream(), originalFilename)) {
                 model.addAttribute("title", "上传失败");
                 model.addAttribute("label1", "400 Bad Request");
-                model.addAttribute("label2", String.format("上传的文件 [%s] 不是一个有效的文件", file.getOriginalFilename()));
+                model.addAttribute("label2", String.format("上传的文件 [%s] 不是一个有效的文件", originalFilename));
                 return "error/4XX";
             }
 
-            String from = new String(param1.getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
-            String to = new String(param2.getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
+            from = new String(from.getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
+            to = new String(to.getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
 
-            if (documentTransService.applyDocumentTranslation(file, file.getOriginalFilename(), from, to, openid)) {
+            if (documentTransService.applyDocumentTranslation(file, originalFilename, from, to, openid)) {
                 model.addAttribute("title", "上传成功");
                 model.addAttribute("msg", "已收到您的翻译申请，翻译后的文档将通过消息模板的方式发到您的微信！");
                 return "feedback_success";
@@ -114,6 +116,8 @@ public class DocumentTranController {
             @RequestParam(value = "openid", required = false) String openid,
             Model model
     ) throws IOException {
+
+        filename = filename.replace(" ", "");
 
         // userCanReadDocument 集合的 key 为用户 openid ，value 为一个 ArrayList，其中包含了用户 openid 对应的可读取文件名称
         if (

@@ -27,8 +27,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestTemplate;
 import java.io.*;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -80,7 +78,7 @@ public class DocumentTransServiceImpl implements DocumentTransService {
 
 
     @Override
-    public boolean checkParams(MultipartFile file, String from, String to, String openid) {
+    public boolean checkParams(MultipartFile file, String from, String to, String openid, String originFileName) {
 
         return
                 file.isEmpty()
@@ -88,7 +86,8 @@ public class DocumentTransServiceImpl implements DocumentTransService {
                         && StringUtils.hasText(to)
                         && !from.equals(to)
                         && lang.contains(from)
-                        && lang.contains(to);
+                        && lang.contains(to)
+                        && StringUtils.hasText(originFileName);
     }
 
     @Override
@@ -153,7 +152,6 @@ public class DocumentTransServiceImpl implements DocumentTransService {
         if (oldName != null) {
             languageDirection = oldName.split("_");
         }
-
 
         if (
                 !documentMd5Map.containsKey(documentMd5) || (

@@ -22,9 +22,10 @@ public interface DocumentTransService {
      * @param from 源语言
      * @param to 目标语言
      * @param openid 用户的 Openid
+     * @param originFileName 上传的文件名
      * @return 传入的参数是否正确
      */
-    boolean checkParams(MultipartFile file, String from, String to, String openid);
+    boolean checkParams(MultipartFile file, String from, String to, String openid, String originFileName);
 
     /**
      * 严格校验上传文件的后缀名以及文件的实际类型
