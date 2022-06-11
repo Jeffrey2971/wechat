@@ -49,6 +49,8 @@ public class TotalInterceptor implements HandlerInterceptor {
 
                     if ("F".equalsIgnoreCase(String.valueOf(userUseTotalEntity.getFreeUser())) && canUse != null && canUse != 0) {
                         getFreeService.updateUserTotal(new UserUseTotalEntity(null, oid, --canUse, userUseTotalEntity.getFreeUser(), ++allUse, userUseTotalEntity.getFree()));
+                    } else {
+                        getFreeService.updateUserTotal(new UserUseTotalEntity(null, oid, canUse, userUseTotalEntity.getFreeUser(), ++allUse, userUseTotalEntity.getFree()));
                     }
                 }
             }
