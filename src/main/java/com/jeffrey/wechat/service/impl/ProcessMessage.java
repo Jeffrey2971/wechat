@@ -1,9 +1,11 @@
 package com.jeffrey.wechat.service.impl;
 
+import java.io.FileInputStream;
 import java.util.*;
 import java.io.InputStream;
 import java.io.IOException;
 import com.google.gson.Gson;
+import com.jeffrey.wechat.entity.message.NewsMessage;
 import lombok.extern.slf4j.Slf4j;
 import com.jeffrey.wechat.utils.*;
 import com.jeffrey.wechat.entity.TransResponseWrapper;
@@ -67,30 +69,43 @@ public class ProcessMessage implements ProcessMessageService {
 
             UserUseTotalEntity entityByOpenId = getFreeService.getUserUseTotalTableEntityByOpenId(oid);
 
-            char free = entityByOpenId.getFree();
+            String getFreeLink = String.format("<a href=\"%s/%s?openid=%s\">%s</a>", serverInfo.getDomain(), "free", oid, "获取每日使用不限次数权益");
 
-            String getFreeLink = String.format("<a href=\"%s/%s?openid=%s\">%s</a>", serverInfo.getDomain(), "free", oid, "获取每日使用不限次数权限");
-            if ("T".equalsIgnoreCase(String.valueOf(free))) {
+            if ("T".equalsIgnoreCase(String.valueOf(entityByOpenId.getFree()))) {
 
                 /*
                     您今日的使用次数已达上限噢，如需永久免费使用请点击：获取永久使用权限
                     但为了不影响您的使用，您可点击：获取临时使用次数
                  */
+                SimpleSendCustomerTextUtil.send(new Gson().toJson(
+                        new CustomerTextMessage(oid,
+                                new CustomerTextMessage.Text(
+                                        String.format("您今日的使用次数已达上限，如需获取每日不限使用次数权益请点击：%s \n但为了不影响您的使用，您可点击以下链接获取临时使用次数", getFreeLink)
+                                ))), BasicResultMessage.class);
 
-                String getTempChance = String.format("<a href=\"%s/%s?openid=%s\">%s</a>", serverInfo.getDomain(), "temp", oid, "获取临时使用次数");
-
-                return new TextMessage(requestMap, String.format("您今日的使用次数已达上限噢，如需每日不限次数使用请点击：%s \n\n但为了不影响您的使用，您可点击：%s", getFreeLink, getTempChance));
+                return new NewsMessage(
+                        requestMap,
+                        new NewsMessage.Articles(
+                                new NewsMessage.Articles.Item(
+                                        "临时使用次数",
+                                        "点击获取临时使用次数",
+                                        String.format("%s/image/newsImg.png", serverInfo.getDomain()),
+                                        String.format("%s/%s?openid=%s", serverInfo.getDomain(), "temp", oid))
+                        ), 1);
             }
-            return new TextMessage(requestMap, String.format("您今日的使用次数已达上限噢，如需每日不限次数使用请点击：%s", getFreeLink));
+
+            return new TextMessage(requestMap, String.format("您今日的使用次数已达上限，如需每日不限次数使用请点击：%s", getFreeLink));
+
         }
 
+        //-------------------------------发送消息-------------------------------//
 
         new Thread(() -> {
 
-            InputStream imageInputStream;
+            FileInputStream imageInputStream;
 
             try {
-                imageInputStream = FileDownloadInputStreamUtil.download(requestMap.get("PicUrl"));
+                imageInputStream = (FileInputStream) FileDownloadInputStreamUtil.download(requestMap.get("PicUrl"));
             } catch (IOException e) {
                 log.error("下载图片字节流发生了异常，后续翻译流程将终止", e);
                 return;
@@ -106,8 +121,14 @@ public class ProcessMessage implements ProcessMessageService {
             try {
                 metaData = GetTextTranslateMetaData.getData(imageInputStream);
             } catch (IOException e) {
-                log.error("翻译过程中发生了异常", e);
+                log.error("翻译过程中发生了异常，本次翻译终止", e);
                 return;
+            } finally {
+                if (imageInputStream != null) {
+                    try {
+                        imageInputStream.close();
+                    } catch (IOException ignored) {}
+                }
             }
 
             log.info("本次翻译状态信息：{} | {}", metaData.getError_code(), metaData.getError_msg());
