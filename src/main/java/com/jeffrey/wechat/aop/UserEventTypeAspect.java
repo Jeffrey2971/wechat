@@ -1,5 +1,6 @@
 package com.jeffrey.wechat.aop;
 
+import com.jeffrey.wechat.entity.TransResponseWrapper;
 import com.jeffrey.wechat.entity.mapper.ShareTableEntity;
 import com.jeffrey.wechat.entity.mapper.UserUseTotalEntity;
 import com.jeffrey.wechat.service.GetFreeService;
@@ -11,6 +12,7 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -25,8 +27,11 @@ public class UserEventTypeAspect {
 
     private final GetFreeService getFreeService;
 
-    public UserEventTypeAspect(GetFreeService getFreeService) {
+    private final HashMap<Long, TransResponseWrapper> userDataItem;
+
+    public UserEventTypeAspect(GetFreeService getFreeService, HashMap<Long, TransResponseWrapper> userDataItem) {
         this.getFreeService = getFreeService;
+        this.userDataItem = userDataItem;
     }
 
     @Pointcut("@annotation(com.jeffrey.wechat.aop.UserEventTypeAOP)")
@@ -42,6 +47,8 @@ public class UserEventTypeAspect {
             log.info("发生事件：{} | 事件场景：{}", requestMap.get("Event"), requestMap.get("EventKey"));
             String eventKey = (String) requestMap.get("EventKey");
             String event = (String) requestMap.get("Event");
+            String fromUserName = (String) requestMap.get("FromUserName");
+
             /*
                 判断是否为一个 event 类型的消息
              */
@@ -49,9 +56,10 @@ public class UserEventTypeAspect {
             if ("event".equalsIgnoreCase((String) requestMap.get("MsgType"))) {
                 switch (event) {
                     case "subscribe":
-                        shared(requestMap, eventKey);
+                        shared(fromUserName, eventKey);
                         break;
                     case "unsubscribe":
+                        clean(fromUserName);
                         break;
                     case "SCAN":
                         break;
@@ -65,12 +73,19 @@ public class UserEventTypeAspect {
                         break;
                 }
             }
-
-
         }
     }
 
-    private void shared(Map<?, ?> requestMap, String eventKey) {
+    private void clean(String openid) {
+        for (Map.Entry<Long, TransResponseWrapper> entry : userDataItem.entrySet()) {
+            if (entry.getValue().getOpenid().equals(openid)) {
+                userDataItem.remove(entry.getKey());
+                break;
+            }
+        }
+    }
+
+    private void shared(String openid, String eventKey) {
         if (
 
                 StringUtils.hasText(eventKey) && eventKey.startsWith("qrscene_")
@@ -79,7 +94,7 @@ public class UserEventTypeAspect {
             // 分享者 openid
             String sharer = eventKey.substring(eventKey.indexOf('_') + 1);
 
-            log.info("用户 {} 通过分享者 {} 分享的二维码关注了", requestMap.get("FromUserName"), sharer);
+            log.info("用户 {} 通过分享者 {} 分享的二维码关注了", openid, sharer);
 
             UserUseTotalEntity userUseTotalEntity = getFreeService.getUserUseTotalTableEntityByOpenId(sharer);
 
