@@ -113,6 +113,7 @@ public class ProcessEventMessageImpl implements ProcessEventMessage {
     }
 
     @Override
+    @UserEventTypeAOP
     public BaseMessage processUnsubscribe(Map<String, String> requestMap) {
 
         String openid = requestMap.get("FromUserName");
@@ -154,37 +155,44 @@ public class ProcessEventMessageImpl implements ProcessEventMessage {
     }
 
     @Override
+    @UserEventTypeAOP
     public BaseMessage processPicPhotoOrAlbum(Map<String, String> requestMap) {
         log.info("通过菜单栏拍照或相册选择照片上传，服务器依然会收到 image 事件，所以当前事件返回空消息类型");
         return new EmptyMessage();
     }
 
     @Override
+    @UserEventTypeAOP
     public BaseMessage processScancodePush(Map<String, String> requestMap) {
         return new EmptyMessage();
     }
 
     @Override
+    @UserEventTypeAOP
     public BaseMessage processScancodeWaitMsg(Map<String, String> requestMap) {
         return new EmptyMessage();
     }
 
     @Override
+    @UserEventTypeAOP
     public BaseMessage processPicSysPhoto(Map<String, String> requestMap) {
         return new EmptyMessage();
     }
 
     @Override
+    @UserEventTypeAOP
     public BaseMessage processPicWeiXin(Map<String, String> requestMap) {
         return new EmptyMessage();
     }
 
     @Override
+    @UserEventTypeAOP
     public BaseMessage processLocationSelect(Map<String, String> requestMap) {
         return new EmptyMessage();
     }
 
     @Override
+    @UserEventTypeAOP
     public BaseMessage processViewMiniProgram(Map<String, String> requestMap) {
         return new EmptyMessage();
     }
