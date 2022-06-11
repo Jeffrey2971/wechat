@@ -5,6 +5,7 @@ import org.springframework.util.StringUtils;
 
 import java.io.*;
 import java.net.URL;
+import java.net.URLConnection;
 
 /**
  * @author jeffrey
@@ -21,6 +22,13 @@ public class FileDownloadInputStreamUtil {
         }
 
         log.info("开始下载文件字节流：{}", httpUrl);
-        return new URL(httpUrl).openConnection().getInputStream();
+
+        URLConnection urlConnection = new URL(httpUrl).openConnection();
+
+        urlConnection.setUseCaches(true);
+        urlConnection.setConnectTimeout(15000);
+        urlConnection.setReadTimeout(15000);
+
+        return urlConnection.getInputStream();
     }
 }

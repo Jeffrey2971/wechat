@@ -1,9 +1,9 @@
 package com.jeffrey.wechat.service.impl;
 
-import java.io.FileInputStream;
 import java.util.*;
 import java.io.InputStream;
 import java.io.IOException;
+
 import com.google.gson.Gson;
 import com.jeffrey.wechat.entity.message.NewsMessage;
 import lombok.extern.slf4j.Slf4j;
@@ -102,10 +102,10 @@ public class ProcessMessage implements ProcessMessageService {
 
         new Thread(() -> {
 
-            FileInputStream imageInputStream;
+            InputStream imageInputStream;
 
             try {
-                imageInputStream = (FileInputStream) FileDownloadInputStreamUtil.download(requestMap.get("PicUrl"));
+                imageInputStream = FileDownloadInputStreamUtil.download(requestMap.get("PicUrl"));
             } catch (IOException e) {
                 log.error("下载图片字节流发生了异常，后续翻译流程将终止", e);
                 return;
@@ -127,7 +127,9 @@ public class ProcessMessage implements ProcessMessageService {
                 if (imageInputStream != null) {
                     try {
                         imageInputStream.close();
-                    } catch (IOException ignored) {}
+                    } catch (IOException e) {
+                        log.error("关闭图片下载流失败", e);
+                    }
                 }
             }
 
