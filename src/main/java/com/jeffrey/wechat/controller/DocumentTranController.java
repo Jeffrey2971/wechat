@@ -2,6 +2,7 @@ package com.jeffrey.wechat.controller;
 
 import com.jeffrey.wechat.WechatApplication;
 import com.jeffrey.wechat.config.WeChatAutoConfiguration;
+import com.jeffrey.wechat.entity.translation.DocTranslationData;
 import com.jeffrey.wechat.service.DocumentTransService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.tika.mime.MimeTypeException;
@@ -93,21 +94,18 @@ public class DocumentTranController {
 
     @GetMapping("/callback")
     @ResponseBody
-    public void callback(@RequestParam Map<String, Object> params) throws IOException {
+    public void callback(DocTranslationData docTranslationData) throws IOException {
 
-        if (params.hashCode() == prevHashCode) {
+        if (docTranslationData.hashCode() == prevHashCode) {
             log.info("重复的请求，已忽略");
             return;
+        } else {
+            synchronized (this) {
+                prevHashCode = docTranslationData.hashCode();
+            }
         }
 
-        synchronized (this) {
-            prevHashCode = params.hashCode();
-        }
-
-        if (documentTransService.documentCallBack(params)) {
-
-        }
-
+        documentTransService.documentCallBack(docTranslationData);
     }
 
     @GetMapping("/doc")
