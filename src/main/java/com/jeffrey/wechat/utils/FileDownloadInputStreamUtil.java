@@ -14,7 +14,7 @@ import java.net.URL;
 @Slf4j
 public class FileDownloadInputStreamUtil {
 
-    public static InputStream download(String httpUrl) throws IOException {
+    public static synchronized InputStream download(String httpUrl) throws IOException {
 
         if (!StringUtils.hasText(httpUrl)) {
             log.error("提供的链接不能为空");

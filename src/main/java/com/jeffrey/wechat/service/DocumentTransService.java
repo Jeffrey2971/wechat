@@ -67,13 +67,8 @@ public interface DocumentTransService {
      */
     boolean isUser(String openid);
 
-    /**
-     *
-     * @param params
-     * @return
-     * @throws IOException
-     */
-    boolean documentCallBack(Map<String, Object> params) throws IOException;
+
+    void documentCallBack(DocTranslationData docTranslationData) throws IOException;
 
     /**
      * 文档翻译结束后，发送模板消息给申请的微信用户，模板消息发送的结果由微信服务推送

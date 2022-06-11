@@ -26,6 +26,7 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestTemplate;
+
 import java.io.*;
 import java.nio.file.Files;
 import java.time.LocalDateTime;
@@ -155,10 +156,10 @@ public class DocumentTransServiceImpl implements DocumentTransService {
 
         if (
                 !documentMd5Map.containsKey(documentMd5) || (
-                !from.equalsIgnoreCase(languageDirection != null ? languageDirection[languageDirection.length - 2] : null)
-                        || !to.equalsIgnoreCase(languageDirection[languageDirection.length - 1]
-                ) || !new File(WechatApplication.documentResPath, String.format("/doc/%s/%s", openid, filename)).exists()
-        )
+                        !from.equalsIgnoreCase(languageDirection != null ? languageDirection[languageDirection.length - 2] : null)
+                                || !to.equalsIgnoreCase(languageDirection[languageDirection.length - 1]
+                        ) || !new File(WechatApplication.documentResPath, String.format("/doc/%s/%s", openid, filename)).exists()
+                )
         ) {
             log.info("用户 {} 申请文档翻译", openid);
 
@@ -217,11 +218,9 @@ public class DocumentTransServiceImpl implements DocumentTransService {
                 System.currentTimeMillis()
         );
 
-
         sendDocTransResultTemplateMessage(docTranslationData, docTranslation);
 
         return true;
-
     }
 
     @Override
@@ -230,65 +229,82 @@ public class DocumentTransServiceImpl implements DocumentTransService {
     }
 
     @Override
-    public boolean documentCallBack(Map<String, Object> params) throws IOException {
+    public void documentCallBack(DocTranslationData docTranslationData) throws IOException {
 
-        String requestId = (String) params.get("requestId");
+        String requestId = docTranslationData.getRequestId();
 
-        if (!applyMap.containsKey(requestId)) {
-            return false;
-        }
+        int errorCode = Integer.parseInt(docTranslationData.getError_code());
 
         DocTranslation docTranslation = applyMap.get(requestId);
 
-        File userFolder = new File(WechatApplication.documentResPath, String.format("/doc/%s", docTranslation.getOpenid()));
+        if (errorCode == 52000) {
 
-        // 为每一个用户创建一个专属的文件夹用于存储用户的文档
-        if (!userFolder.exists() && !userFolder.mkdirs()) {
-            log.error("创建用户文件夹失败");
-            return false;
+            if (!applyMap.containsKey(requestId)) {
+                sendDocTransResultTemplateMessage(
+                        docTranslationData,
+                        docTranslation
+                );
+            }
+
+            File userFolder = new File(WechatApplication.documentResPath, String.format("/doc/%s", docTranslation.getOpenid()));
+
+            // 为每一个用户创建一个专属的文件夹用于存储用户的文档
+            if (!userFolder.exists() && !userFolder.mkdirs()) {
+
+                log.error("创建用户文件夹失败");
+                sendDocTransResultTemplateMessage(
+                        docTranslationData,
+                        docTranslation
+                );
+            }
+
+            String filename = docTranslation.getFilename();
+
+            File documentRealPath = new File(WechatApplication.documentResPath, String.format("/doc/%s/%s", docTranslation.getOpenid(), filename));
+
+            try {
+                FileCopyUtils.copy(
+                        FileDownloadInputStreamUtil.download(docTranslationData.getFileSrcUrl()),
+                        Files.newOutputStream(documentRealPath.toPath()));
+            } catch (IOException e) {
+                sendDocTransResultTemplateMessage(
+                        docTranslationData,
+                        docTranslation
+                );
+            }
+
+            //----------------- 这里处理用户的文档浏览功能 -----------------//
+
+            String addTaskUrl = String.format("%s?url=%s/doc/%s/%s?openid=%s", serverInfo.getAddTask(), serverInfo.getDomain(), docTranslation.getOpenid(), filename, docTranslation.getOpenid());
+
+            log.info("添加预浏览队列：{}", REST_TEMPLATE.getForObject(addTaskUrl, String.class));
+
+            String reqLink = String.format("%s/doc?openid=%s&name=%s", serverInfo.getDomain(), docTranslation.getOpenid(), filename);
+
+            docTranslationData.setFileSrcUrl(reqLink);
+
+            //-----------------        设置用户可读        ----------------//
+            // 添加用户可读取文档，如果包含 key 说明对应的 value 一定不为 null 且一般都有元素 //
+            // 因为对象的引用机制，所以更新的值不需要重新放进 Map 中 //
+
+            if (userCanReadDocument.containsKey(docTranslation.getOpenid())) {
+                userCanReadDocument.get(docTranslation.getOpenid()).add(filename);
+            } else {
+                userCanReadDocument.put(docTranslation.getOpenid(), new ArrayList<>(Collections.singleton(filename)));
+            }
+
+            //-----------------         发送模板         ----------------//
+
+            sendDocTransResultTemplateMessage(docTranslationData, docTranslation);
+        } else {
+
+            //-----------------         翻译失败         ----------------//
+
+            sendDocTransResultTemplateMessage(
+                    docTranslationData,
+                    docTranslation
+            );
         }
-
-        String filename = docTranslation.getFilename();
-
-        File documentRealPath = new File(WechatApplication.documentResPath, String.format("/doc/%s/%s", docTranslation.getOpenid(), filename));
-
-        if (FileCopyUtils.copy(
-                FileDownloadInputStreamUtil.download((String) params.get("fileSrcUrl")),
-                Files.newOutputStream(documentRealPath.toPath())) <= 0
-        ) {
-            return false;
-        }
-
-        //----------------- 这里处理用户的文档浏览功能 -----------------//
-
-        String addTaskUrl = String.format("%s?url=%s/doc/%s/%s?openid=%s", serverInfo.getAddTask(), serverInfo.getDomain(), docTranslation.getOpenid(), filename, docTranslation.getOpenid());
-
-        log.info("添加预浏览队列：{}", REST_TEMPLATE.getForObject(addTaskUrl, String.class));
-
-        String reqLink = String.format("%s/doc?openid=%s&name=%s", serverInfo.getDomain(), docTranslation.getOpenid(), filename);
-
-        //-----------------         发送模板         ----------------//
-
-        sendDocTransResultTemplateMessage(new DocTranslationData(
-                        (String) params.get("error_code"),
-                        (String) params.get("error_msg"),
-                        requestId,
-                        reqLink,
-                        (String) params.get("sign"),
-                        (String) params.get("amount"),
-                        Integer.parseInt(String.valueOf(params.get("charCount")))
-                ), docTranslation
-        );
-
-        // 添加用户可读取文档，如果包含 key 说明对应的 value 一定不为 null 且一般都有元素。因为对象的引用机制，所以更新的值不需要重新放进 Map 中
-        if (
-                userCanReadDocument.containsKey(docTranslation.getOpenid()) &&
-                        userCanReadDocument.get(docTranslation.getOpenid()).add(filename)
-        ) {return true;}
-
-        userCanReadDocument.put(docTranslation.getOpenid(), new ArrayList<>(Collections.singleton(filename)));
-
-        return true;
     }
 
     @Override
@@ -328,9 +344,11 @@ public class DocumentTransServiceImpl implements DocumentTransService {
 
         //----------------------- 解决模板消息乱码 -----------------------//
 
-        HTTP_HEADERS.setContentType(MediaType.APPLICATION_JSON);
-        HTTP_HEADERS.setContentLanguage(Locale.CHINA);
-        HTTP_HEADERS.setContentLength(requestBody.length());
+        synchronized (this) {
+            HTTP_HEADERS.setContentType(MediaType.APPLICATION_JSON);
+            HTTP_HEADERS.setContentLanguage(Locale.CHINA);
+            HTTP_HEADERS.setContentLength(requestBody.length());
+        }
 
         HttpEntity<Object> httpEntity = new HttpEntity<>(requestBody, HTTP_HEADERS);
 
