@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
@@ -29,11 +30,18 @@ public class GetFreeController {
     }
 
     @GetMapping("/free")
-    public String getFree(@RequestParam(required = false) String openid, Model model, HttpServletRequest request) throws IOException {
+    public String getFree(
+            @RequestParam(required = false) String openid,
+            Model model,
+            HttpServletRequest request,
+            HttpServletResponse response) throws IOException {
 
         request.setAttribute("openid", openid);
 
         if (StringUtils.hasText(openid) && getFreeService.isUser(openid)) {
+
+            response.setHeader("Cache-Control", "private, max-age=60");
+
             model.addAttribute("shareImg", getFreeService.getUserShareLink(openid));
             model.addAttribute("count", getFreeService.getUserShareTotal(openid));
 

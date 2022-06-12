@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 
 /**
@@ -31,9 +32,18 @@ public class GetDocInfoController {
     }
 
     @GetMapping(value = "/info/{id}", produces = "text/html;charset=UTF-8")
-    public String info(@PathVariable(required = false) Integer id, @MatrixVariable(required = false) Long wrapper, @MatrixVariable(required = false) String openid, Model model, HttpServletRequest request){
+    public String info(
+            @PathVariable(required = false) Integer id,
+            @MatrixVariable(required = false) Long wrapper,
+            @MatrixVariable(required = false) String openid,
+            Model model,
+            HttpServletRequest request,
+            HttpServletResponse response
+    ){
+        //--------------- CEP Servlet3 ---------------//
 
         request.setAttribute("openid", openid);
+        response.setHeader("Cache-Control", "max-age=1800");
 
         if (userDataItem.containsKey(wrapper) && id > 0 && id <= 5) {
             TransResponseWrapper item = userDataItem.get(wrapper);
