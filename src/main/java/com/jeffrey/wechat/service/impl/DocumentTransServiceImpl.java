@@ -321,7 +321,7 @@ public class DocumentTransServiceImpl implements DocumentTransService {
                 config.getWxGetSendTemplateId(),
                 errorCode == 52000 ? docTranslationData.getFileSrcUrl() : null,
                 new TemplateMessage.Data(
-                        new TemplateMessage.First("您上传的文档有新的动态", "#173177"),
+                        new TemplateMessage.First("您上传的文档有新的动态", "#FFFF00"),
                         new TemplateMessage.KeyWord1(docTranslation.getFilename(), "#173177"),
                         new TemplateMessage.KeyWord2(String.format("%s -> %s",
 
@@ -337,9 +337,30 @@ public class DocumentTransServiceImpl implements DocumentTransService {
                                         ? "日文" : to.equalsIgnoreCase("kor")
                                         ? "韩文" : "未知"), "#173177"),
 
-                        new TemplateMessage.KeyWord3(errorCode == 52000 ? "成功" : "失败", "#173177"),
+                        new TemplateMessage.KeyWord3(errorCode == 52000 ? "成功" : "失败", errorCode == 52000 ? "#008000" : "#FF0000"),
                         new TemplateMessage.KeyWord4(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss").format(LocalDateTime.now()), "#173177"),
-                        new TemplateMessage.Remark(errorCode == 52000 ? "点击详情下载翻译文档，感谢您的使用！" : "本次翻译失败，请检查您上传的文档！", "#173177")))
+                        new TemplateMessage.Remark(errorCode == 52000
+                                ? "本次文档翻译成功，点击详情预览翻译文档，感谢您的使用！"
+                                : String.format("本次翻译失败，原因是：%s",
+                                errorCode == 52001
+                                        ? "请求超时，请重试" : errorCode == 52002
+                                        ? "在处理时发生了异常，请重试" : errorCode == 52003
+                                        ? "未授权的用户，请联系作者解决" : errorCode == 54001
+                                        ? "签名错误，请联系作者解决" : errorCode == 54003
+                                        ? "访问频率首先，请降低您的访问频率" : errorCode == 54004
+                                        ? "作者没钱维护文档翻译功能了，下个月再试吧" : errorCode == 54010
+                                        ? "作者没钱维护文档翻译功能了，下个月再试吧" : errorCode == 58000
+                                        ? "在处理时发生了异常，请联系作者解决" : errorCode == 66000
+                                        ? "在处理时发生了异常，请联系作者解决" : errorCode == 70201
+                                        ? "没有找到您上传的文件，请重试" : errorCode == 70202
+                                        ? "在处理时发生了异常，请联系作者解决" : errorCode == 70203
+                                        ? "上传的文件大小超出限制" : errorCode == 70204
+                                        ? "缓存文档是小，请重新上传" : errorCode == 70205
+                                        ? "文档翻译失败，请重新上传" : errorCode == 70206
+                                        ? "上传的文档类型不受支持，请检查您上传的文档是否符合要求" : errorCode == 70207
+                                        ? "上传的文档内容无法翻译，请检查您上传的文档" : "我不造啊"
+                        ), errorCode == 52000 ? "#008000" : "#FF0000")
+                ))
         );
 
         //----------------------- 解决模板消息乱码 -----------------------//
