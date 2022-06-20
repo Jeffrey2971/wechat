@@ -29,8 +29,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.io.*;
 import java.nio.file.Files;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -338,7 +337,7 @@ public class DocumentTransServiceImpl implements DocumentTransService {
                                         ? "韩文" : "未知"), "#173177"),
 
                         new TemplateMessage.KeyWord3(errorCode == 52000 ? "成功" : "失败", errorCode == 52000 ? "#008000" : "#FF0000"),
-                        new TemplateMessage.KeyWord4(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss").format(LocalDateTime.now()), "#173177"),
+                        new TemplateMessage.KeyWord4(new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.CHINESE).format(docTranslation.getTimestamp()), "#173177"),
                         new TemplateMessage.Remark(errorCode == 52000
                                 ? "本次文档翻译成功，点击详情预览翻译文档，感谢您的使用！"
                                 : String.format("本次翻译失败，原因是：%s",
