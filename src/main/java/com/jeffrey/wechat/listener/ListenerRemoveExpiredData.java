@@ -67,9 +67,15 @@ public class ListenerRemoveExpiredData implements ApplicationListener<Applicatio
     private void createMenu(HashMap<String, Object> uriParams, HttpHeaders httpHeaders) {
 
         Button button = new Button();
-        button.getButton().add(new ViewButton("使用方式", wxConfig.getWxShowUseUrl()));
+
+        button.getButton().add(new SubButton("使用方式", Arrays.asList(
+                new ViewButton("图片翻译", wxConfig.getWxShowUseUrlImage()),
+                new ViewButton("文档翻译", wxConfig.getWxShowUseUrlDocument())
+                )));
+
+
         button.getButton().add(new PicPhotoOrAlbumButton("发送图片", "menu_image_upload"));
-        button.getButton().add(new SubButton("更多翻译", Arrays.asList(new ClickButton("文档翻译", "documentTrans"), new ClickButton("网页翻译", "htmlTrans"), new ClickButton("语音翻译", "voiceTrans"))));
+        button.getButton().add(new ClickButton("文档翻译", "documentTrans"));
 
         HttpEntity<String> httpEntity = new HttpEntity<>(new Gson().toJson(button), httpHeaders);
         log.info("创建菜单栏：{}", RequestUtil.postEntity(wxConfig.getWxCreateMenuUrl(), httpEntity, String.class, uriParams));
