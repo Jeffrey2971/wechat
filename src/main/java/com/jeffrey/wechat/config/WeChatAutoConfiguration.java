@@ -185,7 +185,8 @@ public class WeChatAutoConfiguration {
         private String wxDeleteMediaDataUrl;
         private String wxDeleteMenuUrl;
         private String wxCreateMenuUrl;
-        private String wxShowUseUrl;
+        private String wxShowUseUrlImage;
+        private String wxShowUseUrlDocument;
         private String wxGetBatchUserOpenIdList;
         private String wxSendTemplateMessageUrl;
         private String wxGetSendTemplateId;
