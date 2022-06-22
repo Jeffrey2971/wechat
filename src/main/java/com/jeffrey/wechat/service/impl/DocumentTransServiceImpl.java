@@ -320,7 +320,7 @@ public class DocumentTransServiceImpl implements DocumentTransService {
                 config.getWxGetSendTemplateId(),
                 errorCode == 52000 ? docTranslationData.getFileSrcUrl() : null,
                 new TemplateMessage.Data(
-                        new TemplateMessage.First("您上传的文档有新的动态", "#FFFF00"),
+                        new TemplateMessage.First("您上传的文档有新的动态", "#173177"),
                         new TemplateMessage.KeyWord1(docTranslation.getFilename(), "#173177"),
                         new TemplateMessage.KeyWord2(String.format("%s -> %s",
 
