@@ -3,7 +3,6 @@ package com.jeffrey.wechat.service.impl;
 import java.util.*;
 import java.io.InputStream;
 import java.io.IOException;
-
 import com.google.gson.Gson;
 import com.jeffrey.wechat.entity.message.NewsMessage;
 import lombok.extern.slf4j.Slf4j;
@@ -36,16 +35,13 @@ public class ProcessMessage implements ProcessMessageService {
 
     private final WeChatAutoConfiguration.ServerInfo serverInfo;
 
-    private final HashMap<Long, TransResponseWrapper> userDataItem;
-
     private final WeChatAutoConfiguration.WxConfig wxConfig;
 
     private final GetFreeService getFreeService;
 
     @Autowired
-    public ProcessMessage(WeChatAutoConfiguration.ServerInfo serverInfo, HashMap<Long, TransResponseWrapper> userDataItem, WeChatAutoConfiguration.WxConfig wxConfig, GetFreeService getFreeService) {
+    public ProcessMessage(WeChatAutoConfiguration.ServerInfo serverInfo, WeChatAutoConfiguration.WxConfig wxConfig, GetFreeService getFreeService) {
         this.serverInfo = serverInfo;
-        this.userDataItem = userDataItem;
         this.wxConfig = wxConfig;
         this.getFreeService = getFreeService;
     }
@@ -80,7 +76,7 @@ public class ProcessMessage implements ProcessMessageService {
                 SimpleSendCustomerTextUtil.send(new Gson().toJson(
                         new CustomerTextMessage(oid,
                                 new CustomerTextMessage.Text(
-                                        String.format("您今日的使用次数已达上限，如需获取每日不限使用次数权益请点击：%s \n但为了不影响您的使用，您可点击以下链接获取临时使用次数", getFreeLink)
+                                        String.format("您今日的使用次数已达上限，如需获取每日不限使用次数权益请点击：%s \n\n但为了不影响您的使用，您可点击以下链接获取临时使用次数", getFreeLink)
                                 ))), BasicResultMessage.class);
 
                 return new NewsMessage(
@@ -151,7 +147,8 @@ public class ProcessMessage implements ProcessMessageService {
             boolean isZh = EditDistance.getSimilarityRatio(metaData.getData().getSumSrc(), metaData.getData().getSumDst()) > 75.000000;
 
             responseWrapper.setOpenid(openid);
-            responseWrapper.setExpiredTimeStamp(System.currentTimeMillis() + (30 * 60 * 1000));
+
+            responseWrapper.setExpiredTimeStamp(System.currentTimeMillis() + ((30L) * (24 * ((60 * 60) * 1000))));
             responseWrapper.setTransOriginalText(src.toString());
             responseWrapper.setTransSumOriginalText(metaData.getData().getSumSrc());
 
@@ -163,13 +160,24 @@ public class ProcessMessage implements ProcessMessageService {
 
             while (true) {
 
-                long expiresTime = System.currentTimeMillis() + (30 * 60 * 1000);
+                String key = String.valueOf(System.currentTimeMillis());
 
-                if (!userDataItem.containsKey(expiresTime)) {
+                if (!SaveAndReadImageDocument.containsKey(key)) {
 
-                    userDataItem.put(expiresTime, responseWrapper);
+                    if (!SaveAndReadImageDocument.serialToJsonAndSave(key, responseWrapper)) {
+                        log.error("翻译成功，但存储翻译对象的时候出现异常");
+                    }
 
-                    String respString = createRespUrl(openid, expiresTime, isZh);
+                    String respString = createRespUrl(openid, key, isZh,
+                            src.toString().contains("pptx")
+                            || src.toString().toLowerCase(Locale.CHINA).contains("ppt")
+                            || src.toString().toLowerCase(Locale.CHINA).contains("doc")
+                            || src.toString().toLowerCase(Locale.CHINA).contains("docx")
+                            || src.toString().toLowerCase(Locale.CHINA).contains("txt")
+                            || src.toString().toLowerCase(Locale.CHINA).contains("xls")
+                            || src.toString().toLowerCase(Locale.CHINA).contains("xlsx")
+                            || src.toString().toLowerCase(Locale.CHINA).contains("pdf")
+                    );
                     String data = new Gson().toJson(new CustomerTextMessage(openid, new CustomerTextMessage.Text(respString)));
 
                     ResponseEntity<BasicResultMessage> responseEntity = SimpleSendCustomerTextUtil.send(data, BasicResultMessage.class);
@@ -237,10 +245,10 @@ public class ProcessMessage implements ProcessMessageService {
                 baseUrl.replace("URL", serverInfo.getDomain() + "/question?openid=" + openid).replace("TITLE", "2、遇到问题或有疑问？");
     }
 
-    private String createRespUrl(String openid, Long timestamp, boolean isZh) {
+    private String createRespUrl(String openid, String key, boolean isZh, boolean similarDocument) {
         StringBuilder sb = new StringBuilder(2048);
         sb.append("以下是图片中相关的信息，可点击蓝色字体查看：\n\n\n");
-        String base1 = "<a href=\"" + serverInfo.getDomain() + "/info/%s;wrapper=" + timestamp + ";openid=" + openid + "\">点击查看</a>\n\n";
+        String base1 = "<a href=\"" + serverInfo.getDomain() + "/info/%s;wrapper=" + key + ";openid=" + openid + "\">点击查看</a>\n\n";
         String base2 = "<a href=\"" + serverInfo.getDomain() + "/question?openid=" + openid + "\">点击查看</a>\n\n";
         String base3 = "<a href=\"" + serverInfo.getDomain() + "/free?openid=" + openid + "\">点击查看</a>\n\n";
         if (isZh) {
@@ -256,6 +264,10 @@ public class ProcessMessage implements ProcessMessageService {
             sb.append("5. 图片译文（不分段）：").append(String.format(base1, 4));
             sb.append("6. 点击不限次数使用：").append(String.format(base3, 6));
             sb.append("7. 反馈问题或提出意见：").append(base2);
+        }
+
+        if (similarDocument) {
+            sb.append("您翻译的内容看起来像文档，建议您使用：").append("<a href=\"" + serverInfo.getDomain() + "/document?uid=" + openid + "\">文档翻译</a>\n\n");
         }
 
         return sb.toString();
