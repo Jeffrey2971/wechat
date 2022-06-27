@@ -24,7 +24,6 @@ public class UserQuestionServiceImpl implements UserQuestionService {
 
     private final WeChatServiceDao weChatServiceDao;
 
-
     @Autowired
     public UserQuestionServiceImpl(UserQuestionServiceDao userQuestionServiceDao, WeChatServiceDao weChatServiceDao) {
         this.userQuestionServiceDao = userQuestionServiceDao;

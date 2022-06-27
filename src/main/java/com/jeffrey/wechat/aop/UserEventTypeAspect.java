@@ -1,6 +1,5 @@
 package com.jeffrey.wechat.aop;
 
-import com.jeffrey.wechat.entity.TransResponseWrapper;
 import com.jeffrey.wechat.entity.mapper.ShareTableEntity;
 import com.jeffrey.wechat.entity.mapper.UserUseTotalEntity;
 import com.jeffrey.wechat.service.GetFreeService;
@@ -11,8 +10,6 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
-
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -27,11 +24,8 @@ public class UserEventTypeAspect {
 
     private final GetFreeService getFreeService;
 
-    private final HashMap<Long, TransResponseWrapper> userDataItem;
-
-    public UserEventTypeAspect(GetFreeService getFreeService, HashMap<Long, TransResponseWrapper> userDataItem) {
+    public UserEventTypeAspect(GetFreeService getFreeService) {
         this.getFreeService = getFreeService;
-        this.userDataItem = userDataItem;
     }
 
     @Pointcut("@annotation(com.jeffrey.wechat.aop.UserEventTypeAOP)")
@@ -59,7 +53,6 @@ public class UserEventTypeAspect {
                         shared(fromUserName, eventKey);
                         break;
                     case "unsubscribe":
-                        clean(fromUserName);
                         break;
                     case "SCAN":
                         break;
@@ -76,15 +69,6 @@ public class UserEventTypeAspect {
         }
     }
 
-    private void clean(String openid) {
-        for (Map.Entry<Long, TransResponseWrapper> entry : userDataItem.entrySet()) {
-            if (entry.getValue().getOpenid().equals(openid)) {
-                userDataItem.remove(entry.getKey());
-                break;
-            }
-        }
-    }
-
     private void shared(String openid, String eventKey) {
         if (
 
@@ -94,11 +78,18 @@ public class UserEventTypeAspect {
             // 分享者 openid
             String sharer = eventKey.substring(eventKey.indexOf('_') + 1);
 
-            log.info("用户 {} 通过分享者 {} 分享的二维码关注了", openid, sharer);
-
             UserUseTotalEntity userUseTotalEntity = getFreeService.getUserUseTotalTableEntityByOpenId(sharer);
 
+            if (userUseTotalEntity == null) {
+                return;
+            }
+
             ShareTableEntity shareTableEntity = getFreeService.getShareTableEntityByOpenId(sharer);
+
+            //-------------------- 这里如果为空说明用户没有点击分享但是却有人通过分享的二维码关注了--------------------
+            if (shareTableEntity == null) {
+                return;
+            }
 
             Integer shareTotal = shareTableEntity.getShareTotal();
 
@@ -106,6 +97,7 @@ public class UserEventTypeAspect {
 
             getFreeService.updateUserTotal(new UserUseTotalEntity(null, sharer, userUseTotalEntity.getCanUse(), shareTotal >= 3 ? 'T' : 'F', userUseTotalEntity.getAllUse(), userUseTotalEntity.getFree()));
 
+            log.info("用户 {} 通过分享者 {} 分享的二维码关注了", openid, sharer);
         }
     }
 }

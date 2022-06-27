@@ -2,11 +2,9 @@ package com.jeffrey.wechat.listener;
 
 import com.jeffrey.wechat.utils.GetRequestAddressUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.context.support.WebApplicationContextUtils;
-
 import javax.servlet.ServletRequestEvent;
 import javax.servlet.ServletRequestListener;
 import javax.servlet.annotation.WebListener;
@@ -23,8 +21,11 @@ import java.util.HashMap;
 @Slf4j
 public class ListenerUserRequest implements ServletRequestListener {
 
-    @Autowired
-    private HashMap<String, Integer> userFrequency;
+    private final HashMap<String, Integer> userFrequency;
+
+    public ListenerUserRequest(HashMap<String, Integer> userFrequency) {
+        this.userFrequency = userFrequency;
+    }
 
     @Override
     public void requestInitialized(ServletRequestEvent sre) {
