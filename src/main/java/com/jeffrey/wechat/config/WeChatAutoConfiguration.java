@@ -1,6 +1,5 @@
 package com.jeffrey.wechat.config;
 
-import com.jeffrey.wechat.entity.TransResponseWrapper;
 import com.jeffrey.wechat.entity.message.*;
 import com.jeffrey.wechat.entity.translation.DocTranslation;
 import com.thoughtworks.xstream.XStream;
@@ -11,12 +10,15 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.util.LinkedMultiValueMap;
-
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.util.*;
@@ -100,11 +102,6 @@ public class WeChatAutoConfiguration {
     }
 
     @Bean
-    public HashMap<Long, TransResponseWrapper> userDataItem() {
-        return new HashMap<>();
-    }
-
-    @Bean
     public HashMap<String, DocTranslation> applyMap() {
         return new HashMap<>();
     }
@@ -132,6 +129,18 @@ public class WeChatAutoConfiguration {
         types.put("ppt", "application/vnd.ms-powerpoint"); // ppt
         return types;
     }
+
+    @Bean(name = "redisTemplate")
+    public RedisTemplate<String, String> redisTemplate(RedisConnectionFactory factory){
+        RedisTemplate<String, String> redisTemplate = new RedisTemplate<>();
+
+        redisTemplate.setConnectionFactory(factory);
+        redisTemplate.setKeySerializer(StringRedisSerializer.UTF_8);
+        redisTemplate.setValueSerializer(new Jackson2JsonRedisSerializer<>(String.class));
+
+        return redisTemplate;
+    }
+
 
     @Data
     @ConfigurationProperties(prefix = "pool")
