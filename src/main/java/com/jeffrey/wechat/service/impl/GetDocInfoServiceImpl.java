@@ -2,10 +2,12 @@ package com.jeffrey.wechat.service.impl;
 
 import com.jeffrey.wechat.entity.TransResponseWrapper;
 import com.jeffrey.wechat.service.GetDocInfoService;
+import com.jeffrey.wechat.utils.SaveAndReadImageDocument;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
-import java.util.HashMap;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * @author jeffrey
@@ -17,11 +19,12 @@ import java.util.HashMap;
 public class GetDocInfoServiceImpl implements GetDocInfoService {
 
     @Override
-    public String prepareData(Integer id, Long wrapper, Model model, HashMap<Long, TransResponseWrapper> userDataItem){
+    public String prepareData(Integer id, String wrapperKey, Model model){
 
-        TransResponseWrapper item = userDataItem.get(wrapper);
+        TransResponseWrapper item = SaveAndReadImageDocument.deSerialJsonToClass(wrapperKey, TransResponseWrapper.class);
         String openid = item.getOpenid();
-        int expiredTime = (int) (item.getExpiredTimeStamp() - System.currentTimeMillis()) / 1000 / 60;
+        String expiredTime = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date(item.getExpiredTimeStamp()));
+
         switch (id) {
             case 1: // 图片原文（分段）
                 log.info("获取图片分段原文：{}", openid);
