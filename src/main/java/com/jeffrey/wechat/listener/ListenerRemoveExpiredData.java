@@ -2,7 +2,6 @@ package com.jeffrey.wechat.listener;
 
 import com.google.gson.Gson;
 import com.jeffrey.wechat.config.WeChatAutoConfiguration;
-import com.jeffrey.wechat.entity.TransResponseWrapper;
 import com.jeffrey.wechat.entity.menu.*;
 import com.jeffrey.wechat.utils.GetAccessTokenUtil;
 import com.jeffrey.wechat.utils.RequestUtil;
@@ -14,9 +13,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-
 import java.util.*;
 
 /**
@@ -31,18 +28,8 @@ public class ListenerRemoveExpiredData implements ApplicationListener<Applicatio
 
     private final WeChatAutoConfiguration.WxConfig wxConfig;
 
-    private final HashMap<Long, TransResponseWrapper> userInfoData;
-
-    private static final List<Long> waitingRemoveKey = new ArrayList<>();
-
-    /**
-     * 检查文档集合的间隔事件
-     */
-    private static final int STEP = 60000;
-
     @Autowired
-    public ListenerRemoveExpiredData(HashMap<Long, TransResponseWrapper> userInfoData, WeChatAutoConfiguration.WxConfig wxConfig) {
-        this.userInfoData = userInfoData;
+    public ListenerRemoveExpiredData(WeChatAutoConfiguration.WxConfig wxConfig) {
         this.wxConfig = wxConfig;
     }
 
@@ -61,7 +48,6 @@ public class ListenerRemoveExpiredData implements ApplicationListener<Applicatio
 
         removeMenu(uriParams);
         createMenu(uriParams, httpHeaders);
-        event();
     }
 
     private void createMenu(HashMap<String, Object> uriParams, HttpHeaders httpHeaders) {
@@ -84,20 +70,5 @@ public class ListenerRemoveExpiredData implements ApplicationListener<Applicatio
 
     private void removeMenu(HashMap<String, Object> uriParams) {
         log.info("移除菜单栏：{}", RequestUtil.getEntity(wxConfig.getWxDeleteMenuUrl(), String.class, uriParams).getBody());
-    }
-
-    @Scheduled(fixedDelay = STEP)
-    private void event() {
-        Set<Long> times = userInfoData.keySet();
-
-        for (Long time : times) {
-            if (System.currentTimeMillis() > time) {
-                waitingRemoveKey.add(time);
-            }
-        }
-
-        waitingRemoveKey.forEach(userInfoData::remove);
-
-        waitingRemoveKey.clear();
     }
 }
