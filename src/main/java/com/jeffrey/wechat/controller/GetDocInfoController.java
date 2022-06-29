@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.text.DateFormat;
@@ -39,7 +40,7 @@ public class GetDocInfoController {
             Model model,
             HttpServletRequest request,
             HttpServletResponse response
-    ){
+    ) {
         //--------------- 添加缓存 ---------------//
 
         request.setAttribute("openid", openid);
@@ -49,21 +50,31 @@ public class GetDocInfoController {
         String expires = df.format(System.currentTimeMillis() + (30L * 24 * 60 * 60 * 1000));
         response.setHeader("expires", expires);
 
-        if (SaveAndReadImageDocument.containsKey(wrapper) && id > 0 && id <= 5) {
-            TransResponseWrapper item = SaveAndReadImageDocument.deSerialJsonToClass(wrapper, TransResponseWrapper.class);
-            if (openid.equals(item.getOpenid())) {
-                return docInfoService.prepareData(id, wrapper, model);
-            } else {
-                model.addAttribute("title", "请先关注");
-                model.addAttribute("label1", "401 Unauthorized");
-                model.addAttribute("label2", "请先长按以下二维码关注本公众号后再继续");
-                return "error/4XX";
-            }
-        } else {
+        //--------------- 判断参数是否正确 ---------------//
+        if (id <= 0 || id > 5) {
+            model.addAttribute("title", "参数错误");
+            model.addAttribute("label1", "400 Bad Request");
+            model.addAttribute("label2", "请求参数错误，请不要修改链接中的内容");
+            return "error/4XX";
+        }
+
+        //--------------- 判断文档是否过期 ---------------//
+        if (!SaveAndReadImageDocument.containsKey(wrapper)) {
             model.addAttribute("title", "文档已过期");
             model.addAttribute("label1", "404 Not Fount");
             model.addAttribute("label2", "可长按识别以下二维码到公众号重新获取");
             return "error/4XX";
         }
+
+        //--------------- 判断用户请求的 openid 是否存在于响应 wrapper 中（即查看文档是否属于访问的用户） ---------------//
+        if (!openid.equals(SaveAndReadImageDocument.deSerialJsonToClass(wrapper, TransResponseWrapper.class).getOpenid())) {
+            model.addAttribute("title", "请先关注");
+            model.addAttribute("label1", "401 Unauthorized");
+            model.addAttribute("label2", "请先长按以下二维码关注本公众号后再继续");
+            return "error/4XX";
+        }
+
+        //--------------- 准备响应数据 ---------------//
+        return docInfoService.prepareData(id, wrapper, model);
     }
 }
