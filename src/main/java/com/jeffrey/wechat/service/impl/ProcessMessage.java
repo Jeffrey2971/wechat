@@ -166,6 +166,7 @@ public class ProcessMessage implements ProcessMessageService {
 
                     if (!SaveAndReadImageDocument.serialToJsonAndSave(key, responseWrapper)) {
                         log.error("翻译成功，但存储翻译对象的时候出现异常");
+                        return;
                     }
 
                     String respString = createRespUrl(openid, key, isZh,

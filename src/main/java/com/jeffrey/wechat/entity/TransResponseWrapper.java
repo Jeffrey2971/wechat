@@ -32,11 +32,6 @@ public class TransResponseWrapper {
     private String transSumText;
 
     /**
-     * 图片实景翻译，base64 字符串，已在前缀添加 data:image/png;base64,
-     */
-    private String transImageBase64;
-
-    /**
      * 分段原文
      */
     private String transOriginalText;
@@ -50,4 +45,9 @@ public class TransResponseWrapper {
      * 当前对象的过期时间
      */
     private Long expiredTimeStamp;
+
+    /**
+     * 图片实景翻译，base64 字符串，已在前缀添加 data:image/png;base64,
+     */
+    private String transImageBase64;
 }

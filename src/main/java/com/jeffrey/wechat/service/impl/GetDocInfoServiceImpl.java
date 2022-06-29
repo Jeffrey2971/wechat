@@ -52,6 +52,7 @@ public class GetDocInfoServiceImpl implements GetDocInfoService {
                 model.addAttribute("base64Image", item.getTransImageBase64());
                 return "image";
             default:
+                //--------------- 这里的问题 Controller 已经处理过，执行到这里那就见鬼了 ---------------//
                 throw new RuntimeException("UnKnownException，it should not be happen");
         }
     }
