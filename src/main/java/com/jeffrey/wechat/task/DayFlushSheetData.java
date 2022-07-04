@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author jeffrey
@@ -88,26 +89,19 @@ public class DayFlushSheetData implements InitializingBean {
 
         log.info("移除 redis 中无效数据");
 
-        List<TransResponseWrapper> entities = SaveAndReadImageDocument.getEntities();
+        Map<String, TransResponseWrapper> entities = SaveAndReadImageDocument.getEntities();
 
         if (entities == null || entities.size() == 0) {
             return;
         }
 
-        for (TransResponseWrapper entity : entities) {
-            if (entity == null) {
-                continue;
-            }
-            List<String> openIdList = weChatService.selectUserOpenIdList();
-            if (!openIdList.contains(entity.getOpenid())) {
+        List<String> openIdList = weChatService.selectUserOpenIdList();
 
-                //----------反推过期时间得到key值----------//
-                String key = String.valueOf(entity.getExpiredTimeStamp() - (30L * 24 * 60 * 60 * 1000));
-                SaveAndReadImageDocument.removeKey(key);
+        for (Map.Entry<String, TransResponseWrapper> entry : entities.entrySet()) {
+            if (!openIdList.contains(entry.getValue().getOpenid())) {
+                SaveAndReadImageDocument.removeKey(entry.getKey());
             }
         }
-
-
     }
 }
 
