@@ -27,6 +27,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestTemplate;
 
+import javax.validation.constraints.NotNull;
 import java.io.*;
 import java.nio.file.Files;
 import java.text.SimpleDateFormat;
@@ -138,14 +139,14 @@ public class DocumentTransServiceImpl implements DocumentTransService {
         String documentMd5 = DigestUtils.md5DigestAsHex(FileCopyUtils.copyToByteArray(file.getInputStream()));
         String documentMediaType = new Tika().detect(file.getInputStream(), filename);
         /*
-            判断文档是否需要重新申请翻译，统一文档用户可能上传多次，需要避免这样的问题从而节省资源开销，以下是判断文档是否需要翻译的条件
+            判断文档是否需要重新申请翻译，同一文档用户可能上传多次，需要避免这样的问题从而节省资源开销，以下是判断文档是否需要翻译的条件
 
                 1. documentMd5Map 中不包含指定键 documentMd5
 
                 2. 用户可能上传文档名相同、文档 md5 特征相同，但选择的语言方向不同，
                     所以 documentMd5Map 中键 documentMd5 对应值的原语种和目标语种其中有一个不一致都需进行翻译
 
-                3. 对应的
+                3. 已经存在缓存的文档
          */
         String oldName = documentMd5Map.get(documentMd5);
         String[] languageDirection = null;
@@ -196,8 +197,10 @@ public class DocumentTransServiceImpl implements DocumentTransService {
 
         if (!oldName.replace(oldName.substring(oldName.lastIndexOf(oldNameSplit[oldNameSplit.length - 2]) - 1), "").equals(filename) && !new File(documentRealPath, oldName).renameTo(new File(documentRealPath, filename))) {
             log.error("用户上传了内容相同但文件名称不相同的文档，在重命名时发生了错误，翻译失败");
+            return false;
         }
 
+        //----------------------- 存在缓存的文档，重新拼接访问路径返回 -----------------------//
         DocTranslationData docTranslationData = new DocTranslationData(
                 "52000",
                 null,
@@ -208,6 +211,7 @@ public class DocumentTransServiceImpl implements DocumentTransService {
                 0
         );
 
+        //---------------------------- 包装对应文档的所需信息 ----------------------------//
         DocTranslation docTranslation = new DocTranslation(
                 filename,
                 openid,
@@ -228,7 +232,9 @@ public class DocumentTransServiceImpl implements DocumentTransService {
     }
 
     @Override
-    public void documentCallBack(DocTranslationData docTranslationData) throws IOException {
+    public synchronized void documentCallBack(DocTranslationData docTranslationData) throws IOException {
+
+        //----------------------- 这里要检验一下回掉请求是否和之前用户文档请求对应 -----------------------//
 
         String requestId = docTranslationData.getRequestId();
 
@@ -236,13 +242,11 @@ public class DocumentTransServiceImpl implements DocumentTransService {
 
         DocTranslation docTranslation = applyMap.get(requestId);
 
-        if (errorCode == 52000) {
+        if (errorCode == 52000 && !applyMap.containsKey(requestId)) {
 
-            if (!applyMap.containsKey(requestId)) {
-                sendDocTransResultTemplateMessage(
-                        docTranslationData,
-                        docTranslation
-                );
+            if (docTranslation == null) {
+                log.error("回掉翻译正常，本次请求也存在于历史请求列表中，但获取对应的数据时为 null");
+                return;
             }
 
             File userFolder = new File(WechatApplication.documentResPath, String.format("/doc/%s", docTranslation.getOpenid()));
@@ -255,6 +259,7 @@ public class DocumentTransServiceImpl implements DocumentTransService {
                         docTranslationData,
                         docTranslation
                 );
+                return;
             }
 
             String filename = docTranslation.getFilename();
@@ -307,7 +312,7 @@ public class DocumentTransServiceImpl implements DocumentTransService {
     }
 
     @Override
-    public void sendDocTransResultTemplateMessage(DocTranslationData docTranslationData, DocTranslation docTranslation) {
+    public void sendDocTransResultTemplateMessage(@NotNull DocTranslationData docTranslationData, @NotNull DocTranslation docTranslation) {
 
         int errorCode = Integer.parseInt(docTranslationData.getError_code());
         String from = docTranslation.getLangFrom();
