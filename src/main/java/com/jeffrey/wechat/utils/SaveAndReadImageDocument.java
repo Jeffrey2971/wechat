@@ -20,10 +20,10 @@ import java.util.concurrent.TimeUnit;
 @Component
 @Slf4j
 public class SaveAndReadImageDocument {
-    public static RedisTemplate<String, String> redisTemplate;
+    private static RedisTemplate<String, String> redisTemplate;
 
     @Autowired
-    public void setRedisTemplate(RedisTemplate<String, String> redisTemplate) {
+    public SaveAndReadImageDocument(RedisTemplate<String, String> redisTemplate) {
         SaveAndReadImageDocument.redisTemplate = redisTemplate;
     }
 

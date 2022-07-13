@@ -6,8 +6,8 @@ import com.jeffrey.wechat.service.GetFreeService;
 import com.jeffrey.wechat.service.WeChatService;
 import com.jeffrey.wechat.utils.SaveAndReadImageDocument;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import java.util.List;
@@ -19,8 +19,9 @@ import java.util.Map;
  */
 
 @Component
+@EnableScheduling
 @Slf4j
-public class DayFlushSheetData implements InitializingBean {
+public class DayFlushSheetData {
 
     private final GetFreeService getFreeService;
 
@@ -33,13 +34,6 @@ public class DayFlushSheetData implements InitializingBean {
         this.getFreeService = getFreeService;
         this.weChatService = weChatService;
         this.wxConfig = wxConfig;
-    }
-
-    @Override
-    public void afterPropertiesSet() {
-        this.flushShareTable();
-        this.flushUserUseTotalTable();
-        this.flushRedisNotFollowUserData();
     }
 
     //--------------------移除 share 表中无效数据--------------------//
