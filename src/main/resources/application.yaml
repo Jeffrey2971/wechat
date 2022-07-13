@@ -11,7 +11,7 @@ spring:
   redis:
     host: 127.0.0.1
     port: 6379
-    password:
+    password: redis 密码
     timeout: 300000
     lettuce:
       pool:
@@ -25,8 +25,8 @@ spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     url: jdbc:mysql://127.0.0.1:3306/wx_public_account?characterEncoding=UTF-8
-    username: 
-    password:
+    username: root
+    password: mysql 登入密码
 
     druid:
       stat-view-servlet:
@@ -34,8 +34,8 @@ spring:
         # 允许清空统计数据
         reset-enable: true
         # 为 Druid 监控配置访问权限(配置访问监控信息的用户与密码)
-        login-username:
-        login-password:
+        login-username: jeffrey
+        login-password: druid 监控页登入密码
         allow:
       web-stat-filter:
         enabled: true
@@ -62,8 +62,8 @@ spring:
   mail:
     host: smtp.yeah.net
     port: 465
-    password:
-    username:
+    password: 邮箱授权码
+    username: 发送邮件账号
     properties:
       mail.smtp.auth: true
       mail.smtp.starttls.enable: true
@@ -78,9 +78,9 @@ pool:
   queue-capacity: 150
 
 wechat:
-  wx-token:
-  wx-app-id:
-  wx-app-secret:
+  wx-token: 微信服务号 token
+  wx-app-id: 微信服务号 appid
+  wx-app-secret: 微信服务号密钥
   wx-customer-url: https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token={token}
   wx-get-token-url: https://api.weixin.qq.com/cgi-bin/token?grant_type={grant_type}&appid={appid}&secret={secret}
   wx-get-user-info-url: https://api.weixin.qq.com/cgi-bin/user/info?access_token={token}&openid={openid}&lang={lang}
@@ -94,7 +94,7 @@ wechat:
   wx-show-use-url-document: https://mp.weixin.qq.com/s/4hys1I_ajjpwb7HH9XeKEA
   wx-send-template-message-url: https://api.weixin.qq.com/cgi-bin/message/template/send?access_token={token}
   wx-get-batch-user-open-id-list: https://api.weixin.qq.com/cgi-bin/user/info/batchget?access_token={token}
-  wx-get-send-template-id: i6B7KecbXjAvfY0qsNqwhJmp5Yh4v_ej7hvi8QMlBGE
+  wx-get-send-template-id: i6B7KecbXjAvfY0qsNqwhJmp5Yh4v_ej7hvi8QMlBGE # 微信服务号模板 ID
   wx-share-threshold: 3
   wx-day-can-use: 5
   thank-keywords:
@@ -111,15 +111,15 @@ wechat:
     - thank you
 
 email:
-  email-from:  # 发送方
-  email-to:  # 接收方
+  email-from: 发送方
+  email-to: 接收方
   email-port: 465 # yeah.net smtp 端口
-  email-c-c:  # 抄送地址
-  email-pass-code:  # 发送方校验码
+  email-c-c: 抄送地址
+  email-pass-code: 发送方校验码
 
 baidu:
-  baidu-transaction-app-id:  # appid
-  baidu-transaction-app-key:  # appkey
+  baidu-transaction-app-id: 百度 appid
+  baidu-transaction-app-key: 百度 appkey
   erase-none: 0 # 不擦除
   erase-full: 1 # 全屏擦除
   erase-block: 2 # 区块擦除
@@ -155,18 +155,18 @@ baidu:
   file-content-type: mutipart/form-data
 
 baidu.doc:
-  baidu-transaction-app-id:
-  baidu-transaction-app-key:
+  baidu-transaction-app-id: 百度 appid
+  baidu-transaction-app-key: baidu appkey
   req-count-url: https://fanyi-api.baidu.com/api/trans/vip/doccount # 文档校验接口
   req-trans-url: https://fanyi-api.baidu.com/api/trans/vip/doctrans # 文档翻译接口
 
 
 cli:
-  cli-style-id:
+  cli-style-id: 4UeWDV3qzp4hMHYrLdNXOKk
   get-qr-code-style-url: https://cli.im/api/qrcode/code?text={text}&mhid={mhid};
 
 domain:
-  domain: http://www.jeffrey2971.top
+  domain: 服务器域名，需通过备案
   online-preview: http://www.jeffrey2971.top:8012/onlinePreview
   add-task: http://www.jeffrey2971.top:8012/addTask
 
