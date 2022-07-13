@@ -242,7 +242,7 @@ public class DocumentTransServiceImpl implements DocumentTransService {
 
         DocTranslation docTranslation = applyMap.get(requestId);
 
-        if (errorCode == 52000 && !applyMap.containsKey(requestId)) {
+        if (errorCode == 52000 && applyMap.containsKey(requestId)) {
 
             if (docTranslation == null) {
                 log.error("回掉翻译正常，本次请求也存在于历史请求列表中，但获取对应的数据时为 null");
