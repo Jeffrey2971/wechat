@@ -10,8 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author jeffrey
@@ -79,7 +82,7 @@ public class DayFlushSheetData {
 
     //----------------------------移除 redis 中无效数据---------------------------//
     @Scheduled(cron = "0 0 3 * * ?")
-    public void flushRedisNotFollowUserData(){
+    public void flushRedisNotFollowUserData() {
 
         log.info("移除 redis 中无效数据");
 
@@ -91,11 +94,18 @@ public class DayFlushSheetData {
 
         List<String> openIdList = weChatService.selectUserOpenIdList();
 
-        for (Map.Entry<String, TransResponseWrapper> entry : entities.entrySet()) {
+        Set<Map.Entry<String, TransResponseWrapper>> redisData = entities.entrySet();
+
+        ArrayList<String> removeKeys = new ArrayList<>(redisData.size() / 50);
+
+        for (Map.Entry<String, TransResponseWrapper> entry : redisData) {
             if (!openIdList.contains(entry.getValue().getOpenid())) {
-                SaveAndReadImageDocument.removeKey(entry.getKey());
+                removeKeys.add(entry.getKey());
             }
         }
+
+        SaveAndReadImageDocument.removeKeyList(removeKeys);
+
     }
 }
 
