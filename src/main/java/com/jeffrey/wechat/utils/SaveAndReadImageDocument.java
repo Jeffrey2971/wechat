@@ -93,15 +93,11 @@ public class SaveAndReadImageDocument {
     /**
      * 移除 redis 中的 key
      *
-     * @param key 要删除的 key
+     * @param keys 要删除 redis 中 key 的集合
      */
-    public static void removeKey(String key) {
-        Boolean result = redisTemplate.delete(key);
-        if (result != null && result) {
-            log.info("移除 redis 无效数据：{}", key);
-        } else {
-            log.error("移除 redis 无效数据失败：{}", key);
-        }
+    public static void removeKeyList(List<String> keys) {
+        Long removeKeysCount = redisTemplate.delete(keys);
+        log.info("找到 {} 个无效数据，成功移除 {} 个数据", keys.size(), removeKeysCount);
     }
 
     /**
