@@ -32,7 +32,8 @@
 
 ### ⑤ 所使用的技术栈
 
-- kkFileView + SpringBoot  + MyBatisPlus + Redis + MySql
+- 后端：kkFileView + SpringBoot  + MyBatisPlus + Redis + MySql
+- 前端：html + jquery + bootstrap
 
 
 
