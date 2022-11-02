@@ -51,6 +51,126 @@ public class ProcessMessage implements ProcessMessageService {
         return new TextMessage(requestMap, responseMessage(requestMap));
     }
 
+    /**
+     * <table>
+     *     <thead>
+     *     <tr>
+     *         <th> 错误码</th>
+     *         <th> 含义</th>
+     *         <th> 解决方案</th>
+     *     </tr>
+     *     </thead>
+     *     <tbody>
+     *     <tr>
+     *         <td> 0</td>
+     *         <td> 成功</td>
+     *         <td>&nbsp;</td>
+     *     </tr>
+     *     <tr>
+     *         <td> 52001</td>
+     *         <td> 请求超时</td>
+     *         <td> 请重试</td>
+     *     </tr>
+     *     <tr>
+     *         <td> 52002</td>
+     *         <td> 服务端系统错误</td>
+     *         <td> 请重试</td>
+     *     </tr>
+     *     <tr>
+     *         <td> 52003</td>
+     *         <td> 未授权用户</td>
+     *         <td> 请检查appid是否正确或者服务是否开通</td>
+     *     </tr>
+     *     <tr>
+     *         <td> 52010</td>
+     *         <td> 开放设备授权容量不足</td>
+     *         <td> 联系管理员扩增容量</td>
+     *     </tr>
+     *     <tr>
+     *         <td> 54000</td>
+     *         <td> 必填参数为空或固定参数有误</td>
+     *         <td> 检查参数是否误传</td>
+     *     </tr>
+     *     <tr>
+     *         <td> 54001</td>
+     *         <td> 签名错误</td>
+     *         <td> 请检查您的签名生成方法</td>
+     *     </tr>
+     *     <tr>
+     *         <td> 54003</td>
+     *         <td> 访问频率受限</td>
+     *         <td> 请降低您的调用频率</td>
+     *     </tr>
+     *     <tr>
+     *         <td> 54004</td>
+     *         <td> 账户余额不足</td>
+     *         <td> 请前往管理控制平台为账户充值</td>
+     *     </tr>
+     *     <tr>
+     *         <td> 54005</td>
+     *         <td> 长query请求频繁</td>
+     *         <td> 请降低长query的发送频率，3s后再试</td>
+     *     </tr>
+     *     <tr>
+     *         <td> 58000</td>
+     *         <td> 客户端IP非法</td>
+     *         <td> 检查个人资料里填写的IP地址是否正确可前往管理控制平台修改，IP限制，IP可留空</td>
+     *     </tr>
+     *     <tr>
+     *         <td> 58001</td>
+     *         <td> 译文语言方向不支持</td>
+     *         <td> 检查译文语言是否在语言列表里</td>
+     *     </tr>
+     *     <tr>
+     *         <td> 69001</td>
+     *         <td> 上传图片数据有误</td>
+     *         <td> 检查图片是否有问题</td>
+     *     </tr>
+     *     <tr>
+     *         <td> 69002</td>
+     *         <td> 图片识别超时</td>
+     *         <td> 请重试</td>
+     *     </tr>
+     *     <tr>
+     *         <td> 69003</td>
+     *         <td> 内容识别失败</td>
+     *         <td> 检查图片是否存在内容后重试</td>
+     *     </tr>
+     *     <tr>
+     *         <td> 69004</td>
+     *         <td> 识别内容为空</td>
+     *         <td> 检查图片是否存在内容后重试</td>
+     *     </tr>
+     *     <tr>
+     *         <td> 69005</td>
+     *         <td> 图片大小超限（超过4M）</td>
+     *         <td> 请上传符合图片大小要求的图片</td>
+     *     </tr>
+     *     <tr>
+     *         <td> 69006</td>
+     *         <td> 图片尺寸不符合标准（最短边至少30px，最长边最大4096px）</td>
+     *         <td> 请上传符合图片尺寸要求的图片</td>
+     *     </tr>
+     *     <tr>
+     *         <td> 69007</td>
+     *         <td> 图片格式不支持（png/jpg）</td>
+     *         <td> 请上传png或jpg格式的图片</td>
+     *     </tr>
+     *     <tr>
+     *         <td> 69008</td>
+     *         <td> 设备号为空</td>
+     *         <td> 检查cuid参数</td>
+     *     </tr>
+     *     <tr>
+     *         <td> 69012</td>
+     *         <td> 文字贴合参数异常</td>
+     *         <td> 请检查参数 paste，枚举示例：0-关闭文字贴合 1-返回整图贴合 2-返回块区贴合</td>
+     *     </tr>
+     *     </tbody>
+     * </table>
+     * @param requestMap 请求信息
+     * @return
+     */
     @Override
     public BaseMessage sendImageMessage(Map<String, String> requestMap) {
 
@@ -131,7 +251,49 @@ public class ProcessMessage implements ProcessMessageService {
 
             log.info("本次翻译状态信息：{} | {}", metaData.getError_code(), metaData.getError_msg());
             if (metaData.getError_code() != 0) {
-                String reqBody = new Gson().toJson(new CustomerTextMessage(openid, new CustomerTextMessage.Text(metaData.getError_msg())));
+                String reqBody;
+                switch (metaData.getError_code()) {
+                    case 52001:
+                    case 69002:
+                        reqBody = new Gson().toJson(new CustomerTextMessage(openid, new CustomerTextMessage.Text("请求超时，请重新发送照片")));
+                        break;
+                    case 52002:
+                    case 54001:
+                    case 52003:
+                    case 52010:
+                    case 54000:
+                    case 54005:
+                    case 58001:
+                    case 69008:
+                    case 69012:
+                        reqBody = new Gson().toJson(new CustomerTextMessage(openid, new CustomerTextMessage.Text("公众号内部出错，请重新发送照片")));
+                        break;
+                    case 54003:
+                        reqBody = new Gson().toJson(new CustomerTextMessage(openid, new CustomerTextMessage.Text("当前公众号使用人数过多，请稍等片刻再试")));
+                        break;
+                    case 54004:
+                    case 58000:
+                        reqBody = new Gson().toJson(new CustomerTextMessage(openid, new CustomerTextMessage.Text("公众号内部出错，请过段时间再试")));
+                        break;
+                    case 69001:
+                        reqBody = new Gson().toJson(new CustomerTextMessage(openid, new CustomerTextMessage.Text("上传图片数据有误，请检查图片是否有问题后重试")));
+                        break;
+                    case 69003:
+                    case 69004:
+                        reqBody = new Gson().toJson(new CustomerTextMessage(openid, new CustomerTextMessage.Text("内容识别失败，请检查图片是否存在内容后重试")));
+                        break;
+                    case 69005:
+                        reqBody = new Gson().toJson(new CustomerTextMessage(openid, new CustomerTextMessage.Text("图片大小超限（超过4M），请上传符合图片大小要求的图片")));
+                        break;
+                    case 69006:
+                        reqBody = new Gson().toJson(new CustomerTextMessage(openid, new CustomerTextMessage.Text("图片尺寸不符合标准（最短边至少30px，最长边最大4096px），请上传符合图片尺寸要求的图片")));
+                        break;
+                    case 69007:
+                        reqBody = new Gson().toJson(new CustomerTextMessage(openid, new CustomerTextMessage.Text("图片格式不支持（png/jpg），请上传png或jpg格式的图片")));
+                        break;
+                    default:
+                        reqBody = new Gson().toJson(new CustomerTextMessage(openid, new CustomerTextMessage.Text("处理图片时发生未知异常，请重试")));
+                }
                 ResponseEntity<BasicResultMessage> responseEntity = SimpleSendCustomerTextUtil.send(reqBody, BasicResultMessage.class);
                 log.error("翻译时出现了异常，响应的状态码不为 0，后续翻流程终止 | {}", responseEntity);
                 return;
@@ -162,22 +324,22 @@ public class ProcessMessage implements ProcessMessageService {
 
                 String key = String.valueOf(System.currentTimeMillis());
 
-                if (!SaveAndReadImageDocument.containsKey(key)) {
+                if (!RedisUtil.containsKey(key)) {
 
-                    if (!SaveAndReadImageDocument.serialToJsonAndSave(key, responseWrapper)) {
+                    if (!RedisUtil.serialToJsonAndSave(key, responseWrapper)) {
                         log.error("翻译成功，但存储翻译对象的时候出现异常");
                         return;
                     }
 
                     String respString = createRespUrl(openid, key, isZh,
                             src.toString().contains("pptx")
-                            || src.toString().toLowerCase(Locale.CHINA).contains("ppt")
-                            || src.toString().toLowerCase(Locale.CHINA).contains("doc")
-                            || src.toString().toLowerCase(Locale.CHINA).contains("docx")
-                            || src.toString().toLowerCase(Locale.CHINA).contains("txt")
-                            || src.toString().toLowerCase(Locale.CHINA).contains("xls")
-                            || src.toString().toLowerCase(Locale.CHINA).contains("xlsx")
-                            || src.toString().toLowerCase(Locale.CHINA).contains("pdf")
+                                    || src.toString().toLowerCase(Locale.CHINA).contains("ppt")
+                                    || src.toString().toLowerCase(Locale.CHINA).contains("doc")
+                                    || src.toString().toLowerCase(Locale.CHINA).contains("docx")
+                                    || src.toString().toLowerCase(Locale.CHINA).contains("txt")
+                                    || src.toString().toLowerCase(Locale.CHINA).contains("xls")
+                                    || src.toString().toLowerCase(Locale.CHINA).contains("xlsx")
+                                    || src.toString().toLowerCase(Locale.CHINA).contains("pdf")
                     );
                     String data = new Gson().toJson(new CustomerTextMessage(openid, new CustomerTextMessage.Text(respString)));
 

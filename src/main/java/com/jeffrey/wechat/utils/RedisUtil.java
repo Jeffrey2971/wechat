@@ -6,6 +6,7 @@ import com.jeffrey.wechat.entity.TransResponseWrapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Component;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
@@ -19,12 +20,12 @@ import java.util.concurrent.TimeUnit;
 
 @Component
 @Slf4j
-public class SaveAndReadImageDocument {
+public class RedisUtil {
     private static RedisTemplate<String, String> redisTemplate;
 
     @Autowired
-    public SaveAndReadImageDocument(RedisTemplate<String, String> redisTemplate) {
-        SaveAndReadImageDocument.redisTemplate = redisTemplate;
+    public RedisUtil(RedisTemplate<String, String> redisTemplate) {
+        RedisUtil.redisTemplate = redisTemplate;
     }
 
     /**
@@ -118,15 +119,18 @@ public class SaveAndReadImageDocument {
      */
     public static Map<String, TransResponseWrapper> getEntities() {
 
+        log.info("开始获取 redis 数据");
+
         Set<String> keys = redisTemplate.keys("*");
 
         if (keys == null || keys.size() == 0) {
             return null;
         }
 
-        HashMap<String, TransResponseWrapper> documentMap = new HashMap<>();
+        HashMap<String, TransResponseWrapper> documentMap = new HashMap<>(keys.size());
+        ValueOperations<String, String> opsForValue = redisTemplate.opsForValue();
 
-        keys.forEach(item -> documentMap.put(item, new Gson().fromJson(redisTemplate.opsForValue().get(item), TransResponseWrapper.class)));
+        keys.forEach(item -> documentMap.put(item, new Gson().fromJson(opsForValue.get(item), TransResponseWrapper.class)));
 
         return documentMap;
 

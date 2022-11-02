@@ -2,7 +2,7 @@ package com.jeffrey.wechat.service.impl;
 
 import com.jeffrey.wechat.entity.TransResponseWrapper;
 import com.jeffrey.wechat.service.GetDocInfoService;
-import com.jeffrey.wechat.utils.SaveAndReadImageDocument;
+import com.jeffrey.wechat.utils.RedisUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -21,7 +21,7 @@ public class GetDocInfoServiceImpl implements GetDocInfoService {
     @Override
     public String prepareData(Integer id, String wrapperKey, Model model){
 
-        TransResponseWrapper item = SaveAndReadImageDocument.deSerialJsonToClass(wrapperKey, TransResponseWrapper.class);
+        TransResponseWrapper item = RedisUtil.deSerialJsonToClass(wrapperKey, TransResponseWrapper.class);
         String openid = item.getOpenid();
         String expiredTime = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date(item.getExpiredTimeStamp()));
 

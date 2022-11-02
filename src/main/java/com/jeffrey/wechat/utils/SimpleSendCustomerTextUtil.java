@@ -29,7 +29,7 @@ public class SimpleSendCustomerTextUtil {
         SimpleSendCustomerTextUtil.wxConfig = wxConfig;
     }
 
-    public static  <T> ResponseEntity<T> send(String content, Class<T> clazz){
+    public static <T> ResponseEntity<T> send(String content, Class<T> clazz){
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
         httpHeaders.setAcceptCharset(Collections.singletonList(StandardCharsets.UTF_8));

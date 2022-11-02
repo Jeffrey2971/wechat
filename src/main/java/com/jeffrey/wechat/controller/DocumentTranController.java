@@ -1,9 +1,14 @@
 package com.jeffrey.wechat.controller;
 
+import com.google.gson.Gson;
 import com.jeffrey.wechat.WechatApplication;
 import com.jeffrey.wechat.config.WeChatAutoConfiguration;
+import com.jeffrey.wechat.entity.BasicResultMessage;
+import com.jeffrey.wechat.entity.message.TextMessage;
+import com.jeffrey.wechat.entity.message.customer.CustomerTextMessage;
 import com.jeffrey.wechat.entity.translation.DocTranslationData;
 import com.jeffrey.wechat.service.DocumentTransService;
+import com.jeffrey.wechat.utils.SimpleSendCustomerTextUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.tika.mime.MimeTypeException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,11 +81,13 @@ public class DocumentTranController {
             if (documentTransService.applyDocumentTranslation(file, originalFilename, from, to, openid)) {
                 model.addAttribute("title", "上传成功");
                 model.addAttribute("msg", "已收到您的翻译申请，翻译后的文档将通过消息模板的方式发到您的微信！");
+                SimpleSendCustomerTextUtil.send(new Gson().toJson(new CustomerTextMessage(openid, new CustomerTextMessage.Text("已收到您的翻译申请，文档翻译后将发送到当前聊天窗口"))), BasicResultMessage.class);
                 return "feedback_success";
             } else {
                 model.addAttribute("title", "文档申请翻译失败");
                 model.addAttribute("label1", "500 Internal Server Error");
                 model.addAttribute("label2", "您上传的文档在处理时出现了异常，请过段时间再试");
+                SimpleSendCustomerTextUtil.send(new Gson().toJson(new CustomerTextMessage(openid, new CustomerTextMessage.Text("您上传的文档在处理时出现了异常，请过段时间再试"))), BasicResultMessage.class);
                 return "error/4XX";
             }
 
@@ -138,12 +145,19 @@ public class DocumentTranController {
         //      [ http://localhost/doc != http://localhost/doc/test.pdf ]                                              //
         //                                                                                                             //
 
-        String originUrl = String.format("%s/doc/%s/%s", serverInfo.getDomain(), openid, URLEncoder.encode(filename, "UTF-8")); // 资源路径
-        String previewUrl = String.format("%s?openid=%s", originUrl, openid); // 带上 kkFileView 所需的文件名
-        String encodeSourceLink = Base64.getEncoder().encodeToString(previewUrl.getBytes(StandardCharsets.UTF_8)); // 对资源路径进行 base64 编码
-        String finalLink = String.format("%s?url=%s", serverInfo.getOnlinePreview(), encodeSourceLink); // 最终的资源访问路径
+        // 资源路径
+        String originUrl = String.format("%s/doc/%s/%s", serverInfo.getDomain(), openid, URLEncoder.encode(filename, "UTF-8"));
 
+        // 带上 kkFileView 所需的文件名
+        String previewUrl = String.format("%s?openid=%s", originUrl, openid);
 
+        // 对资源路径进行 base64 编码
+        String encodeSourceLink = Base64.getEncoder().encodeToString(previewUrl.getBytes(StandardCharsets.UTF_8));
+
+        // 最终的资源访问路径
+        String finalLink = String.format("%s?url=%s", serverInfo.getOnlinePreview(), encodeSourceLink);
+
+        // 重定向资源
         return "redirect:" + finalLink;
     }
 }

@@ -4,7 +4,7 @@ import com.jeffrey.wechat.config.WeChatAutoConfiguration;
 import com.jeffrey.wechat.entity.TransResponseWrapper;
 import com.jeffrey.wechat.service.GetFreeService;
 import com.jeffrey.wechat.service.WeChatService;
-import com.jeffrey.wechat.utils.SaveAndReadImageDocument;
+import com.jeffrey.wechat.utils.RedisUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -86,7 +86,8 @@ public class DayFlushSheetData {
 
         log.info("移除 redis 中无效数据");
 
-        Map<String, TransResponseWrapper> entities = SaveAndReadImageDocument.getEntities();
+        // Big Object
+        Map<String, TransResponseWrapper> entities = RedisUtil.getEntities();
 
         if (entities == null || entities.size() == 0) {
             return;
@@ -96,19 +97,17 @@ public class DayFlushSheetData {
 
         Set<Map.Entry<String, TransResponseWrapper>> redisData = entities.entrySet();
 
-        ArrayList<String> removeKeys = new ArrayList<>(redisData.size() / 50);
+        ArrayList<String> removeKeys = new ArrayList<>();
 
         for (Map.Entry<String, TransResponseWrapper> entry : redisData) {
             if (!openIdList.contains(entry.getValue().getOpenid())) {
+                log.info("发现无效数据 key：{}", entry.getKey());
                 removeKeys.add(entry.getKey());
             }
         }
 
-        SaveAndReadImageDocument.removeKeyList(removeKeys);
-
+        RedisUtil.removeKeyList(removeKeys);
     }
 }
-
-
 
 
