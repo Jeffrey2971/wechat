@@ -44,6 +44,11 @@ public class ListenerUserRequest implements ServletRequestListener {
             HttpServletRequest httpServletRequest = (HttpServletRequest) sre.getServletRequest();
             String requestIp = GetRequestAddressUtil.getIPAddress(httpServletRequest);
 
+            if ("127.0.0.1".equals(requestIp)) {
+                log.debug("来自本地 spring-boot-admin-starter 的请求，已忽略");
+                return;
+            }
+
             if (userFrequency.containsKey(requestIp)) {
                 userFrequency.put(requestIp, userFrequency.get(requestIp) + 1);
             } else {
