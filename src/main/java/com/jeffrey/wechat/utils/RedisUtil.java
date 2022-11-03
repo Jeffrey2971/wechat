@@ -9,6 +9,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Component;
 import java.util.*;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -113,26 +114,38 @@ public class RedisUtil {
     }
 
     /**
-     * 获取 redis 中的所有文档数据并封装为 List<TransResponseWrapper> 返回
+     * 返回一个 Map<String, String> 对象，key 为 redis 对应的 key，value 为 redis 对应的 key 的 value（为一个 Json 字符串，最大 4MB）
+     * 注意：一次性获取 Redis 缓存中的所有数据会给服务器内存造成压力，需要的数据在 value 中，考虑采用分段的形式获取 value
      *
-     * @return List<TransResponseWrapper>
+     * @return Map<String, String>
      */
-    public static Map<String, TransResponseWrapper> getEntities() {
+    public static Map<String, String> getEntities() {
 
-        log.info("开始获取 redis 数据");
+        log.info("begin load redis data");
 
         Set<String> keys = redisTemplate.keys("*");
 
-        if (keys == null || keys.size() == 0) {
-            return null;
+        if (keys == null || keys.size() == 0) return null;
+
+        final ValueOperations<String, String> opsForValue = redisTemplate.opsForValue();
+        final HashMap<String, String> keyAndOpenId = new HashMap<>(keys.size());
+        final Iterator<String> keysIterators = keys.iterator();
+        final HashSet<String> requestKeys = new HashSet<>(10);
+
+        while (keysIterators.hasNext()) {
+            String key = keysIterators.next();
+            requestKeys.add(key);
+            
+            if (requestKeys.size() == 10 || !keysIterators.hasNext()) {
+                List<String> jsonValue = opsForValue.multiGet(requestKeys);
+                requestKeys.clear();
+                if (jsonValue == null) continue;
+                jsonValue.forEach(bigJson -> {
+                    String oid = new Gson().fromJson(bigJson, TransResponseWrapper.class).getOpenid();
+                    keyAndOpenId.put(key, oid);
+                });
+            }
         }
-
-        HashMap<String, TransResponseWrapper> documentMap = new HashMap<>(keys.size());
-        ValueOperations<String, String> opsForValue = redisTemplate.opsForValue();
-
-        keys.forEach(item -> documentMap.put(item, new Gson().fromJson(opsForValue.get(item), TransResponseWrapper.class)));
-
-        return documentMap;
-
+        return keyAndOpenId;
     }
 }

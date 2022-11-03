@@ -84,27 +84,22 @@ public class DayFlushSheetData {
     @Scheduled(cron = "0 0 3 * * ?")
     public void flushRedisNotFollowUserData() {
 
-        log.info("移除 redis 中无效数据");
+        log.info("begin remove redis bad data");
 
-        // Big Object
-        Map<String, TransResponseWrapper> entities = RedisUtil.getEntities();
+        Map<String, String> entities = RedisUtil.getEntities();
 
-        if (entities == null || entities.size() == 0) {
-            return;
-        }
+        if (entities == null || entities.size() == 0) return;
 
         List<String> openIdList = weChatService.selectUserOpenIdList();
 
-        Set<Map.Entry<String, TransResponseWrapper>> redisData = entities.entrySet();
-
         ArrayList<String> removeKeys = new ArrayList<>();
 
-        for (Map.Entry<String, TransResponseWrapper> entry : redisData) {
-            if (!openIdList.contains(entry.getValue().getOpenid())) {
-                log.info("发现无效数据 key：{}", entry.getKey());
-                removeKeys.add(entry.getKey());
+        entities.forEach((redisKey, openId) -> {
+            if (!openIdList.contains(openId)) {
+                removeKeys.add(redisKey);
+                log.info("remove -> [ redisKey = {} | openId = {} ]", redisKey, openId);
             }
-        }
+        });
 
         RedisUtil.removeKeyList(removeKeys);
     }
